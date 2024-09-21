@@ -1,0 +1,287 @@
+/*----------------------------------------
+  Menu basic style
+------------------------------------------*/
+.header-area{
+  z-index: 10;
+  position: relative;
+}
+.main-menu {
+  display: flex;
+  justify-content: flex-end;
+}
+.main-menu > li > a {
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  height: 104px;
+  line-height: 104px;
+  text-transform: uppercase;
+}
+.main-menu > li:hover > a{
+  color: #ffc267;
+}
+.main-menu li + li {
+    margin-left: 36px;
+}
+.hs-logo {
+  height: 160px;
+  line-height: 160px;
+
+}
+/*-----------------------------------------
+        Sticky  For  Header
+-------------------------------------------*/
+.ml-header-top.header-one.scroll-header {
+  background: rgba(255, 255, 255, 1) none repeat scroll 0 0 !important;
+}
+.header-style-4 .ml-header-top.scroll-header {
+  animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+  background: rgba(255, 255, 255, 1) none repeat scroll 0 0;
+  box-shadow: 0 1px 3px rgba(50, 50, 50, 0.4);
+  left: 0;
+  margin: 0 auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+.fluid-container.mobile-menu-container {
+  position: relative;
+}
+.mobile-logo {
+  align-items: center;
+  display: flex;
+  height: 52px;
+  left: 0;
+  padding-left: 15px;
+  position: absolute;
+  top: 0;
+  z-index: 2147483647;
+}
+.mobile-logo img {
+  max-height: 25px;
+}
+.ml-header-top.scroll-header {
+  animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+  background: rgba(255, 255, 255, 1) none repeat scroll 0 0;
+  box-shadow: 0 1px 3px rgba(50, 50, 50, 0.4);
+  left: 0;
+  margin: 0 auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+.head-style-1.transparent-header .scroll-header .header-content {
+  border-bottom: 0px solid transparent;
+  margin: 0;
+}
+.head-style-1.transparent-header .scroll-header .header-content .main-menu > li > a::before {
+  position: inherit;
+}
+
+
+/*-------------------------------------------------------------
+  Dropdown Menu
+----------------------------------------------------*/
+.main-menu li.drop{
+    position: relative;
+}
+.main-menu li.drop ul.dropdown {
+  background: #ffffff none repeat scroll 0 0;
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  transition: all 0.2s ease-in-out 0s;
+  visibility: hidden;
+  width: 200px;
+  z-index: 999;
+  top: 120%
+}
+.scroll-header .main-menu li.drop ul.dropdown {
+  top: 120% !important;
+}
+.scroll-header .main-menu li.drop:hover ul.dropdown {
+  top: 100% !important;
+}
+.main-menu li.drop:hover ul.dropdown {
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+}
+.main-menu ul.dropdown li {
+    border-bottom: 1px solid #f4f4f4;
+    display: block;
+}
+
+.main-menu ul.dropdown li a {
+  background: #ffffff none repeat scroll 0 0;
+  color: #999999;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 6px 20px 6px 25px;
+  text-align: left;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 0.3s ease 0s;
+}
+
+.main-menu li.drop ul.dropdown li:hover > a {
+    background: #fafafa none repeat scroll 0 0;
+    color: #222222;
+}
+/*------------------------------------
+        Sub Menu
+------------------------------------*/
+.main-menu li.drop ul.dropdown li.drop::after {
+  color: #999;
+  content: "";
+  font-family: "Material-Design-Iconic-Font";
+  font-size: 13px;
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  transition: all 0.2s ease-in-out 0s;
+}
+.main-menu li.drop ul.dropdown li.drop{
+  position: relative;
+}
+.main-menu li.drop ul.dropdown li.drop ul.dropdown.smright {
+  border: medium none;
+  right: 100%;
+  top: 0;
+  transition: all 0.3s ease 0s;
+}
+.main-menu li.drop ul.dropdown li.drop ul.dropdown.level2 {
+  border: medium none;
+  left: 100%;
+  top: 20%;
+  transition: all 0.3s ease 0s;
+}
+.main-menu li.drop ul.dropdown li.drop ul.dropdown.level2 {
+    opacity: 0;
+    visibility: hidden;
+}
+.main-menu li.drop ul.dropdown li.drop:hover ul.dropdown.level2 {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+}
+.main-menu li.drop ul.dropdown li.drop ul.dropdown.smright {
+    opacity: 0;
+    visibility: hidden;
+}
+.main-menu li.drop ul.dropdown li.drop ul.dropdown.smright {
+  background: #ffffff none repeat scroll 0 0;
+  left: -100%;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  top: 20%;
+  transition: all 0.3s ease-in-out 0s;
+  visibility: hidden;
+  width: 220px;
+  z-index: 999;
+}
+.main-menu li.drop ul.dropdown li.drop:hover ul.dropdown.smright {
+  left: -100%;
+  opacity: 1;
+  visibility: visible;
+  top: 0;
+}
+.theme-color .cd-words-wrapper {
+  padding: 0px !important;
+}
+
+.main-menu li ul li {
+    margin: 0;
+}
+.main-menu li ul li:first-child {
+    margin: 0;
+}
+
+/*----------------------
+  Header Top
+-------------------------*/
+.hs-header-top {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+}
+
+.hs-social-icon {
+    display: flex;
+}
+.hs-social-icon li a {
+    font-size: 18px;
+    height: 56px;
+    line-height: 56px;
+    transition: all 0.3s ease 0s;
+}
+.hs-social-icon li + li {
+    margin-left: 30px;
+}
+.hs-social-icon li a:hover i {
+}
+.hs-social-icon li a:hover i {
+    color: #ffc267;
+}
+.header-top-left p {
+    color: #ffc267;
+    font-family: Open Sans;
+    font-size: 13px;
+    height: 56px;
+    line-height: 56px;
+}
+.header-top-left p span {
+    color: #fff;
+    margin-left: 16px;
+}
+
+/*----------------------
+  scroll-header
+-------------------------*/
+
+header.hs-header {
+  left: 0;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  z-index: 99999;
+}
+
+.header-wrap.scroll-header {
+  animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+  background: #ffc267;
+  box-shadow: 0 1px 3px rgba(50, 50, 50, 0.4);
+  left: 0;
+  margin: 0 auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+.header-wrap.scroll-header .hs-header-top{
+  display: none;
+}
+.header-wrap.scroll-header .hs-logo {
+  height: 70px;
+  line-height: 70px;
+}
+.header-wrap.scroll-header .main-menu > li:hover > a {
+  color: #131313 !important;
+}
+
+.header-wrap.scroll-header .hs-logo a img {
+  max-height: 50px;
+}
+.header-wrap.scroll-header .main-menu > li > a {
+  height: 70px;
+  line-height: 70px;
+}
