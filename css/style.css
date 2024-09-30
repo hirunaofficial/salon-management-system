@@ -32,7 +32,7 @@ h2.section-title.bg-color-bark {
     width: 100%;
 }
 .hs-story-thumb .hs-story-img::before {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
     content: "";
     height: calc(100% - 80px);
     left: 0;
@@ -61,7 +61,7 @@ h2.section-title.bg-color-bark {
     color: #fff;
 }
 .hs-story-text::before {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
     bottom: 0;
     content: "";
     height: calc(100% - 20px);
@@ -219,10 +219,10 @@ h4.ser-vice-tit {
 }
 .hs-priceing-box.active .hs-price-box p,
 .hs-priceing-box.active .hs-price-box span {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .hs-priceing-box.active .hs-price-box p sup {
-    color: #ffc267;
+    color: #ff69b4;
 }
 /*---------------------------------
   08. Our team area
@@ -251,7 +251,7 @@ h4.ser-vice-tit {
 }
 .hs-single-team:hover .team-info h4 a,
 .hs-single-team:hover .team-info p {
-    color: #ffc267
+    color: #ff69b4
 }
 /*shape*/
 
@@ -325,7 +325,7 @@ h4.ser-vice-tit {
     color: #909090;
 }
 .team-social-icon li a:hover i {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .team-social-icon li {
     margin: 24px 0;
@@ -361,10 +361,10 @@ Start  nav
     transition: 0.3s;
 }
 .port-filter-nav li.is-checked {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .port-filter-nav li:hover {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .port-filter-nav li + li {
     margin-left: 22px;
@@ -419,7 +419,7 @@ Start  nav
 }
 .our-hover-action a,
 .blog-hover-action a {
-    border: 1px solid #ffc267;
+    border: 1px solid #ff69b4;
     border-radius: 100%;
     display: block;
     height: 50px;
@@ -432,7 +432,7 @@ Start  nav
 }
 .our-hover-action a i,
 .blog-hover-action a i {
-    color: #ffc267;
+    color: #ff69b4;
     font-size: 24px;
 }
 .our-portfolio:hover .our-hover-action a,
@@ -442,8 +442,8 @@ Start  nav
 }
 .our-hover-action a:hover,
 .blog-hover-action a:hover {
-    background: #ffc267 none repeat scroll 0 0;
-    border: 1px solid #ffc267;
+    background: #ff69b4 none repeat scroll 0 0;
+    border: 1px solid #ff69b4;
 }
 .our-hover-action a:hover i,
 .blog-hover-action a:hover i {
@@ -505,7 +505,7 @@ Start  nav
     transition: 0.3s;
 }
 .product-information ul li a:hover i {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .shop-title a {
     display: block;
@@ -519,7 +519,7 @@ Start  nav
     margin-top: 7px;
 }
 .product-price li.new-price {
-    color: #ffc267;
+    color: #ff69b4;
     font-size: 24px;
     line-height: 24px;
     margin-right: 8px;
@@ -574,7 +574,7 @@ Start  nav
     opacity: 1;
 }
 .hs-btn.hs-btn-2 {
-    color: #ffc267 !important;
+    color: #ff69b4 !important;
     padding: 0 30px;
     height: 45px;
     line-height: 45px;
@@ -624,7 +624,7 @@ Start  nav
 .blog-hover-action a:hover {
     background: transparent;
     border: 1px solid transparent;
-    color: #ffc267;
+    color: #ff69b4;
 }
 .blog-title a {
     display: block;
@@ -735,7 +735,7 @@ Start  nav
     text-transform: uppercase;
 }
 .s-price-box span.new-price {
-    color: #ffc267;
+    color: #ff69b4;
     font-size: 24px;
     line-height: 24px;
 }
@@ -754,8 +754,8 @@ Start  nav
     margin-right: 20px;
 }
 .single_add_to_cart_button {
-    background: #ffc267 none repeat scroll 0 0;
-    border: 1px solid #ffc267;
+    background: #ff69b4 none repeat scroll 0 0;
+    border: 1px solid #ff69b4;
     color: #fff;
     display: block;
     font-weight: 400;
@@ -783,7 +783,7 @@ Start  nav
     margin-left: 10px;
 }
 .social-sharing .social-icons li a i {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
     display: block;
     height: 30px;
     line-height: 30px;
@@ -798,7 +798,7 @@ Start  nav
     display: flex;
 }
 .numbers-row input {
-    color: #ffc267;
+    color: #ff69b4;
     height: 30px;
     line-height: 30px;
     padding-left: 10px;
@@ -892,7 +892,7 @@ Start  nav
     color: #fff;
 }
 #scrollUp {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
 }
 /*---------------------------------------
   End scroll to top
@@ -902,7 +902,6 @@ Start  nav
 ----------------------------------------*/
 
 h2.page-title {
-    color: #5b5b5b;
     font-size: 40px;
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -915,7 +914,7 @@ h2.page-title {
     text-transform: uppercase;
 }
 .breadcrumbs > ul li a {
-    color: #f8c12c;
+    color: #ff69b4;
     padding-right: 17px;
     position: relative;
 }
@@ -967,13 +966,13 @@ h2.page-title {
 .page li.p-icon a i:hover {
     background-color: #464646;
     border: 1px solid #464646;
-    color: #ffc267;
+    color: #ff69b4;
 }
 .page li.p-icon a i {
     transition: all .3s ease 0s;
 }
 .page li.p-icon a:hover i {
-    color: #ffc267;
+    color: #ff69b4;
 }
 /*----------------------------------------*/
 /*  17. Blog sidebar
@@ -988,7 +987,7 @@ h3.leave-comment-text {
     position: relative;
 }
 h3.leave-comment-text::before {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
     bottom: -2px;
     content: "";
     height: 3px;
@@ -1015,8 +1014,8 @@ h3.leave-comment-text::before {
     width: 100%;
 }
 .blog-search button.submit {
-    background-color: #ffc267;
-    border: 1px solid #ffc267;
+    background-color: #ff69b4;
+    border: 1px solid #ff69b4;
     height: 40px;
     padding: 0;
     position: absolute;
@@ -1061,7 +1060,7 @@ h3.leave-comment-text::before {
   transition: all 0.3s ease 0s;
 }
 .blog-video-text > h3 a:hover {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .blog-right-sidebar-top ul li {
     color: #464646;
@@ -1093,7 +1092,7 @@ h3.leave-comment-text::before {
 .blog-right-sidebar-top ul li:hover a,
 .blog-right-sidebar-top ul li:hover a span,
 .blog-right-sidebar-top ul li a:hover::before {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .blog-right-sidebar-bottom ul li {
     float: left;
@@ -1112,7 +1111,7 @@ h3.leave-comment-text::before {
     transition: all 0.2s linear 0s;
 }
 .blog-right-sidebar-bottom ul li a:hover {
-    background-color: #ffc267;
+    background-color: #ff69b4;
     color: #fff !important;
 }
 /*----------------------------------------*/
@@ -1168,7 +1167,7 @@ blockquote {
     transition: all 0.3s ease 0s;
 }
 .nes-icon > a i:hover {
-    color: #ffc267 !important;
+    color: #ff69b4 !important;
 }
 .leave-form input {
     background: transparent none repeat scroll 0 0;
@@ -1190,8 +1189,8 @@ blockquote {
     padding: 20px;
 }
 .text-leave button.submit {
-    background-color: #ffc267;
-    border: 1px solid #ffc267;
+    background-color: #ff69b4;
+    border: 1px solid #ff69b4;
     color: #fff;
     font-size: 12px;
     line-height: inherit;
@@ -1288,15 +1287,15 @@ h3.contact-title {
     margin-bottom: 15px;
 }
 .price_filter .ui-slider-range {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
 }
 #slider-range.ui-slider-horizontal {
     height: 5px !important;
 }
 #slider-range .ui-state-default,
 #slider-range .ui-widget-content .ui-state-default {
-    background: #ffc267 none repeat scroll 0 0;
-    border: 1px solid #ffc267;
+    background: #ff69b4 none repeat scroll 0 0;
+    border: 1px solid #ff69b4;
     cursor: pointer;
     height: 20px;
     position: absolute;
@@ -1353,13 +1352,13 @@ h3.contact-title {
 .features-tab .tabs > li > a.active,
 .features-tab .tabs > li > a.active:focus,
 .features-tab .tabs > li > a.active:hover {
-    border: 1px solid #ffc267;
-    color: #ffc267;
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
     background-color: none;
 }
 .features-tab.fe-again .nav > li > a:focus {
     background: #fff none repeat scroll 0 0;
-    border: 1px solid #ffc267;
+    border: 1px solid #ff69b4;
 }
 .features-tab .shop-all-tab .two-part {
     float: left;
@@ -1390,8 +1389,8 @@ h3.contact-title {
     float: left;
 }
 .features-tab.fe-again .nav > li > a:hover {
-    border: 1px solid #ffc267;
-    color: #ffc267;
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
     background: #fff none repeat scroll 0 0;
 }
 .shop-all-tab.top-shop-n {
@@ -1461,7 +1460,7 @@ h3.contact-title {
     display: inline-block;
 }
 .hs-shop-details ul a {
-    color: #ffc267;
+    color: #ff69b4;
     font-size: 20px;
 }
 .shop-over .shop-title a {
@@ -1540,7 +1539,7 @@ h3.contact-title {
     text-decoration: none !important;
 }
 .cart-table .sop-cart > a:hover {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .cen input.qty {
     border: 1px solid #ddd;
@@ -1560,7 +1559,7 @@ h3.contact-title {
     transition: all 0.5s ease 0s
 }
 .cart-form .cart-table .sop-icon a i:hover {
-    background: none repeat scroll 0 0 #ffc267;
+    background: none repeat scroll 0 0 #ff69b4;
     color: #fff;
 }
 .tas.ce-ta {
@@ -1578,7 +1577,7 @@ h3.contact-title {
     transition: all 0.5s ease 0s;
 }
 .cart-form .tas.ce-ta a i:hover {
-    background: none repeat scroll 0 0 #ffc267;
+    background: none repeat scroll 0 0 #ff69b4;
     color: #fff;
 }
 /*--------------------- 22. Shopping cart --------------------*/
@@ -1604,7 +1603,7 @@ label.col-sm-2.control-label.ta {
     font-size: 14px;
 }
 .faq-accordion.ced-fag .panel-default > .panel-heading {
-    background-color: #ffc267;
+    background-color: #ff69b4;
     border-color: #ddd;
     color: #fff;
 }
@@ -1639,7 +1638,7 @@ label.col-sm-2.control-label.ta {
     transition: all 0.5s ease 0s;
 }
 .btn.btn-primary.pet:hover {
-    background: none repeat scroll 0 0 #ffc267;
+    background: none repeat scroll 0 0 #ff69b4;
 }
 label.col-sm-2.control-label.ta7 {
     padding-left: 0px;
@@ -1674,7 +1673,7 @@ button.bn7:hover,
 .btn.btn-default.ce5:hover,
 .btn.btn-primary.ce5:hover,
 .btn.btn-danger.g6:hover {
-    background: none repeat scroll 0 0 #ffc267;
+    background: none repeat scroll 0 0 #ff69b4;
 }
 .faq-accordion a:hover,
 .faq-accordion a:focus,
@@ -1682,7 +1681,7 @@ button.bn7:hover,
     color: #fff !important;
 }
 .form-control:focus {
-    border-color: #ffc267;
+    border-color: #ff69b4;
 }
 .page-title {
     margin-bottom: 30px;
@@ -1761,7 +1760,7 @@ p.log {
     display: block;
 }
 .block-button-right a.o-back-to:hover {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .left-info .left-up span,
 .shiping-method p {
@@ -1918,7 +1917,7 @@ p.log {
     z-index: 0;
 }
 .input-one label.required em {
-    color: #ffc267;
+    color: #ff69b4;
     float: right;
     font-style: normal;
     position: absolute;
@@ -2029,7 +2028,7 @@ p.log {
     border-bottom: 1px solid #e5e5e5;
 }
 .easy2 div.required .control-label::before {
-    color: #ffc267;
+    color: #ff69b4;
     content: "* ";
     font-weight: bold;
 }
@@ -2052,19 +2051,19 @@ p.log {
     vertical-align: middle !important;
 }
 .easy2 .btn-info {
-    background-color: #df5c39;
-    background-image: linear-gradient(to bottom, #e06342, #dc512c);
+    background-color: #ff69b4;
+    background-image: linear-gradient(to bottom, #ff69b4, #ff69b4);
     background-repeat: repeat-x;
-    border-color: #dc512c #dc512c #a2371a;
+    border-color: #ff69b4 #ff69b4 #ff69b4;
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 .easy2 .btn-info:hover {
-    background-color: #df5c39;
+    background-color: #ff69b4;
     background-image: none;
 }
 .easy2 .btn.btn-info.g6 {
-    background: none repeat scroll 0 0 #df5c39;
+    background: none repeat scroll 0 0 #ff69b4;
     border: 0 none;
     border-radius: 0;
     color: #fff;
@@ -2075,7 +2074,7 @@ p.log {
     transition: all 0.5s ease 0s;
 }
 .btn.btn-info.g6:hover {
-    background: none repeat scroll 0 0 #ffc267;
+    background: none repeat scroll 0 0 #ff69b4;
 }
 a.collap {
     background: none repeat scroll 0 0 #323a45;
@@ -2102,7 +2101,7 @@ a.o-back-to {
     color: #666;
 }
 a.o-back-to:hover {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .collapse_area .panel-group {
     margin-bottom: 0;
@@ -2176,7 +2175,7 @@ a.o-back-to:hover {
 }
 .related-title h2 {
     background-color: #fff;
-    border: 1px solid #ffc267;
+    border: 1px solid #ff69b4;
     color: #373737 !important;
     display: inline-block;
     font-size: 14px !important;
@@ -2200,7 +2199,7 @@ a.o-back-to:hover {
   text-transform: capitalize;
 }
 .cras .pro-rating.cendo-pro {
-  color: #ffc267;
+  color: #ff69b4;
   font-size: 16px;
   margin-top: 5px;
 }
@@ -2233,7 +2232,7 @@ a.o-back-to:hover {
 .cras .pre-box span.special-price {
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
-    color: #ffc267;
+    color: #ff69b4;
     font-family: aleo-regular;
     text-align: left;
     width: 100%;
@@ -2290,7 +2289,7 @@ a.o-back-to:hover {
     width: 37px !important;
 }
 .add-to-box1 .product-icon a:hover{
-    background: #ffc267 none repeat scroll 0 0 !important;
+    background: #ff69b4 none repeat scroll 0 0 !important;
     color: #fff !important;
 }
 .s-cart-img {
@@ -2327,8 +2326,8 @@ a.o-back-to:hover {
 }
 .tab_area .text a:hover, .tab_area .text li a.active {
     background: #fff none repeat scroll 0 0;
-    border: 1px solid #ffc267;
-    color: #ffc267;
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
 }
 .tab_area .text a {
   background: #fff none repeat scroll 0 0;
@@ -2385,7 +2384,7 @@ a.o-back-to:hover {
     position: relative;
 }
 .tab_area .text span.fa {
-    color: #f4a137;
+    color: #ff69b4;
     float: left;
     font-size: 8px;
     margin-right: 8px;
@@ -2402,7 +2401,7 @@ a.o-back-to:hover {
     width: 100%;
 }
 .tab_area .text div.required .control-label::before {
-    color: #ffc267;
+    color: #ff69b4;
     content: "* ";
     font-weight: bold;
 }
@@ -2441,7 +2440,7 @@ a.o-back-to:hover {
     transition: all 0.3s ease 0s
 }
 .buttons.si-button button:hover{
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
 }
 .mostview-area.mostview-area2 {
     margin-bottom: 50px;
@@ -2452,20 +2451,3 @@ a.o-back-to:hover {
 .tab_area.sing-tab .text{
     padding: 0 0px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
