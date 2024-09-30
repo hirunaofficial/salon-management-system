@@ -35,8 +35,8 @@
     margin-left: 14px;
 }
 .social-icon li a:hover{
-    background: #ffc267 none repeat scroll 0 0;
-    border: 1px solid #ffc267;
+    background: #ff69b4 none repeat scroll 0 0;
+    border: 1px solid #ff69b4;
     color: #fff;
 }
 .social-icon li a:hover i {
@@ -64,7 +64,7 @@
 .footer-icon a{
     border: 1px solid #f6f6f6;
     border-radius: 50%;
-    color: #ffc267;
+    color: #ff69b4;
     height: 30px;
     line-height: 28px;
     margin-right: 14px;
@@ -110,7 +110,7 @@
   display: block;
 }
 .our-colection li a::before {
-  background: #ffc267 none repeat scroll 0 0;
+  background: #ff69b4 none repeat scroll 0 0;
   content: "";
   height: 100%;
   left: 0;
@@ -148,7 +148,7 @@
     text-transform: capitalize;
 }
 .footer-btm-inner p a {
-	color: #ffc267;
+	color: #ff69b4;
 }
 .footer-top {
   padding-top: 130px;
