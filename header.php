@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Hair Salon - Home 1 </title>
-    <meta name="description" content="">
+    <title>Glamour Salon - Home</title>
+    <meta name="description" content="Luxury hair and beauty services at Glamour Salon. Discover the best haircuts, beauty treatments, and pampering experiences.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="apple-touch-icon.html">
@@ -31,7 +31,7 @@
                         <div class="col-md-9 col-lg-10">
                             <div class="hs-header-top">
                                 <div class="header-top-left">
-                                    <p>Opening Hours: <span>Mon-Fri:     8.00 to 20.00</span></p>
+                                    <p>Opening Hours: <span>Mon-Fri: 8.00 to 20.00</span></p>
                                 </div>
                                 <ul class="hs-social-icon">
                                     <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
@@ -43,14 +43,14 @@
                             <div class="hs-mainmenu-wrap d-none d-md-block">
                                 <nav class="mainmenu-nav">
                                     <ul class="main-menu">
-                                        <li><a href="index.php">Home</a></li>
-                                        <li><a href="about.php">About</a></li>
+                                        <li class="active"><a href="index.php">Home</a></li>
+                                        <li><a href="about.php">About Us</a></li>
                                         <li><a href="services.php">Services</a></li>
                                         <li><a href="products.php">Products</a></li>
-                                        <li><a href="#">Appointment Booking</a></li>
+                                        <li><a href="appointment.php">Appointment</a></li>
                                         <li><a href="gallery.php">Gallery</a></li>
                                         <li><a href="blog.php">Blog</a></li>
-                                        <li><a href="contact.php">Contact</a></li>
+                                        <li><a href="contact.php">Contact Us</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="mobile-menu-area d-block d-md-none">
                 <div class="fluid-container mobile-menu-container">
-                    <div class="mobile-logo"><a href="index.php"><img src="images/logo/2.png" alt="Mobile logo"></a></div>
+                    <div class="mobile-logo"><a href="index.php"><img src="images/logo/hair-salon.png" alt="Mobile logo"></a></div>
                     <div class="mobile-menu clearfix">
                         <nav id="mobile_dropdown">
                             <ul>
@@ -68,7 +68,7 @@
                                 <li><a href="about.php">About</a></li>
                                 <li><a href="services.php">Services</a></li>
                                 <li><a href="products.php">Products</a></li>
-                                <li><a href="#">Appointment Booking</a></li>
+                                <li><a href="appointment.php">Appointment Booking</a></li>
                                 <li><a href="gallery.php">Gallery</a></li>
                                 <li><a href="blog.php">Blog</a></li>
                                 <li><a href="contact.php">Contact</a></li>

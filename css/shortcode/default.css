@@ -37,7 +37,7 @@ html {
 }
 body {
     font-family: 'Open Sans', sans-serif;
-    color: #252525;
+    color: #141414;
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
@@ -46,7 +46,7 @@ body {
 }
 p{
     font-family: 'Open Sans', sans-serif;
-    color: #252525;
+    color: #141414;
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
@@ -65,7 +65,7 @@ h6,
 .h5,
 .h6 {
     font-family: 'Lato', sans-serif;
-    color: #252525;
+    color: #000000;
     font-weight: 400;
     font-variant-ligatures: common-ligatures;
     margin-top: 0;
@@ -147,12 +147,12 @@ a {
 a:hover,
 a:focus,
 a:active {
-    color: #ffc267 !important;
+    color: #ff69b4 !important;
 }
 p a:hover,
 p a:focus,
 p a:active {
-    color: #ffc267;
+    color: #ff69b4;
 }
 h1 a,
 h2 a,
@@ -321,23 +321,23 @@ body {
   background: #fff;
 }
 *::-moz-selection {
-    background: #ffc267;
+    background: #ff69b4;
     color: #fff;
     text-shadow: none;
 }
 ::-moz-selection {
-    background: #ffc267;
+    background: #ff69b4;
     color: #fff;
     text-shadow: none;
 }
 ::selection {
-    background: #ffc267;
+    background: #ff69b4;
     color: #fff;
     text-shadow: none;
 }
 
 .mark, mark {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
     color: #ffffff;
 }
 /*-------------
@@ -350,11 +350,11 @@ body {
 .bg-white span,
 .bg-white ul,
 .bg-white a:not(.ml-btn) {
-  color: #252525;
+  color: #000000;
 }
 
 .bg-white a:hover {
-  color: #252525;
+  color: #000000;
 }
 
 .bg-white h1,
@@ -364,7 +364,7 @@ body {
 .bg-white h5,
 .bg-white h6,
 .bg-white i {
-  color: #252525;
+  color: #000000;
 }
 /*-------------
   bg-gray
@@ -376,7 +376,7 @@ body {
 .bg-gray span,
 .bg-gray ul,
 .bg-gray a:not(.btn) {
-  color: #252525;
+  color: #000000;
 }
 .bg-gray h1,
 .bg-gray h2,
@@ -385,7 +385,7 @@ body {
 .bg-gray h5,
 .bg-gray h6,
 .bg-gray i {
-  color: #252525;
+  color: #000000;
 }
 
 /*-------------
@@ -416,10 +416,10 @@ body {
 ---------------*/
 
 .bg-theme {
-    background: #ffc267 !important;
+    background: #ff69b4 !important;
 }
 .theme-color {
-    color: #ffc267 !important;
+    color: #ff69b4 !important;
 }
 .bg-theme p,
 .bg-theme span,
@@ -563,12 +563,12 @@ body {
 .text-blue { color: #4FC1F0; }
 .text-white { color: #fff ;}
 .text-black { color: #363636; }
-.text-theme { color: #ffc267; }
+.text-theme { color: #ff69b4; }
 
 .text-white h1, .text-white p, .text-white h2{ color: #fff; }
 .text-white { color: #fff; }
 .text-theme {
-  color: #ffc267 !important;
+  color: #ff69b4 !important;
 }
 
 
@@ -910,8 +910,8 @@ input:focus {
 }
 textarea {
     resize: vertical;
-    background: #ffc267;
-    border: 1px solid #ffc267;
+    background: #ff69b4;
+    border: 1px solid #ff69b4;
     padding: 10px;
     width: 100%;
     font-size: 14px;
@@ -922,7 +922,7 @@ textarea:focus {
     outline: none;
 }
 ::-moz-placeholder {
-    color: #444;
+    color: #ffffff;
     font-size: 14px;
 }
 
@@ -1185,17 +1185,17 @@ textarea:focus {
 
 
 ::-webkit-input-placeholder { /* Chrome */
-  color: #909090;
+  color: #141414;
 }
 :-ms-input-placeholder { /* IE 10+ */
-  color: #909090;
+  color: #141414;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-  color: #909090;
+  color: #141414;
   opacity: 0.9;
 }
 :-moz-placeholder { /* Firefox 4 - 18 */
-  color: #909090;
+  color: #141414;
   opacity: 0.9;
 }
 
@@ -1252,7 +1252,7 @@ p.error {
     z-index: 2;
 }
 .hs-btn.btn-light {
-    background: #ffc267 none repeat scroll 0 0;
+    background: #ff69b4 none repeat scroll 0 0;
     color: #fff;
 }
 .hs-btn.btn-light.btn-large {
@@ -1279,7 +1279,7 @@ p.error {
 }
 
 .hs-btn.hs-btn-3 {
-  color: #ffc267 !important;
+  color: #ff69b4 !important;
   height: 36px;
   line-height: 36px;
   padding: 0 18px;
@@ -1290,7 +1290,7 @@ p.error {
 
 .bg-theme *::-moz-selection {
   background: #fff none repeat scroll 0 0;
-  color: #ffc267;
+  color: #ff69b4;
   text-shadow: none;
 }
 

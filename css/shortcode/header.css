@@ -19,7 +19,7 @@
   text-transform: uppercase;
 }
 .main-menu > li:hover > a{
-  color: #ffc267;
+  color: #ff69b4;
 }
 .main-menu li + li {
     margin-left: 36px;
@@ -133,7 +133,7 @@
 
 .main-menu li.drop ul.dropdown li:hover > a {
     background: #fafafa none repeat scroll 0 0;
-    color: #222222;
+    color: #141414;
 }
 /*------------------------------------
         Sub Menu
@@ -230,10 +230,10 @@
 .hs-social-icon li a:hover i {
 }
 .hs-social-icon li a:hover i {
-    color: #ffc267;
+    color: #ff69b4;
 }
 .header-top-left p {
-    color: #ffc267;
+    color: #ff69b4;
     font-family: Open Sans;
     font-size: 13px;
     height: 56px;
@@ -258,7 +258,7 @@ header.hs-header {
 
 .header-wrap.scroll-header {
   animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
-  background: #ffc267;
+  background: #ff69b4;
   box-shadow: 0 1px 3px rgba(50, 50, 50, 0.4);
   left: 0;
   margin: 0 auto;

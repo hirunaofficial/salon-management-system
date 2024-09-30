@@ -1,101 +1,124 @@
-        <footer id="our-footer" class="out-footer-wrap">
-            <div class="footer-top ft-bg-1 pb-80">
+    <section id="hs-newsletter-area" class="hs-newsletter-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="hs-newsletter-inner bg-theme">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-auto">
+                                <h2 class="hs-newsletter-tile">NewsLetter Sign-Up</h2>
+                            </div>
+                            <div class="col-md-auto">
+                                <div class="nws-input-box">
+                                    <input type="email" placeholder="Enter your E-mail">
+                                </div>
+                            </div>
+                            <div class="col-md-auto">
+                                <div class="sing-up-btn">
+                                    <a class="hs-btn hs-btn-3" href="#">subcribes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="our-footer" class="out-footer-wrap">
+        <div class="footer-top ft-bg-1 pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <div class="footer-logo">
+                                <img src="images/logo/hair-salon.png" alt="footer logo">
+                            </div>
+                            <p class="footer-pra">Providing top-quality hair and beauty services, our salon ensures that every customer leaves feeling rejuvenated and confident. Visit us for a luxurious experience.</p>
+                            <ul class="social-icon">
+                                <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
+                                <li><a href="#"><i class="zmdi zmdi-youtube"></i></a></li>
+                                <li><a href="#"><i class="zmdi zmdi-whatsapp"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <h4 class="footer-title">OPENING HOURS</h4>
+                            <ul class="hs-footer-date">
+                                <li>Monday-Friday: 8.00 to 20.00</li>
+                                <li>Saturday: 9.00 to 18.00</li>
+                                <li>Sunday: Closed</li>
+                            </ul>
+                            <p class="footer-pra footer-pra-2">Join us every Friday for exclusive discounts on select services.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <h4 class="footer-title">CONTACT US</h4>
+                            <div class="hs-footer-address">
+                                <div class="ft-single-address">
+                                    <div class="footer-icon">
+                                        <a href="#"><i class="zmdi zmdi-pin"></i></a>
+                                    </div>
+                                    <div class="footer-address">
+                                        <p>Address: Colombo, Sri Lanka.</p>
+                                    </div>
+                                </div>
+                                <div class="ft-single-address">
+                                    <div class="footer-icon">
+                                        <a href="#"><i class="zmdi zmdi-email"></i></a>
+                                    </div>
+                                    <div class="footer-address">
+                                        <p><a href="mailto:info@glamoursalon.com">info@glamoursalon.com</a></p>
+                                        <p><a href="mailto:support@glamoursalon.com">support@glamoursalon.com</a></p>
+                                    </div>
+                                </div>
+                                <div class="ft-single-address">
+                                    <div class="footer-icon">
+                                        <a href="#"><i class="zmdi zmdi-phone"></i></a>
+                                    </div>
+                                    <div class="footer-address">
+                                        <p><a href="tel:+94123456789">+94 123 456 789</a></p>
+                                        <p><a href="tel:+94123456789">+94 123 456 789</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-footer-widget">
+                            <h4 class="footer-title">GALLERY</h4>
+                            <ul class="our-colection">
+                                <li><a href="#"><img src="images/others/sm-img/1.jpg" alt="salon image"></a></li>
+                                <li><a href="#"><img src="images/others/sm-img/2.jpg" alt="salon image"></a></li>
+                                <li><a href="#"><img src="images/others/sm-img/3.jpg" alt="salon image"></a></li>
+                                <li><a href="#"><img src="images/others/sm-img/4.jpg" alt="salon image"></a></li>
+                                <li><a href="#"><img src="images/others/sm-img/5.jpg" alt="salon image"></a></li>
+                                <li><a href="#"><img src="images/others/sm-img/6.jpg" alt="salon image"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <div class="footer-bottom-area ft-bg-2">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-footer-widget">
-                                <div class="footer-logo">
-                                    <img src="images/logo/2.png" alt="footer logo">
-                                </div>
-                                <p class="footer-pra">Lorem ipsum dolor sit amet, conse acteir our adipisicing elit, sed do eiusmod the a tempor the incididunt ut labore et dolore magnaa liqua. Ut enim minimn.</p>
-                                <ul class="social-icon">
-                                    <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-tumblr"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-skype"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-linkedin"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-pinterest"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-footer-widget">
-                                <h4 class="footer-title">OPENING TIME</h4>
-                                <ul class="hs-footer-date">
-                                   <li>Monday-Friday: __________8.00 to 18.00</li> 
-                                   <li>Saturday: _________________9.00 to 18.00</li> 
-                                   <li>Sunday: __________________10.00 to 16.00</li> 
-                                </ul>
-                                <p class="footer-pra footer-pra-2">Every friday of week dolor sit amet, cons ctetur adipisi cing.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-footer-widget">
-                                <h4 class="footer-title">contact us</h4>
-                                <div class="hs-footer-address">
-                                    <div class="ft-single-address">
-                                        <div class="footer-icon">
-                                            <a href="#"><i class="zmdi zmdi-pin"></i></a>
-                                        </div>
-                                        <div class="footer-address">
-                                            <p>Address: Your address goes here.</p>
-                                        </div>
-                                    </div>
-                                    <div class="ft-single-address">
-                                        <div class="footer-icon">
-                                            <a href="#"><i class="zmdi zmdi-email"></i></a>
-                                        </div>
-                                        <div class="footer-address">
-                                            <p><a href="mailto:www.yourmail.com">www.demo@gmail.com</a></p>
-                                            <p><a href="mailto:www.yourmail.com">www.demo@gmail.com</a></p>
-                                        </div>
-                                    </div>
-                                    <div class="ft-single-address">
-                                        <div class="footer-icon">
-                                            <a href="#"><i class="zmdi zmdi-phone"></i></a>
-                                        </div>
-                                        <div class="footer-address">
-                                            <p><a href="phone:+8801722889963">0123456789</a></p>
-                                            <p><a href="phone:+8801722889963">0123456789</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-footer-widget">
-                                <h4 class="footer-title">collections</h4>
-                                <ul class="our-colection">
-                                    <li><a href="#"><img src="images/others/sm-img/1.jpg" alt="footer images"></a></li>
-                                    <li><a href="#"><img src="images/others/sm-img/2.jpg" alt="footer images"></a></li>
-                                    <li><a href="#"><img src="images/others/sm-img/3.jpg" alt="footer images"></a></li>
-                                    <li><a href="#"><img src="images/others/sm-img/4.jpg" alt="footer images"></a></li>
-                                    <li><a href="#"><img src="images/others/sm-img/5.jpg" alt="footer images"></a></li>
-                                    <li><a href="#"><img src="images/others/sm-img/6.jpg" alt="footer images"></a></li>
-                                </ul>
+                        <div class="col-md-12">
+                            <div class="footer-btm-inner text-center">
+                                <p>© 2024 <span class="text-capitalize">Glamour Salon</span> all rights reserved.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="copyright">
-                <div class="footer-bottom-area ft-bg-2">
-                    <div class="container">
-                        <div class="row">
-                            <div class="cl-md-12">
-                                <div class="footer-btm-inner">
-                                    <p>
-            © 2022 <span class="text-capitalize">Hair Salon</span>. Made
-            with <span style="color:#ea3a3c;">&#10084;</span> by
-            <a target="_blank" href="https://hasthemes.com/">HasThemes</a>
-          </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
+
     <div id="quickview-wrapper">
         <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
