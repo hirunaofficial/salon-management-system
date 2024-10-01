@@ -121,7 +121,7 @@
                                                                 <form action="cart.php" method="post">
                                                                     <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                                                                     <input type="hidden" name="product_name" value="<?php echo $product['product_name']; ?>">
-                                                                    <input type="hidden" name="price" value="<?php echo number_format($product['price'], 2); ?>">
+                                                                    <input type="hidden" name="price" value="<?php echo $product['price'], 2; ?>">
                                                                     <input type="hidden" name="qty" value="1">
                                                                     <a><button type="submit" name="add_to_cart" style="border: none; background: none;">
                                                                         <i class="zmdi zmdi-shopping-cart"></i>
@@ -130,9 +130,15 @@
                                                             </li>
 
                                                             <li>
-                                                                <a href="wishlist.php?product_id=<?php echo $product['product_id']; ?>">
-                                                                    <i class="zmdi zmdi-favorite"></i>
-                                                                </a>
+                                                                <form action="wishlist.php" method="post">
+                                                                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                                    <input type="hidden" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                    <input type="hidden" name="price" value="<?php echo $product['price'], 2; ?>">
+                                                                    <input type="hidden" name="qty" value="1">
+                                                                    <a><button type="submit" name="wishlist" style="border: none; background: none;">
+                                                                        <i class="zmdi zmdi-favorite"></i>
+                                                                    </button></a>
+                                                                </form>
                                                             </li>
                                                         </ul>
                                                     </div>
