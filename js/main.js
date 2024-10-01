@@ -138,6 +138,16 @@ $.scrollUp({
     
 })(jQuery);
 
-
-
-
+$(document).ready(function(){
+  var $grid = $('.grid').isotope({
+      itemSelector: '.pro-item'
+  });
+  
+  $('#service-filters').on('click', 'li', function(){
+      var filterValue = $(this).attr('data-filter');
+      $grid.isotope({ filter: filterValue });
+      
+      $('#service-filters li').removeClass('is-checked');
+      $(this).addClass('is-checked');
+  });
+});
