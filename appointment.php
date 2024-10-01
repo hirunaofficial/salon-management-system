@@ -2,6 +2,20 @@
 include 'header.php';
 include 'dbconnect.php';
 
+// Start session and check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "<script type='text/javascript'>
+        window.location.href = 'login.php';
+        </script>";
+    exit;
+}
+
+// Fetch the logged-in user's data
+$user_id = $_SESSION['user_id'];
+$stmt_user = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id");
+$stmt_user->execute(['user_id' => $user_id]);
+$user = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
 // Function to check if the appointment slot is available (max 4 clients per time slot)
 function checkExistingAppointments($pdo, $appointment_date, $appointment_time) {
     $stmt = $pdo->prepare("
@@ -37,10 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message_type = 'danger';
     } else {
         $stmt = $pdo->prepare("
-            INSERT INTO appointments (name, email, phone, service_id, appointment_date, appointment_time) 
-            VALUES (:name, :email, :phone, :service_id, :appointment_date, :appointment_time)
+            INSERT INTO appointments (user_id, name, email, phone, service_id, appointment_date, appointment_time) 
+            VALUES (:user_id, :name, :email, :phone, :service_id, :appointment_date, :appointment_time)
         ");
         $stmt->execute([
+            'user_id' => $user_id,
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
@@ -101,11 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="appoinment-form mt-40">
                         <form action="appointment.php" method="POST">
                             <div class="input-box">
-                                <input type="text" name="name" placeholder="Your Name" required>
-                                <input type="email" name="email" placeholder="Your Email" required>
+                                <input type="text" name="name" value="<?= $user['first_name'] . ' ' . $user['last_name'] ?>">
+                                <input type="email" name="email" value="<?= $user['email'] ?>">
                             </div>
                             <div class="input-box">
-                                <input type="tel" name="phone" placeholder="Phone Number" required>
+                                <input type="tel" name="phone" value="<?= $user['telephone'] ?>">
                                 <select name="service" required>
                                     <option disabled selected>Choose Service</option>
                                     <?php
