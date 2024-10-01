@@ -1,4 +1,17 @@
-<?php include 'header.php'; ?>
+<?php
+include 'header.php';
+include 'dbconnect.php';
+
+// Query to fetch unique categories from the services table
+$stmt = $pdo->prepare("SELECT DISTINCT category FROM services");
+$stmt->execute();
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Query to fetch all services from the database
+$stmt_services = $pdo->prepare("SELECT * FROM services");
+$stmt_services->execute();
+$services = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <section class="breadcrumbs-area ptb-100">
     <div class="container">
@@ -24,10 +37,9 @@
             <div class="col-12 text-center">
                 <ul id="service-filters" class="port-filter-nav">
                     <li data-filter="*" class="is-checked">All</li>
-                    <li data-filter=".haircut">Haircuts</li>
-                    <li data-filter=".makeup">Makeup</li>
-                    <li data-filter=".styling">Styling</li>
-                    <li data-filter=".treatment">Treatments</li>
+                    <?php foreach ($categories as $category): ?>
+                        <li data-filter=".<?= strtolower($category['category']) ?>"><?= ucfirst($category['category']) ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
@@ -37,53 +49,15 @@
 <section id="hs-service-area" class="hs-service area ptb-90 bg-gray">
     <div class="container">
         <div class="row mb-n6 grid">
-            <div class="col-lg-4 col-md-6 mb-6 pro-item haircut">
-                <div class="single-service-area">
-                    <h4 class="ser-vice-tit">Classic Haircut</h4>
-                    <p class="ser-pra">Experience a timeless haircut tailored to your style by our expert stylists. Perfect for all occasions.</p>
-                    <p class="service-price">Price: LKR 2,500</p>
+            <?php foreach ($services as $service): ?>
+                <div class="col-lg-4 col-md-6 mb-6 pro-item <?= strtolower($service['category']) ?>">
+                    <div class="single-service-area">
+                        <h4 class="ser-vice-tit"><?= $service['name'] ?></h4>
+                        <p class="ser-pra"><?= $service['description'] ?></p>
+                        <p class="service-price">Price: LKR <?= number_format($service['price'], 2) ?></p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-6 pro-item styling">
-                <div class="single-service-area">
-                    <h4 class="ser-vice-tit">Hair Extensions</h4>
-                    <p class="ser-pra">Add length and volume with our high-quality hair extensions, seamlessly blended for a natural look.</p>
-                    <p class="service-price">Price: LKR 10,000</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-6 pro-item styling">
-                <div class="single-service-area">
-                    <h4 class="ser-vice-tit">Hair Styling</h4>
-                    <p class="ser-pra">From elegant updos to modern waves, our stylists craft personalized looks for any occasion.</p>
-                    <p class="service-price">Price: LKR 3,500</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-6 pro-item styling">
-                <div class="single-service-area">
-                    <h4 class="ser-vice-tit">Hair Coloring</h4>
-                    <p class="ser-pra">Transform your hair with our professional coloring services. Vibrant, long-lasting colors just for you.</p>
-                    <p class="service-price">Price: LKR 7,000</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-6 pro-item treatment">
-                <div class="single-service-area">
-                    <h4 class="ser-vice-tit">Hair Treatments</h4>
-                    <p class="ser-pra">Nourish and rejuvenate your hair with our deep conditioning and repair treatments for shiny, healthy locks.</p>
-                    <p class="service-price">Price: LKR 4,500</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-6 pro-item styling">
-                <div class="single-service-area">
-                    <h4 class="ser-vice-tit">Hair Wash & Blowout</h4>
-                    <p class="ser-pra">Enjoy a refreshing hair wash followed by a sleek blowout for a polished, finished look.</p>
-                    <p class="service-price">Price: LKR 1,500</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
