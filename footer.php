@@ -173,8 +173,10 @@
         </div>
     </div>
 
+    <link rel="stylesheet" href="js/vendor/jquery-ui.css">
     <script src="js/vendor/jquery-3.6.0.min.js"></script>
     <script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
+    <script src="js/vendor/jquery-ui.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery.simpleLens.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
@@ -185,5 +187,4 @@
     <script src="js/main.js"></script>
 
 </body>
-
 </html>

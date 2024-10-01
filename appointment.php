@@ -1,4 +1,59 @@
-<?php include 'header.php'; ?>
+<?php
+include 'header.php';
+include 'dbconnect.php';
+
+// Function to check if the appointment slot is available (max 4 clients per time slot)
+function checkExistingAppointments($pdo, $appointment_date, $appointment_time) {
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*) as appointment_count 
+        FROM appointments 
+        WHERE appointment_date = :appointment_date 
+          AND appointment_time = :appointment_time
+    ");
+    $stmt->execute([
+        'appointment_date' => $appointment_date,
+        'appointment_time' => $appointment_time
+    ]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return $result['appointment_count'] >= 4;
+}
+
+// Form submission logic
+$message = '';
+$message_type = ''; // Variable to store message type (success or danger)
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $service_id = $_POST['service'];
+    $appointment_date = date('Y-m-d', strtotime($_POST['date']));
+    $appointment_time = date('H:i:s', strtotime($_POST['time']));
+
+    // Check if the appointment slot is full
+    if (checkExistingAppointments($pdo, $appointment_date, $appointment_time)) {
+        $message = "Sorry, the selected time slot is fully booked.";
+        $message_type = 'danger';
+    } else {
+        $stmt = $pdo->prepare("
+            INSERT INTO appointments (name, email, phone, service_id, appointment_date, appointment_time) 
+            VALUES (:name, :email, :phone, :service_id, :appointment_date, :appointment_time)
+        ");
+        $stmt->execute([
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'service_id' => $service_id,
+            'appointment_date' => $appointment_date,
+            'appointment_time' => $appointment_time
+        ]);
+
+        $message = "Appointment successfully booked!";
+        $message_type = 'success';
+    }
+}
+?>
 
 <section class="breadcrumbs-area ptb-100">
     <div class="container">
@@ -35,8 +90,16 @@
                             Schedule your beauty experience with Glamour Salon. Fill in the details below and we will take care of the rest.
                         </p>
                     </div>
+
+                    <?php if ($message): ?>
+                        <br>
+                        <div class="alert alert-<?= $message_type ?> text-center">
+                            <?= $message ?>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="appoinment-form mt-40">
-                        <form action="submit_appointment.php" method="POST">
+                        <form action="appointment.php" method="POST">
                             <div class="input-box">
                                 <input type="text" name="name" placeholder="Your Name" required>
                                 <input type="email" name="email" placeholder="Your Email" required>
@@ -45,20 +108,19 @@
                                 <input type="tel" name="phone" placeholder="Phone Number" required>
                                 <select name="service" required>
                                     <option disabled selected>Choose Service</option>
-                                    <option value="Classic Haircut">Classic Haircut</option>
-                                    <option value="Hair Extensions">Hair Extensions</option>
-                                    <option value="Hair Coloring">Hair Coloring</option>
-                                    <option value="Hair Treatment">Hair Treatment</option>
+                                    <?php
+                                    $stmt_services = $pdo->prepare("SELECT service_id, name FROM services");
+                                    $stmt_services->execute();
+                                    $services = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
+                                    foreach ($services as $service): ?>
+                                        <option value="<?= $service['service_id'] ?>"><?= $service['name'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="input-box">
-                                <input type="text" name="date" placeholder="Preferred Date (DD/MM/YYYY)" required>
-                                <select name="time" required>
+                                <input type="text" id="datepicker" name="date" placeholder="Preferred Date" required>
+                                <select name="time" id="time-select" required>
                                     <option disabled selected>Choose Time</option>
-                                    <option value="9:00 AM">9:00 AM</option>
-                                    <option value="11:00 AM">11:00 AM</option>
-                                    <option value="2:00 PM">2:00 PM</option>
-                                    <option value="4:00 PM">4:00 PM</option>
                                 </select>
                             </div>
                             <div class="book-appoin-btn mt-30">

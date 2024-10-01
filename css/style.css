@@ -574,6 +574,7 @@ Start  nav
     opacity: 1;
 }
 .hs-btn.hs-btn-2 {
+    z-index: 1;
     color: #ff69b4 !important;
     padding: 0 30px;
     height: 45px;
