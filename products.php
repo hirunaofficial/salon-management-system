@@ -85,7 +85,7 @@
                                         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                                         $offset = ($page - 1) * $limit;
 
-                                        $query = "SELECT product_name, description, price, image_url FROM products WHERE 1";
+                                        $query = "SELECT product_id, product_name, description, price, image_url FROM products WHERE 1";
                                         
                                         if (!empty($_GET['query'])) {
                                             $search = htmlspecialchars($_GET['query']);
@@ -117,9 +117,23 @@
                                                     <img src="<?php echo $product['image_url']; ?>" alt="product images">
                                                     <div class="product-information">
                                                         <ul>
-                                                            <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
-                                                            <li><a href="#"><i class="zmdi zmdi-favorite"></i></a></li>
-                                                            <li><a href="#"><i class="zmdi zmdi-eye"></i></a></li>
+                                                            <li>
+                                                                <form action="cart.php" method="post">
+                                                                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                                    <input type="hidden" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                    <input type="hidden" name="price" value="<?php echo number_format($product['price'], 2); ?>">
+                                                                    <input type="hidden" name="qty" value="1">
+                                                                    <a><button type="submit" name="add_to_cart" style="border: none; background: none;">
+                                                                        <i class="zmdi zmdi-shopping-cart"></i>
+                                                                    </button></a>
+                                                                </form>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="wishlist.php?product_id=<?php echo $product['product_id']; ?>">
+                                                                    <i class="zmdi zmdi-favorite"></i>
+                                                                </a>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
