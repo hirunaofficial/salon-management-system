@@ -2,6 +2,11 @@
 include 'header.php';
 include 'dbconnect.php';
 
+// Function to sanitize the category name for filtering
+function sanitize_category($category) {
+    return strtolower(preg_replace('/[^a-zA-Z0-9]/', '-', $category));
+}
+
 // Query to fetch unique categories from the services table
 $stmt = $pdo->prepare("SELECT DISTINCT category FROM services");
 $stmt->execute();
@@ -38,7 +43,7 @@ $services = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
                 <ul id="service-filters" class="port-filter-nav">
                     <li data-filter="*" class="is-checked">All</li>
                     <?php foreach ($categories as $category): ?>
-                        <li data-filter=".<?= strtolower(str_replace(' ', '-', $category['category'])) ?>"><?= ucfirst($category['category']) ?></li>
+                        <li data-filter=".<?= sanitize_category($category['category']) ?>"><?= ucfirst($category['category']) ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -50,11 +55,14 @@ $services = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <div class="row mb-n6 grid">
             <?php foreach ($services as $service): ?>
-                <div class="col-lg-4 col-md-6 mb-6 pro-item <?= strtolower(str_replace(' ', '-', $service['category'])) ?>">
+                <div class="col-lg-4 col-md-6 mb-6 pro-item <?= sanitize_category($service['category']) ?>">
                     <div class="single-service-area">
                         <h4 class="ser-vice-tit"><?= $service['name'] ?></h4>
                         <p class="ser-pra"><?= $service['description'] ?></p>
-                        <p class="service-price">Price: LKR <?= number_format($service['price'], 2) ?></p>
+                        <p class="service-price">
+                            Standard Price: LKR <?= number_format($service['price'], 2) ?><br>
+                            Member Price: LKR <?= number_format($service['member_price'], 2) ?>
+                        </p>
                     </div>
                 </div>
             <?php endforeach; ?>
