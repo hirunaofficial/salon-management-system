@@ -38,7 +38,7 @@ $services = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
                 <ul id="service-filters" class="port-filter-nav">
                     <li data-filter="*" class="is-checked">All</li>
                     <?php foreach ($categories as $category): ?>
-                        <li data-filter=".<?= strtolower($category['category']) ?>"><?= ucfirst($category['category']) ?></li>
+                        <li data-filter=".<?= strtolower(str_replace(' ', '-', $category['category'])) ?>"><?= ucfirst($category['category']) ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -50,7 +50,7 @@ $services = $stmt_services->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <div class="row mb-n6 grid">
             <?php foreach ($services as $service): ?>
-                <div class="col-lg-4 col-md-6 mb-6 pro-item <?= strtolower($service['category']) ?>">
+                <div class="col-lg-4 col-md-6 mb-6 pro-item <?= strtolower(str_replace(' ', '-', $service['category'])) ?>">
                     <div class="single-service-area">
                         <h4 class="ser-vice-tit"><?= $service['name'] ?></h4>
                         <p class="ser-pra"><?= $service['description'] ?></p>
