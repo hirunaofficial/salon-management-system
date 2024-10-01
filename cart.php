@@ -1,11 +1,16 @@
-<?php 
+<?php
 include 'header.php';
+
+// Initialize message variables
+$message = '';
+$message_type = '';
 
 // Handle adding or updating items in the cart
 if (isset($_POST['add_to_cart']) || isset($_POST['update_cart'])) {
     $product_id = $_POST['product_id'];
     $product_name = $_POST['product_name'];
-    $price = (float) $_POST['price']; // Cast price to float
+    $price = $_POST['price']; // Cast price to float
+    print($price);
     $qty = (int) $_POST['qty']; // Cast quantity to integer
 
     // Check if the cart session exists, if not, create one
@@ -16,6 +21,8 @@ if (isset($_POST['add_to_cart']) || isset($_POST['update_cart'])) {
     // If product already exists in the cart, update the quantity
     if (isset($_SESSION['cart'][$product_id])) {
         $_SESSION['cart'][$product_id]['qty'] = $qty; // Update quantity
+        $message = "Product quantity updated in the cart.";
+        $message_type = 'success';
     } else {
         // Add the new product to the cart
         $_SESSION['cart'][$product_id] = [
@@ -23,12 +30,16 @@ if (isset($_POST['add_to_cart']) || isset($_POST['update_cart'])) {
             'price' => $price,
             'qty' => $qty
         ];
+        $message = "Product added to the cart.";
+        $message_type = 'success';
     }
 }
 
 // Handle removal of items from the cart
 if (isset($_GET['remove']) && isset($_SESSION['cart'][$_GET['remove']])) {
     unset($_SESSION['cart'][$_GET['remove']]);
+    $message = "Product removed from the cart.";
+    $message_type = 'danger';
 }
 
 // Calculate total
@@ -47,9 +58,7 @@ if (isset($_SESSION['cart'])) {
                 <div class="breadcrumbs">
                     <h2 class="page-title">Shopping Cart</h2>
                     <ul>
-                        <li>
-                            <a class="active" href="index.php">Home</a>
-                        </li>
+                        <li><a class="active" href="index.php">Home</a></li>
                         <li>Shopping Cart</li>
                     </ul>
                 </div>
@@ -62,6 +71,14 @@ if (isset($_SESSION['cart'])) {
     <div class="container">
         <div class="row">
             <div class="col-12">
+
+                <?php if ($message): ?>
+                    <div class="alert alert-<?= $message_type ?> alert-dismissible fade show" role="alert">
+                        <?= $message ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
                 <div class="s-cart-all">
                     <div class="page-title">
                         <h1>Shopping Cart :</h1>
@@ -90,8 +107,8 @@ if (isset($_SESSION['cart'])) {
                                                 </button>
                                             </form>
                                         </td>
-                                        <td class="sop-cart">$<?php echo number_format((float)$product['price'], 2); ?></td>
-                                        <td class="sop-cart">$<?php echo number_format((float)$product['price'] * (int)$product['qty'], 2); ?></td>
+                                        <td class="sop-cart">LKR <?php echo number_format((float)$product['price'], 2); ?></td>
+                                        <td class="sop-cart">LKR <?php echo number_format((float)$product['price'] * (int)$product['qty'], 2); ?></td>
                                         <td class="sop-icon">
                                             <a href="cart.php?remove=<?php echo $product_id; ?>" class="remove">
                                                 <i class="zmdi zmdi-close-circle"></i>
@@ -119,11 +136,11 @@ if (isset($_SESSION['cart'])) {
                 <table class="table table-bordered mt-5 mt-lg-0">
                     <tr>
                         <td class="text-center"><strong>Sub-Total:</strong></td>
-                        <td class="text-center">$<?php echo number_format($cart_total, 2); ?></td>
+                        <td class="text-center">LKR <?php echo number_format($cart_total, 2); ?></td>
                     </tr>
                     <tr>
                         <td class="text-center"><strong>Total:</strong></td>
-                        <td class="text-center">$<?php echo number_format($cart_total, 2); ?></td>
+                        <td class="text-center">LKR <?php echo number_format($cart_total, 2); ?></td>
                     </tr>
                 </table>
                 <div class="buttons d-flex justify-content-between flex-wrap mt-5">
