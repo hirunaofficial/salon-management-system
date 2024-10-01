@@ -1,4 +1,34 @@
-<?php include 'header.php'; ?>
+<?php 
+include 'header.php'; 
+include 'dbconnect.php';
+
+$message = "";
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['con_name'];
+    $email = $_POST['con_email'];
+    $phone = $_POST['con_phone'];
+    $subject = $_POST['con_subject'];
+    $messageContent = $_POST['con_message'];
+
+    // Prepare SQL insert statement
+    $stmt = $pdo->prepare("
+        INSERT INTO contact_messages (name, email, phone, subject, message) 
+        VALUES (:name, :email, :phone, :subject, :message)
+    ");
+
+    $stmt->execute([
+        ':name' => $name,
+        ':email' => $email,
+        ':phone' => $phone,
+        ':subject' => $subject,
+        ':message' => $messageContent
+    ]);
+
+    $message = "Your message has been sent successfully!";
+}
+?>
 
 <section class="breadcrumbs-area ptb-100">
     <div class="container">
@@ -7,9 +37,7 @@
                 <div class="breadcrumbs">
                     <h2 class="page-title">Contact Us</h2>
                     <ul>
-                        <li>
-                            <a class="active" href="index.php">Home</a>
-                        </li>
+                        <li><a class="active" href="index.php">Home</a></li>
                         <li>Contact Us</li>
                     </ul>
                 </div>
@@ -21,8 +49,16 @@
 <div id="contact-area" class="contact-area gray-bg ptb-100 bg-img-3 bg-gray">
     <div class="container">
         <div class="row">
-            <form id="contact-form" action="submit_contact.php" method="post" class="col-lg-9">
+            <form id="contact-form" method="post" class="col-lg-9">
                 <h3 class="contact-title">Send Us a Message:</h3>
+
+                <?php if ($message): ?>
+                    <br>
+                    <div class="alert alert-success">
+                        <?= $message ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="row all-contact-text">
                     <div class="col-md-6">
                         <div class="contact-message">

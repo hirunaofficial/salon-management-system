@@ -182,7 +182,6 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/slick.min.js"></script>
-    <script src="js/ajax-mail.js"></script>
     <script src="js/waypoints.min.js"></script>
     <script src="js/main.js"></script>
 
