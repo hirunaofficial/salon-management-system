@@ -116,3 +116,18 @@ CREATE TABLE appointments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE
 );
+
+CREATE TABLE gallery (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL
+);
+
+INSERT INTO gallery (title, category, file_path) VALUES 
+('Classic Hair Style 1', 'hair styles', 'images/gallery/1.jpg'),
+('Makeup Look 1', 'makeup', 'images/gallery/2.jpg'),
+('Classic Hair Style 2', 'hair styles', 'images/gallery/3.jpg'),
+('Nail Art Design 1', 'nail art', 'images/gallery/4.jpg'),
+('Classic Hair Style 3', 'hair styles', 'images/gallery/5.jpg'),
+('Makeup Look 2', 'makeup', 'images/gallery/6.jpg');
