@@ -77,13 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         $message = 'Address updated successfully.';
     }
-
-    // Handle address deletion
-    if (isset($_GET['delete_address'])) {
-        $stmt = $pdo->prepare("UPDATE users SET address = NULL, city = NULL, country = NULL, postal_code = NULL WHERE user_id = :user_id");
-        $stmt->execute(['user_id' => $user_id]);
-        $message = 'Address deleted successfully.';
-    }
 }
 ?>
 
@@ -259,11 +252,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </div>
                                         </div>
                                     </form>
-
-                                    <!-- Delete Address -->
-                                    <div class="buttons d-flex justify-content-between flex-wrap mt-5">
-                                        <a class="btn btn-danger g6" href="?delete_address=1">Delete Address</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
