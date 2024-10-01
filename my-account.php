@@ -1,175 +1,279 @@
-<?php include 'header.php' ?>
+<?php 
+include 'header.php';
+include 'dbconnect.php';
 
-        <section class="breadcrumbs-area ptb-100 bg-gray">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <div class="breadcrumbs">
-                            <h2 class="page-title">My Account</h2>
-                            <ul>
-                                <li>
-                                    <a class="active" href="#">Home</a>
-                                </li>
-                                <li>My Account</li>
-                            </ul>
-                        </div>
-                    </div>
+// Start session and check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Fetch the logged-in user's data
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id");
+$stmt->execute(['user_id' => $user_id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Update personal information
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Update personal information
+    if (isset($_POST['update_info'])) {
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $telephone = $_POST['telephone'];
+        $fax = $_POST['fax'];
+
+        $stmt = $pdo->prepare("
+            UPDATE users SET 
+            first_name = :first_name, 
+            last_name = :last_name, 
+            email = :email, 
+            telephone = :telephone, 
+            fax = :fax 
+            WHERE user_id = :user_id
+        ");
+        $stmt->execute([
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'telephone' => $telephone,
+            'fax' => $fax,
+            'user_id' => $user_id
+        ]);
+        $message = 'Account information updated successfully.';
+    }
+
+    // Update password
+    if (isset($_POST['change_password'])) {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        $stmt = $pdo->prepare("UPDATE users SET password = :password WHERE user_id = :user_id");
+        $stmt->execute(['password' => $password, 'user_id' => $user_id]);
+        $message = 'Password updated successfully.';
+    }
+
+    // Update address
+    if (isset($_POST['update_address'])) {
+        $address = $_POST['address'];
+        $city = $_POST['city'];
+        $country = $_POST['country'];
+        $postal_code = $_POST['postal_code'];
+
+        $stmt = $pdo->prepare("
+            UPDATE users SET 
+            address = :address, 
+            city = :city, 
+            country = :country, 
+            postal_code = :postal_code 
+            WHERE user_id = :user_id
+        ");
+        $stmt->execute([
+            'address' => $address,
+            'city' => $city,
+            'country' => $country,
+            'postal_code' => $postal_code,
+            'user_id' => $user_id
+        ]);
+        $message = 'Address updated successfully.';
+    }
+
+    // Handle address deletion
+    if (isset($_GET['delete_address'])) {
+        $stmt = $pdo->prepare("UPDATE users SET address = NULL, city = NULL, country = NULL, postal_code = NULL WHERE user_id = :user_id");
+        $stmt->execute(['user_id' => $user_id]);
+        $message = 'Address deleted successfully.';
+    }
+}
+?>
+
+<section class="breadcrumbs-area ptb-100 bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumbs">
+                    <h2 class="page-title">My Account</h2>
+                    <ul>
+                        <li><a class="active" href="#">Home</a></li>
+                        <li>My Account</li>
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-        <section class="collapse_area coll2 ptb-90">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="check">
-                            <h1>My Account :</h1>
-                        </div>
-                        <div class="faq-accordion">
-                            <div class="panel-group pas7" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed method" role="button" data-bs-toggle="collapse"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Edit your account information <i class="zmdi zmdi-caret-down"></i> </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne" data-bs-parent="#accordion">
-                                        <div class="row align-items-center">
-                                            <div class="col-12 easy2">
-                                                <h1>My Account Information</h1>
-                                                <form class="form-horizontal" action="#">
-                                                    <fieldset>
-                                                        <legend>Your Personal Details</legend>
-                                                        <div class="form-group row align-items-center required pt-5 mt-0">
-                                                            <label class="col-md-2 control-label">First Name </label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="text" placeholder="First Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row align-items-center required">
-                                                            <label class="col-md-2 control-label">Last Name</label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="text" placeholder="Last Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row align-items-center required">
-                                                            <label class="col-md-2 control-label">E-Mail</label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="email" placeholder="E-Mail">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row align-items-center required">
-                                                            <label class="col-md-2 control-label">Telephone</label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="tel" placeholder="Telephone">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row align-items-center">
-                                                            <label class="col-md-2 control-label">Fax</label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="text" placeholder="Fax">
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                    <div class="buttons d-flex justify-content-between flex-wrap mt-5">
-                                                        <div class="pull-left">
-                                                            <a class="btn btn-default ce5" href="#">Back</a>
-                                                        </div>
-                                                        <div class="pull-right">
-                                                            <input class="btn btn-primary ce5" type="submit" value="Continue">
-                                                        </div>
+<section class="collapse_area coll2 ptb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <?php if (isset($message)): ?>
+                    <div class="alert alert-success"><?= $message ?></div>
+                <?php endif; ?>
+                <div class="faq-accordion">
+                    <div class="panel-group pas7" id="accordion" role="tablist" aria-multiselectable="true">
+                        
+                        <!-- Account Information -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a class="collapsed method" role="button" data-bs-toggle="collapse"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Edit your account information <i class="zmdi zmdi-caret-down"></i></a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                <div class="row align-items-center">
+                                    <div class="col-12 easy2">
+                                        <h1>My Account Information</h1>
+                                        <form class="form-horizontal" action="" method="POST">
+                                            <fieldset>
+                                                <legend>Your Personal Details</legend>
+                                                <div class="form-group row align-items-center required pt-5 mt-0">
+                                                    <label class="col-md-2 control-label">First Name </label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="text" name="first_name" value="<?= $user['first_name'] ?>" placeholder="First Name" required>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-bs-toggle="collapse"  href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Change your password <i class="zmdi zmdi-caret-down"></i></a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" data-bs-parent="#accordion" style="height: 0px;">
-                                        <div class="row align-items-center">
-                                            <div class="col-12 easy2">
-                                                <h1>Change Password</h1>
-                                                <form class="form-horizontal" action="#">
-                                                    <fieldset>
-                                                        <legend>Your Password</legend>
-                                                        <div class="form-group row align-items-center required pt-5 mt-0">
-                                                            <label class="col-md-2 control-label">Password</label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="password" placeholder="password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row align-items-center required">
-                                                            <label class="col-md-2 control-label">Password Confirm</label>
-                                                            <div class="col-md-10">
-                                                                <input class="form-control" type="password" placeholder="password confirm">
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-                                                    <div class="buttons d-flex justify-content-between flex-wrap mt-5">
-                                                        <div class="pull-left">
-                                                            <a class="btn btn-default ce5" href="#">Back</a>
-                                                        </div>
-                                                        <div class="pull-right">
-                                                            <input class="btn btn-primary ce5" type="submit" value="Continue">
-                                                        </div>
+                                                </div>
+                                                <div class="form-group row align-items-center required">
+                                                    <label class="col-md-2 control-label">Last Name</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="text" name="last_name" value="<?= $user['last_name'] ?>" placeholder="Last Name" required>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-bs-toggle="collapse"  href="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">Modify your address book entries  <i class="zmdi zmdi-caret-down"></i></a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-bs-parent="#accordion" style="height: 0px;">
-                                        <div class="easy2">
-                                            <h1 class="mb-20">Address Book Entries</h1>
-                                            <table class="table table-bordered table-hover">
-                                                <tr>
-                                                    <td class="text-left">
-                                                        Farhana hayder (shuvo)
-                                                        <br>
-                                                        hastech
-                                                        <br>
-                                                        Road#1 , Block#c
-                                                        <br>
-                                                        Rampura.
-                                                        <br>
-                                                        Dhaka
-                                                        <br>
-                                                        Bangladesh
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <a class="btn btn-info g6" href="#">Edit</a>
-                                                        <a class="btn btn-danger g6" href="#">Delete</a>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                                </div>
+                                                <div class="form-group row align-items-center required">
+                                                    <label class="col-md-2 control-label">E-Mail</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="email" name="email" value="<?= $user['email'] ?>" placeholder="E-Mail" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-center required">
+                                                    <label class="col-md-2 control-label">Telephone</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="tel" name="telephone" value="<?= $user['telephone'] ?>" placeholder="Telephone" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-center">
+                                                    <label class="col-md-2 control-label">Fax</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="text" name="fax" value="<?= $user['fax'] ?>" placeholder="Fax">
+                                                    </div>
+                                                </div>
+                                            </fieldset>
                                             <div class="buttons d-flex justify-content-between flex-wrap mt-5">
                                                 <div class="pull-left">
                                                     <a class="btn btn-default ce5" href="#">Back</a>
                                                 </div>
                                                 <div class="pull-right">
-                                                    <input class="btn btn-primary ce5" type="submit" value="Continue">
+                                                    <button class="btn btn-primary ce5" type="submit" name="update_info">Continue</button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <a class="collap mt-2" href="wishlist.html">Modify your wish list <i class="zmdi zmdi-caret-down"></i></a>
                         </div>
+
+                        <!-- Change Password -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-bs-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Change your password <i class="zmdi zmdi-caret-down"></i></a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                                <div class="row align-items-center">
+                                    <div class="col-12 easy2">
+                                        <h1>Change Password</h1>
+                                        <form class="form-horizontal" action="" method="POST">
+                                            <fieldset>
+                                                <legend>Your Password</legend>
+                                                <div class="form-group row align-items-center required pt-5 mt-0">
+                                                    <label class="col-md-2 control-label">Password</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="password" name="password" placeholder="New Password" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-center required">
+                                                    <label class="col-md-2 control-label">Confirm Password</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-control" type="password" placeholder="Confirm Password" required>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <div class="buttons d-flex justify-content-between flex-wrap mt-5">
+                                                <div class="pull-left">
+                                                    <a class="btn btn-default ce5" href="#">Back</a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button class="btn btn-primary ce5" type="submit" name="change_password">Continue</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Book Entries -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-bs-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Modify your address book entries <i class="zmdi zmdi-caret-down"></i></a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-bs-parent="#accordion">
+                                <div class="easy2">
+                                    <h1 class="mb-20">Address Book Entries</h1>
+
+                                    <!-- Edit Address Form -->
+                                    <form action="" method="POST">
+                                        <div class="form-group row align-items-center required">
+                                            <label class="col-md-2 control-label">Address</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" name="address" value="<?= $user['address'] ?>" placeholder="Address" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center required">
+                                            <label class="col-md-2 control-label">City</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" name="city" value="<?= $user['city'] ?>" placeholder="City" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center required">
+                                            <label class="col-md-2 control-label">Country</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" name="country" value="<?= $user['country'] ?>" placeholder="Country" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center required">
+                                            <label class="col-md-2 control-label">Postal Code</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" name="postal_code" value="<?= $user['postal_code'] ?>" placeholder="Postal Code" required>
+                                            </div>
+                                        </div>
+                                        <div class="buttons d-flex justify-content-between flex-wrap mt-5">
+                                            <div class="pull-left">
+                                                <a class="btn btn-default ce5" href="#">Back</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <button class="btn btn-primary ce5" type="submit" name="update_address">Update Address</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!-- Delete Address -->
+                                    <div class="buttons d-flex justify-content-between flex-wrap mt-5">
+                                        <a class="btn btn-danger g6" href="?delete_address=1">Delete Address</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                    <a class="collap mt-2" href="wishlist.php">Modify your wish list <i class="zmdi zmdi-caret-down"></i></a>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-<?php include 'footer.php' ?>
+<?php include 'footer.php'; ?>
