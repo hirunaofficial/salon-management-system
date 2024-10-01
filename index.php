@@ -1,4 +1,7 @@
-<?php include 'header.php' ?>
+<?php 
+include 'header.php'; 
+include 'dbconnect.php';
+?>
 
         <div class="slider-area bg-color-1">
             <div class="slide-active slider-shape-1 slider-activation slider-nav-style-1">
@@ -92,76 +95,35 @@
         <section id="hs-service-area" class="hs-service area ptb-90 bg-gray">
             <div class="container">
                 <div class="row mb-n6">
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/others/shape/sm-shape/1.png" alt="Classic Haircut">
-                            </div>
-                            <h4 class="ser-vice-tit">Classic Haircut</h4>
-                            <p class="ser-pra">Experience a timeless haircut tailored to your style by our expert stylists.</p>
-                        </div>
-                    </div>
+                    <?php
+                    // Fetch 6 random services from the services table
+                    $service_query = "SELECT * FROM services ORDER BY RAND() LIMIT 6";
+                    $services = $pdo->query($service_query)->fetchAll(PDO::FETCH_ASSOC);
 
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/others/shape/sm-shape/2.png" alt="Hair Extension">
+                    // Loop through each service and display it
+                    foreach ($services as $service) {
+                    ?>
+                        <div class="col-md-6 col-lg-4 mb-6">
+                            <div class="single-service-area">
+                                <h4 class="ser-vice-tit"><?= $service['name'] ?> (<?= $service['category'] ?>)</h4>
+                                <p class="ser-pra"><?= $service['description'] ?></p>
+                                <p><strong>Price:</strong> <?= number_format($service['price'], 2) ?> LKR</p>
+                                <p><strong>Member Price:</strong> <?= number_format($service['member_price'], 2) ?> LKR</p>
+                                <p><strong>Duration:</strong> <?= $service['duration'] ?> minutes</p>
                             </div>
-                            <h4 class="ser-vice-tit">Hair Extensions</h4>
-                            <p class="ser-pra">Enhance your look with premium quality hair extensions, expertly applied for natural volume and length.</p>
                         </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/others/shape/sm-shape/3.png" alt="Hair Stylist">
-                            </div>
-                            <h4 class="ser-vice-tit">Hair Styling</h4>
-                            <p class="ser-pra">From updos to waves, our stylists create stunning looks perfect for any occasion.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/others/shape/sm-shape/3.png" alt="Hair Coloring">
-                            </div>
-                            <h4 class="ser-vice-tit">Hair Coloring</h4>
-                            <p class="ser-pra">Transform your look with vibrant, long-lasting colors customized just for you.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/others/shape/sm-shape/4.png" alt="Hair Treatment">
-                            </div>
-                            <h4 class="ser-vice-tit">Hair Treatments</h4>
-                            <p class="ser-pra">Revitalize and restore your hair with our nourishing treatments for healthier, shinier locks.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/others/shape/sm-shape/5.png" alt="Hair Wash">
-                            </div>
-                            <h4 class="ser-vice-tit">Hair Wash & Blowout</h4>
-                            <p class="ser-pra">Relax with a refreshing hair wash followed by a sleek blowout for the perfect finish.</p>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </section>
 
-        <section id="hs-pricing-table-area" class="hs-pricing-table-area ptb-90 bg-white">
+        <section id="hs-membership-packages" class="hs-membership-packages ptb-90 bg-white">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="hs-pricing-title text-center">
-                            <h2 class="section-title">Our Pricing</h2>
-                            <p class="section-details">Discover our affordable packages, designed to suit your beauty needs. Choose the perfect plan for you and indulge in luxury services at Glamour Salon.</p>
+                            <h2 class="section-title">Membership Packages</h2>
+                            <p class="section-details">Unlock exclusive benefits with our membership plans. Choose the package that suits your beauty needs and enjoy premium services at Glamour Salon.</p>
                         </div>
                     </div>
                 </div>
@@ -169,21 +131,22 @@
                     <div class="col-md-6 col-lg-4 mb-6">
                         <div class="hs-priceing-box">
                             <div class="hs-price-head">
-                                <h4>Basic Pack</h4>
+                                <h4>Basic Membership</h4>
                                 <div class="hs-price-box">
-                                    <p>7,000 LKR</p>/month 
+                                    <p>FREE</p>
                                 </div>
                             </div>
                             <div class="hs-price-body">
                                 <ul>
-                                    <li>Sleek & Shiny</li>
-                                    <li>Shampoo</li>
-                                    <li class="no">Haircut & Blowdry</li>
-                                    <li class="no">Treatment</li>
-                                    <li class="no">Makeup</li>
+                                    <li>Access to Member Prices on All Services</li>
+                                    <li>Discounted Rates on Regular Haircuts</li>
+                                    <li>Access to Standard Shampoo & Blowdry</li>
+                                    <li class="no">Hair Treatments</li>
+                                    <li class="no">Makeup Services</li>
+                                    <li class="no">Priority Booking</li>
                                 </ul>
                                 <div class="pricing-btn">
-                                    <a class="hs-btn" href="#">SIGN UP</a>
+                                    <a class="hs-btn" href="sign-up.php">SIGN UP</a>
                                 </div>
                             </div>
                         </div>
@@ -192,21 +155,23 @@
                     <div class="col-md-6 col-lg-4 mb-6">
                         <div class="hs-priceing-box active">
                             <div class="hs-price-head">
-                                <h4>Premium Pack</h4>
+                                <h4>Premium Membership</h4>
                                 <div class="hs-price-box">
-                                    <p>12,500 LKR</p>/month 
+                                    <p>10,000 LKR</p>/month
                                 </div>
                             </div>
                             <div class="hs-price-body">
                                 <ul>
-                                    <li>Sleek & Shiny</li>
-                                    <li>Shampoo</li>
-                                    <li>Haircut & Blowdry</li>
-                                    <li>Treatment</li>
-                                    <li class="no">Makeup</li>
+                                    <li>All Basic Membership Benefits</li>
+                                    <li>Complimentary Haircut & Premium Blowdry (Monthly)</li>
+                                    <li>Exclusive Access to Hair Treatments</li>
+                                    <li>Member Prices on Hair Color & Styling</li>
+                                    <li>10% Off on All Product Purchases</li>
+                                    <li>Priority Booking & Flexible Scheduling</li>
+                                    <li class="no">Makeup Services</li>
                                 </ul>
                                 <div class="pricing-btn">
-                                    <a class="hs-btn" href="#">SIGN UP</a>
+                                    <a class="hs-btn" href="contact-shop.php">CONTACT SHOP</a>
                                 </div>
                             </div>
                         </div>
@@ -215,21 +180,23 @@
                     <div class="col-md-6 col-lg-4 mb-6">
                         <div class="hs-priceing-box">
                             <div class="hs-price-head">
-                                <h4>Ultimate Pack</h4>
+                                <h4>VIP Membership</h4>
                                 <div class="hs-price-box">
-                                    <p>16,000 LKR</p>/month 
+                                    <p>15,000 LKR</p>/month
                                 </div>
                             </div>
                             <div class="hs-price-body">
                                 <ul>
-                                    <li>Sleek & Shiny</li>
-                                    <li>Shampoo</li>
-                                    <li>Haircut & Blowdry</li>
-                                    <li>Treatment</li>
-                                    <li>Makeup</li>
+                                    <li>All Premium Membership Benefits</li>
+                                    <li>VIP Haircut & Blowdry (Monthly)</li>
+                                    <li>Unlimited Hair Treatments</li>
+                                    <li>Makeup Services Included</li>
+                                    <li>20% Off on All Product Purchases</li>
+                                    <li>Priority Booking with Exclusive Time Slots</li>
+                                    <li>Complimentary Beverages During Visits</li>
                                 </ul>
                                 <div class="pricing-btn">
-                                    <a class="hs-btn" href="#">SIGN UP</a>
+                                    <a class="hs-btn" href="contact-shop.php">CONTACT SHOP</a>
                                 </div>
                             </div>
                         </div>
@@ -325,99 +292,37 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                    <div class="hs-pricing-title text-center">
-                        <h2 class="section-title">Our Works</h2>
-                        <p class="section-details">At Glamour Salon, we pride ourselves on delivering stunning transformations. From elegant hairstyles to flawless makeup, our talented team brings your beauty vision to life with every service.</p>
-                    </div>
+                        <div class="hs-pricing-title text-center">
+                            <h2 class="section-title">Our Works</h2>
+                            <p class="section-details">At Glamour Salon, we pride ourselves on delivering stunning transformations. From elegant hairstyles to flawless makeup, our talented team brings your beauty vision to life with every service.</p>
+                        </div>
                     </div>                    
                 </div>
-                <div class="row mb-50 xmb-20">
-                    <div class="col-12 text-center">
-                        <ul id="our-filters" class="port-filter-nav">
-                            <li data-filter="*" class="is-checked">All</li>
-                            <li data-filter=".images">Images</li>
-                            <li data-filter=".video">Videos</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row our-portfolio-page grid">
-                    <div class="pro-item col-lg-4 col-md-6 video">
-                        <div class="our-portfolio" data-title-position="left, top">
-                            <div class="our-port-thumb">
-                                <img src="images/portfolio/width-variation/1.jpg" alt="port img">
-                            </div>
-                            <div class="our-hover-information">
-                                <div class="our-hover-action">
-                                    <a href="images/portfolio/width-variation/1.jpg" data-lightbox="hsportimg" data-title="My caption"><i class="zmdi zmdi-zoom-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="pro-item col-lg-4 col-md-6 images video">
-                        <div class="our-portfolio" data-title-position="left, top">
-                            <div class="our-port-thumb">
-                                <img src="images/portfolio/width-variation/2.jpg" alt="port img">
-                            </div>
-                            <div class="our-hover-information">
-                                <div class="our-hover-action">
-                                    <a href="images/portfolio/width-variation/2.jpg" data-lightbox="hsportimg" data-title="My caption"><i class="zmdi zmdi-zoom-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row our-portfolio-page grid mt-30">
+                    <?php
+                    // Fetch 3 random gallery items from the database
+                    $stmt = $pdo->prepare("SELECT * FROM gallery ORDER BY RAND() LIMIT 3");
+                    $stmt->execute();
+                    $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    <div class="pro-item col-lg-4 col-md-6 video">
+                    foreach ($gallery_items as $item) {
+                    ?>
+                    <div class="pro-item col-lg-4 col-md-6">
                         <div class="our-portfolio" data-title-position="left, top">
                             <div class="our-port-thumb">
-                                <img src="images/portfolio/width-variation/3.jpg" alt="port img">
+                                <img src="<?= $item['file_path'] ?>" alt="<?= $item['title'] ?>">
                             </div>
                             <div class="our-hover-information">
                                 <div class="our-hover-action">
-                                    <a href="images/portfolio/width-variation/3.jpg" data-lightbox="hsportimg" data-title="My caption"><i class="zmdi zmdi-zoom-in"></i></a>
+                                    <a href="<?= $item['file_path'] ?>" data-lightbox="hsportimg" data-title="<?= $item['title'] ?>">
+                                        <i class="zmdi zmdi-zoom-in"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="pro-item col-lg-4 col-md-6 images">
-                        <div class="our-portfolio" data-title-position="left, top">
-                            <div class="our-port-thumb">
-                                <img src="images/portfolio/width-variation/4.jpg" alt="port img">
-                            </div>
-                            <div class="our-hover-information">
-                                <div class="our-hover-action">
-                                    <a href="images/portfolio/width-variation/4.jpg" data-lightbox="hsportimg" data-title="My caption"><i class="zmdi zmdi-zoom-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pro-item col-lg-4 col-md-6 video video">
-                        <div class="our-portfolio" data-title-position="left, top">
-                            <div class="our-port-thumb">
-                                <img src="images/portfolio/width-variation/5.jpg" alt="port img">
-                            </div>
-                            <div class="our-hover-information">
-                                <div class="our-hover-action">
-                                    <a href="images/portfolio/width-variation/5.jpg" data-lightbox="hsportimg" data-title="My caption"><i class="zmdi zmdi-zoom-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pro-item col-lg-4 col-md-6 images">
-                        <div class="our-portfolio" data-title-position="left, top">
-                            <div class="our-port-thumb">
-                                <img src="images/portfolio/width-variation/6.jpg" alt="port img">
-                            </div>
-                            <div class="our-hover-information">
-                                <div class="our-hover-action">
-                                    <a href="images/portfolio/width-variation/6.jpg" data-lightbox="hsportimg" data-title="My caption"><i class="zmdi zmdi-zoom-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>                
             </div>
         </section>
@@ -427,37 +332,23 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="hs-pricing-title text-center">
-                            <h2 class="section-title">our shop items</h2>
+                            <h2 class="section-title">Our Shop Items</h2>
                         </div>
                     </div>                    
                 </div>
                 <div class="row mt-40 mb-n6">
-                    <div class="col-md-6 col-lg-3 mb-6">
-                        <div class="hs-single-shop-area">
-                            <div class="single-shop-thumd">
-                                <img src="images/shop/1.jpg" alt="product images">
-                                <div class="product-information">
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-favorite"></i></a></li>
-                                        <li><a data-bs-toggle="modal" data-bs-target="#productModal" title="quick-view" class="quick-view modal-view detail-link" href="#"><i class="zmdi zmdi-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="hs-shop-details">
-                                <h4 class="shop-title"><a href="#">Hair Shampoo</a></h4>
-                                <ul class="product-price">
-                                   <li class="new-price">$50.00</li>
-                                   <li class="old-price">20.00</li> 
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    // Fetch 4 random products from the database
+                    $stmt_products = $pdo->prepare("SELECT * FROM products ORDER BY RAND() LIMIT 4");
+                    $stmt_products->execute();
+                    $products = $stmt_products->fetchAll(PDO::FETCH_ASSOC);
 
+                    foreach ($products as $product) {
+                    ?>
                     <div class="col-md-6 col-lg-3 mb-6">
                         <div class="hs-single-shop-area">
                             <div class="single-shop-thumd">
-                                <img src="images/shop/2.jpg" alt="product images">
+                                <img src="<?= $product['image_url'] ?>" alt="<?= $product['product_name'] ?>">
                                 <div class="product-information">
                                     <ul>
                                         <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
@@ -467,56 +358,14 @@
                                 </div>
                             </div>
                             <div class="hs-shop-details">
-                                <h4 class="shop-title"><a href="#">Hair Shampoo</a></h4>
+                                <h4 class="shop-title"><a href="#"><?= $product['product_name'] ?></a></h4>
                                 <ul class="product-price">
-                                   <li class="new-price">$50.00</li> 
+                                    <li class="new-price"><?= $product['price'] ?></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6 col-lg-3 mb-6">
-                        <div class="hs-single-shop-area">
-                            <div class="single-shop-thumd">
-                                <img src="images/shop/3.jpg" alt="product images">
-                                <div class="product-information">
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-favorite"></i></a></li>
-                                        <li><a data-bs-toggle="modal" data-bs-target="#productModal" title="quick-view" class="quick-view modal-view detail-link" href="#"><i class="zmdi zmdi-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="hs-shop-details">
-                                <h4 class="shop-title"><a href="#">Hair Shampoo</a></h4>
-                                <ul class="product-price">
-                                   <li class="new-price">$50.00</li>
-                                   <li class="old-price">20.00</li> 
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 mb-6">
-                        <div class="hs-single-shop-area">
-                            <div class="single-shop-thumd">
-                                <img src="images/shop/1.jpg" alt="product images">
-                                <div class="product-information">
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-favorite"></i></a></li>
-                                        <li><a data-bs-toggle="modal" data-bs-target="#productModal" title="quick-view" class="quick-view modal-view detail-link" href="#"><i class="zmdi zmdi-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="hs-shop-details">
-                                <h4 class="shop-title"><a href="#">Hair Shampoo</a></h4>
-                                <ul class="product-price">
-                                   <li class="new-price">$50.00</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </section>
@@ -526,77 +375,42 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="hs-pricing-title text-center">
-                            <h2 class="section-title">our shop items</h2>
-                            <p class="section-details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel volutpat felis, eu condimentum massa. Pellentesque mollis eros vel mattis tempor. Aliquam </p>
+                            <h2 class="section-title">Our Latest Blogs</h2>
+                            <p class="section-details">Discover the latest beauty trends, tips, and insights from our blog.</p>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-40 mb-n6">
-                    <div class="col-lg-4 col-md-6 mb-6">
-                        <div class="single-blog-wrap">
-                            <div class="blog-front">
-                                <div class="blog-thumb">
-                                    <img src="images/blog/blog-img/1.jpg" alt="blog images">
-                                </div>
-                                <div class="blog-hover-info">
-                                    <div class="blog-hover-action">
-                                        <a href="#"><i class="zmdi zmdi-link"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="blog-details">
-                                <h4 class="blog-title"><a href="blog-details.html">Lorem Ipsum is simply dummy</a></h4>
-                                <ul class="blog-post-date">
-                                    <li class="post-time"><i class="zmdi zmdi-time"></i><span>Jun 25, 2022 </span></li>
-                                    <li class="post-cmt"><i class="zmdi zmdi-comment-alt-text"></i><span>( 100 )</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    // Fetch 3 random blog posts from the database
+                    $stmt_blogs = $pdo->prepare("SELECT * FROM blog ORDER BY RAND() LIMIT 3");
+                    $stmt_blogs->execute();
+                    $blogs = $stmt_blogs->fetchAll(PDO::FETCH_ASSOC);
 
+                    foreach ($blogs as $blog) {
+                    ?>
                     <div class="col-lg-4 col-md-6 mb-6">
                         <div class="single-blog-wrap">
                             <div class="blog-front">
                                 <div class="blog-thumb">
-                                    <img src="images/blog/blog-img/2.jpg" alt="blog images">
+                                    <img src="<?= $blog['image'] ?>" alt="<?= $blog['title'] ?>">
                                 </div>
                                 <div class="blog-hover-info">
                                     <div class="blog-hover-action">
-                                        <a href="#"><i class="zmdi zmdi-link"></i></a>
+                                        <a href="blog-details.php?id=<?= $blog['id'] ?>"><i class="zmdi zmdi-link"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="blog-details">
-                                <h4 class="blog-title"><a href="blog-details.html">Lorem Ipsum is simply dummy</a></h4>
+                                <h4 class="blog-title"><a href="blog-details.php?id=<?= $blog['id'] ?>"><?= $blog['title'] ?></a></h4>
                                 <ul class="blog-post-date">
-                                    <li class="post-time"><i class="zmdi zmdi-time"></i><span>Jun 25, 2022 </span></li>
-                                    <li class="post-cmt"><i class="zmdi zmdi-comment-alt-text"></i><span>( 100 )</span></li>
+                                    <li class="post-time"><i class="zmdi zmdi-time"></i><span><?= date('M d, Y', strtotime($blog['post_date'])) ?></span></li>
+                                    <li class="post-cmt"><i class="zmdi zmdi-comment-alt-text"></i><span>(<?= $blog['comments_count'] ?>)</span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-4 col-md-6 mb-6">
-                        <div class="single-blog-wrap">
-                            <div class="blog-front">
-                                <div class="blog-thumb">
-                                    <img src="images/blog/blog-img/3.jpg" alt="blog images">
-                                </div>
-                                <div class="blog-hover-info">
-                                    <div class="blog-hover-action">
-                                        <a href="#"><i class="zmdi zmdi-link"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="blog-details">
-                                <h4 class="blog-title"><a href="blog-details.html">Lorem Ipsum is simply dummy</a></h4>
-                                <ul class="blog-post-date">
-                                    <li class="post-time"><i class="zmdi zmdi-time"></i><span>Jun 25, 2022 </span></li>
-                                    <li class="post-cmt"><i class="zmdi zmdi-comment-alt-text"></i><span>( 100 )</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </section>
