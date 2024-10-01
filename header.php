@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -34,10 +36,12 @@
                                     <p>Opening Hours: <span>Mon-Fri: 8.00 to 20.00</span></p>
                                 </div>
                                 <ul class="hs-social-icon">
-                                    <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-youtube"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-whatsapp"></i></a></li>
+                                    <li><a href="cart.php"><i class="zmdi zmdi-shopping-cart"></i> Cart</a></li>
+                                    <?php if (isset($_SESSION['user_id'])): ?>
+                                        <li><a href="wishlist.php"><i class="zmdi zmdi-favorite"></i> Wishlist</a></li>
+                                        <li><a href="manage_appointments.php"><i class="zmdi zmdi-calendar"></i> Manage Appointment</a></li>
+                                        <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                             <div class="hs-mainmenu-wrap d-none d-md-block">
@@ -51,6 +55,12 @@
                                         <li><a href="gallery.php">Gallery</a></li>
                                         <li><a href="blog.php">Blog</a></li>
                                         <li><a href="contact.php">Contact Us</a></li>
+
+                                        <?php if (isset($_SESSION['user_id'])): ?>
+                                            <li><a href="logout.php">Logout</a></li>
+                                        <?php else: ?>
+                                            <li><a href="login.php">Login</a></li>
+                                        <?php endif; ?>
                                     </ul>
                                 </nav>
                             </div>
@@ -72,9 +82,17 @@
                                 <li><a href="gallery.php">Gallery</a></li>
                                 <li><a href="blog.php">Blog</a></li>
                                 <li><a href="contact.php">Contact</a></li>
+
+                                <?php if (isset($_SESSION['user_id'])): ?>
+                                    <li><a href="my_account.php">My Account</a></li>
+                                    <li><a href="logout.php">Logout</a></li>
+                                <?php else: ?>
+                                    <li><a href="login.php">Login</a></li>
+                                <?php endif; ?>
                             </ul>
                         </nav>
                     </div>  
                 </div>
             </div>
         </div>
+    </div>
