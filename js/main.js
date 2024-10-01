@@ -84,27 +84,43 @@ $.scrollUp({
  price slider
 --------------------- */  
 	
-    $( "#slider-range" ).slider({
+  $(document).ready(function() {
+    $("#slider-range").slider({
         range: true,
-        min: 40,
-        max: 600,
-        values: [ 60, 570 ],
-        slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        min: 1000,
+        max: 50000,
+        values: [1000, 50000],
+        slide: function(event, ui) {
+            $("#amount").val("LKR " + ui.values[0].toLocaleString() + " - LKR " + ui.values[1].toLocaleString());
+        },
+        stop: function(event, ui) {
+            var minPrice = ui.values[0];
+            var maxPrice = ui.values[1];
+            // Update hidden inputs with the selected range
+            $("#amount").val("LKR " + minPrice.toLocaleString() + " - LKR " + maxPrice.toLocaleString());
+            
+            // Trigger form submission to update products on page
+            $("form#price-filter-form").submit();
         }
     });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-    " - $" + $( "#slider-range" ).slider( "values", 1 ) );    
-    
-    
-    /*--
-    Simple Lens and Lightbox
-    ------------------------*/
-	$('.simpleLens-lens-image').simpleLens({
-		loading_image: 'images/loading.gif'
-	}); 
-    
-    
+
+    $("#amount").val("LKR " + $("#slider-range").slider("values", 0).toLocaleString() +
+        " - LKR " + $("#slider-range").slider("values", 1).toLocaleString());
+
+    // On form submit, process price and update URL
+    $("form#price-filter-form").submit(function(event) {
+        event.preventDefault();  // Prevent the default form submission
+        
+        var priceRange = $("#amount").val().replace(/LKR\s|,/g, '').split('-');
+        var minPrice = priceRange[0].trim();
+        var maxPrice = priceRange[1].trim();
+        
+        // Redirect to the page with the updated price range in the query string
+        var currentUrl = window.location.pathname;
+        window.location.href = currentUrl + "?price=" + minPrice + "-" + maxPrice;
+    });
+  });
+
     /*--
     Pro Slider for Pro Details
     ------------------------*/
