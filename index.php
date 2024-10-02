@@ -157,7 +157,7 @@ include 'dbconnect.php';
                             <div class="hs-price-head">
                                 <h4>Premium Membership</h4>
                                 <div class="hs-price-box">
-                                    <p>10,000 LKR</p>/month
+                                    <p>10,000 LKR</p>/year
                                 </div>
                             </div>
                             <div class="hs-price-body">
@@ -182,7 +182,7 @@ include 'dbconnect.php';
                             <div class="hs-price-head">
                                 <h4>VIP Membership</h4>
                                 <div class="hs-price-box">
-                                    <p>15,000 LKR</p>/month
+                                    <p>15,000 LKR</p>/year
                                 </div>
                             </div>
                             <div class="hs-price-body">

@@ -47,23 +47,27 @@ $comments = $comments_stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="news-details-bottom mtb-60">
                         <h3 class="leave-comment-text">Comments</h3>
 
-                        <?php foreach ($comments as $comment): ?>
-                        <div class="blog-top">
-                            <div class="news-allreply">
-                                <a href="#"><img src="images/blog/user.jpg" alt=""></a>
-                                <div class="nes-icon">
-                                    <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
+                        <?php if (empty($comments)): ?>
+                            <p>No comments yet.</p>
+                        <?php else: ?>
+                            <?php foreach ($comments as $comment): ?>
+                            <div class="blog-top">
+                                <div class="news-allreply">
+                                    <a href="#"><img src="images/blog/user.jpg" alt=""></a>
+                                    <div class="nes-icon">
+                                        <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
+                                    </div>
+                                </div>
+                                <div class="blog-img-details">
+                                    <div class="blog-title">
+                                        <h3><?= $comment['author'] ?></h3>
+                                        <span><?= date('d F, Y h:i A', strtotime($comment['created_at'])) ?></span>
+                                    </div>
+                                    <p class="p-border"><?= $comment['content'] ?></p>
                                 </div>
                             </div>
-                            <div class="blog-img-details">
-                                <div class="blog-title">
-                                    <h3><?= $comment['author'] ?></h3>
-                                    <span><?= date('d F, Y h:i A', strtotime($comment['created_at'])) ?></span>
-                                </div>
-                                <p class="p-border"><?= $comment['content'] ?></p>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
 
                     <div class="leave-comment">

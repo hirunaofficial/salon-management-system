@@ -10,7 +10,6 @@ if (isset($_POST['add_to_cart']) || isset($_POST['update_cart'])) {
     $product_id = $_POST['product_id'];
     $product_name = $_POST['product_name'];
     $price = $_POST['price']; // Cast price to float
-    print($price);
     $qty = (int) $_POST['qty']; // Cast quantity to integer
 
     // Check if the cart session exists, if not, create one
