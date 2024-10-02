@@ -26,11 +26,13 @@ if (isset($_GET['cancel_appointment'])) {
     $message = 'Appointment successfully canceled.';
 }
 
-// Fetch user's appointments from the database
+// Fetch user's appointments from the database, including staff information
 $stmt = $pdo->prepare("
-    SELECT a.appointment_id, a.appointment_date, a.appointment_time, s.name AS service_name
+    SELECT a.appointment_id, a.appointment_date, a.appointment_time, s.name AS service_name, 
+           CONCAT(st.first_name, ' ', st.last_name) AS staff_name
     FROM appointments a
     JOIN services s ON a.service_id = s.service_id
+    LEFT JOIN staff st ON a.staff_id = st.staff_id
     WHERE a.user_id = :user_id
     ORDER BY a.appointment_date DESC, a.appointment_time DESC
 ");
@@ -71,6 +73,7 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <thead>
                                 <tr>
                                     <th>Service</th>
+                                    <th>Staff</th>
                                     <th>Appointment Date</th>
                                     <th>Appointment Time</th>
                                     <th>Actions</th>
@@ -80,21 +83,22 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php foreach ($appointments as $appointment): ?>
                                     <tr>
                                         <td><?= $appointment['service_name'] ?></td>
+                                        <td><?= $appointment['staff_name'] ?? 'N/A' ?></td> <!-- Staff info, or 'N/A' if null -->
                                         <td><?= date('F d, Y', strtotime($appointment['appointment_date'])) ?></td>
                                         <td><?= date('h:i A', strtotime($appointment['appointment_time'])) ?></td>
                                         <td>
                                             <a href="?cancel_appointment=<?= $appointment['appointment_id'] ?>" 
-                                               class="btn btn-danger" 
                                                onclick="return confirm('Are you sure you want to cancel this appointment?')">
-                                               Cancel Appointment
+                                               <button class="btn btn-primary ce5" type="submit" name="update_info">Cancel Appointment</button>
                                             </a>
+                                            
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     <?php else: ?>
-                        <center><p>You have no upcoming appointments.</p></center>
+                        <p style="text-align: center; font-size: 16px; color: #555; padding: 20px;">You have no upcoming appointments.</p>
                     <?php endif; ?>
                 </div>
             </div>
