@@ -233,7 +233,7 @@ include 'dbconnect.php';
                                 </div>
                                 <div class="team-info">
                                     <h4><a href="#">Amal Perera</a></h4>
-                                    <p>Barber</p>
+                                    <p>Staff</p>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +256,7 @@ include 'dbconnect.php';
                                 </div>
                                 <div class="team-info">
                                     <h4><a href="#">Niluka Fernando</a></h4>
-                                    <p>Hair Stylist</p>
+                                    <p>Staff</p>
                                 </div>
                             </div>
                         </div>
@@ -279,7 +279,7 @@ include 'dbconnect.php';
                                 </div>
                                 <div class="team-info">
                                     <h4><a href="#">Sachika Silva</a></h4>
-                                    <p>Makeup Artist</p>
+                                    <p>Staff</p>
                                 </div>
                             </div>
                         </div>

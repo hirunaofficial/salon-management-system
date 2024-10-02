@@ -317,12 +317,12 @@ h4.ser-vice-tit {
     transform: scale(1);
 }
 .team-social-icon li a {
-    color: #909090;
+    color: #000000;
     display: block;
     font-size: 24px;
 }
 .team-social-icon li a i {
-    color: #909090;
+    color: #000000;
 }
 .team-social-icon li a:hover i {
     color: #ff69b4;
@@ -525,7 +525,7 @@ Start  nav
     margin-right: 8px;
 }
 .product-price li.old-price {
-    color: #909090;
+    color: #000000;
     font-size: 18px;
     line-height: 24px;
 }
@@ -542,7 +542,7 @@ Start  nav
 .input-box > input {
     background: #fff none repeat scroll 0 0;
     border: 1px solid transparent;
-    color: #909090;
+    color: #000000;
     height: 45px;
     line-height: 45px;
     padding-left: 20px;
@@ -559,7 +559,7 @@ Start  nav
 }
 .input-box select {
     border: 1px solid transparent;
-    color: #909090;
+    color: #000000;
     font-family: Lato;
     font-size: 14px;
     font-weight: 400;
@@ -570,7 +570,7 @@ Start  nav
     line-height: 45px;
 }
 .input-box input*::-moz-placeholder {
-    color: #909090;
+    color: #000000;
     opacity: 1;
 }
 .hs-btn.hs-btn-2 {
@@ -582,7 +582,6 @@ Start  nav
 }
 .appoinment-form form select {
     -moz-appearance: none;
-    -webkit-appearance: none;
     -o-appearance: none;
     background-color: #fff;
     background-image: url("images/icons/select-option.png");
@@ -638,17 +637,17 @@ Start  nav
     justify-content: space-between;
 }
 .blog-post-date li {
-    color: #909090;
+    color: #000000;
     font-family: Lato;
     font-size: 14px;
     font-weight: 400;
 }
 .blog-post-date li i {
-    color: #909090;
+    color: #000000;
     margin-right: 6px;
 }
 .blog-post-date li span {
-    color: #909090;
+    color: #000000;
 }
 .single-blog-wrap {} .blog-details {
     border: 1px solid #dfdfdf;
@@ -741,7 +740,7 @@ Start  nav
     line-height: 24px;
 }
 .s-price-box span.old-price {
-    color: #909090;
+    color: #000000;
     font-size: 18px;
     line-height: 24px;
 }

@@ -112,10 +112,12 @@ CREATE TABLE appointments (
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     service_id INT NOT NULL,
+    staff_id INT DEFAULT NULL,
     appointment_date DATE NOT NULL,
     appointment_time TIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE SET NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -198,6 +200,22 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE staff (
+    staff_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    specialization VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Inserting the 3 staff members into the table:
+INSERT INTO staff (first_name, last_name, email, phone, specialization) VALUES
+('Amal', 'Perera', 'amal.perera@glamoursalon.com', '0711234567', 'Barber'),
+('Niluka', 'Fernando', 'niluka.fernando@glamoursalon.com', '0717654321', 'Hair Stylist'),
+('Sachika', 'Silva', 'sachika.silva@glamoursalon.com', '0719876543', 'Makeup Artist');
 
 CREATE TABLE wishlist (
     wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
