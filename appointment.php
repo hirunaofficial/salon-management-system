@@ -192,8 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <option disabled selected>Choose Time</option>
                                 </select>
                             </div>
-                            <div style="border: 1px solid transparent; color: #000000; font-family: Lato; font-size: 14px; font-weight: 400; padding-left: 0; line-height: 45px; margin-top: 18px;">
-                                <select name="staff" style="border: 1px solid #ccc; width: 100%; height: 45px; ">
+                            <div style="border: 1px solid transparent; color: #000000; font-family: Lato; font-size: 14px; font-weight: 400; padding-left: 0px; line-height: 45px; margin-top: 18px;">
+                                <select name="staff" style="border: 1px solid #000000; width: 100%; height: 45px; padding-left: 20px;">
                                     <option value="">Select Staff Member (Optional)</option>
                                     <?php
                                     $stmt_staff = $pdo->prepare("SELECT staff_id, CONCAT(first_name, ' ', last_name) as staff_name FROM staff");
