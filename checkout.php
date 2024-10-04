@@ -1,173 +1,144 @@
-<?php include 'header.php' ?>
+<?php
+include 'header.php';
+include 'dbconnect.php';
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 
-<section class="breadcrumbs-area ptb-100 bg-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <div class="breadcrumbs">
-                    <h2 class="page-title">Checkout</h2>
-                    <ul>
-                        <li><a class="active" href="index.php">Home</a></li>
-                        <li>Checkout</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+// Load environment variables
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Function to send order confirmation email
+function sendOrderConfirmationEmail($email, $orderDetails) {
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = $_ENV['SMTP_PORT'];
+
+        $mail->setFrom($_ENV['SMTP_USER'], 'Your Store Name');
+        $mail->addAddress($email);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Order Confirmation';
+        $mail->Body = $orderDetails;
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Assume the user is already logged in and session contains user_id
+    $user_id = $_SESSION['user_id'];
+
+    // Fetch user details from the database
+    $stmt_user = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id");
+    $stmt_user->execute(['user_id' => $user_id]);
+    $user = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
+    // Redirect to my-account.php if user details are missing
+    if (!$user || empty($user['address']) || empty($user['city']) || empty($user['postal_code']) || empty($user['country'])) {
+        echo "<script>alert('Please fill in your address details in your account.'); window.location.href = 'my-account.php';</script>";
+        exit;
+    }
+
+    // Calculate the cart total dynamically
+    $cart_total = 0;
+    if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $product) {
+            $cart_total += $product['price'] * $product['qty'];
+        }
+    }
+
+    if ($cart_total <= 0) {
+        echo "<script>alert('Your cart is empty or there was an issue with the total calculation. Please try again.'); window.location.href = 'cart.php';</script>";
+        exit;
+    }
+
+    // Payment method
+    $payment_method = $_POST['payment_method'];
+
+    // Insert order into orders table with user_id
+    $stmt_order = $pdo->prepare("
+        INSERT INTO orders (user_id, first_name, last_name, email, telephone, address, city, postal_code, country, total, payment_method)
+        VALUES (:user_id, :first_name, :last_name, :email, :telephone, :address, :city, :postal_code, :country, :total, :payment_method)
+    ");
+    $stmt_order->execute([
+        'user_id' => $user_id, // Include user_id
+        'first_name' => $user['first_name'],
+        'last_name' => $user['last_name'],
+        'email' => $user['email'],
+        'telephone' => $user['telephone'],
+        'address' => $user['address'],
+        'city' => $user['city'],
+        'postal_code' => $user['postal_code'],
+        'country' => $user['country'],
+        'total' => $cart_total,
+        'payment_method' => $payment_method
+    ]);
+    $order_id = $pdo->lastInsertId();
+
+    // Insert order items into order_items table
+    foreach ($_SESSION['cart'] as $product_id => $product) {
+        $stmt_item = $pdo->prepare("
+            INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+            VALUES (:order_id, :product_id, :product_name, :quantity, :price)
+        ");
+        $stmt_item->execute([
+            'order_id' => $order_id,
+            'product_id' => $product_id,
+            'product_name' => $product['product_name'],
+            'quantity' => $product['qty'],
+            'price' => $product['price']
+        ]);
+    }
+
+    // Prepare email order details
+    $orderDetails = "<h2>Order Confirmation</h2>";
+    $orderDetails .= "<p>Order ID: {$order_id}</p>";
+    $orderDetails .= "<p>Name: {$user['first_name']} {$user['last_name']}</p>";
+    $orderDetails .= "<p>Address: {$user['address']}, {$user['city']}, {$user['country']}, {$user['postal_code']}</p>";
+    $orderDetails .= "<p>Total: LKR " . number_format($cart_total, 2) . "</p>";
+
+    foreach ($_SESSION['cart'] as $product) {
+        $orderDetails .= "<p>{$product['product_name']} - Qty: {$product['qty']} - Total: LKR " . number_format($product['qty'] * $product['price'], 2) . "</p>";
+    }
+
+    if ($payment_method == 'bank_transfer') {
+        $orderDetails .= "<p><strong>Bank Transfer Details:</strong></p>";
+        $orderDetails .= "<p>Bank: Sampath Bank<br>Account Name: Glamour Salon<br>Account Number: 437566485674<br>Branch: Colombo</p>";
+    } else {
+        $orderDetails .= "<p><strong>Payment Method: Cash on Delivery</strong></p>";
+    }
+
+    // Send confirmation email
+    sendOrderConfirmationEmail($user['email'], $orderDetails);
+
+    // Clear cart and redirect to Home (index.php)
+    unset($_SESSION['cart']);
+    echo "<script>alert('Order placed successfully! Redirecting to home...'); window.location.href = 'index.php';</script>";
+}
+?>
 
 <section class="checkout-area ptb-90">
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="check">
-                    <h1>Checkout</h1>
-                </div>
-
-                <!-- Billing and Account Details -->
                 <div class="checkout-section">
-                    <h4>Step 1: Account & Billing Details</h4>
-                    <form action="checkout_process.php" method="POST">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="telephone">Telephone</label>
-                                    <input type="tel" name="telephone" class="form-control" placeholder="Telephone" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" name="address" class="form-control" placeholder="Address" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input type="text" name="city" class="form-control" placeholder="City" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="state">State/Province</label>
-                                    <input type="text" name="state" class="form-control" placeholder="State/Province" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="postal_code">Postal Code</label>
-                                    <input type="text" name="postal_code" class="form-control" placeholder="Postal Code" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="country">Country</label>
-                                    <select name="country" class="form-control" required>
-                                        <option value="">Select Country</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="GB">United Kingdom</option>
-                                        <!-- Add more countries as needed -->
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Delivery Method -->
-                <div class="checkout-section">
-                    <h4>Step 2: Delivery Method</h4>
-                    <div class="form-group">
-                        <label for="delivery_method">Select Delivery Method</label>
-                        <select name="delivery_method" class="form-control" required>
-                            <option value="standard">Standard Shipping (Free)</option>
-                            <option value="express">Express Shipping ($20.00)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Payment Method -->
-                <div class="checkout-section">
-                    <h4>Step 3: Payment Method</h4>
-                    <div class="form-group">
-                        <label>Select Payment Method</label>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="payment_method" value="credit_card" required> Credit Card
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="payment_method" value="paypal" required> PayPal
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="card_number">Credit Card Number</label>
-                        <input type="text" name="card_number" class="form-control" placeholder="Credit Card Number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="expiry_date">Expiration Date</label>
-                        <input type="month" name="expiry_date" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cvv">CVV</label>
-                        <input type="text" name="cvv" class="form-control" placeholder="CVV" required>
-                    </div>
-                </div>
-
-                <!-- Order Review -->
-                <div class="checkout-section">
-                    <h4>Step 4: Order Review</h4>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Loop through cart items and display them here -->
-                            <tr>
-                                <td>Example Product 1</td>
-                                <td>$100.00</td>
-                                <td>2</td>
-                                <td>$200.00</td>
-                            </tr>
-                            <!-- Add more products as needed -->
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3">Subtotal</td>
-                                <td>$200.00</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">Shipping</td>
-                                <td>$20.00</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">Grand Total</td>
-                                <td>$220.00</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                <!-- Place Order Button -->
-                <div class="checkout-section">
-                    <button type="submit" class="btn btn-primary btn-lg">Place Order</button>
+                    <h4>Placing your order...</h4>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<?php include 'footer.php' ?>
+<?php include 'footer.php'; ?>
