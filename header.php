@@ -38,6 +38,7 @@
                                 <ul class="hs-social-icon">
                                     <li><a href="cart.php"><i class="zmdi zmdi-shopping-cart"></i> Cart</a></li>
                                     <?php if (isset($_SESSION['user_id'])): ?>
+                                        <li><a href="manage_orders.php"><i class="zmdi zmdi-receipt"></i> Manage Orders</a></li>
                                         <li><a href="manage_appointments.php"><i class="zmdi zmdi-calendar"></i> Manage Appointment</a></li>
                                         <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
                                     <?php endif; ?>
