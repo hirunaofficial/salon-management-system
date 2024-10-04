@@ -146,7 +146,7 @@ include 'dbconnect.php';
                                     <li class="no">Priority Booking</li>
                                 </ul>
                                 <div class="pricing-btn">
-                                    <a class="hs-btn" href="sign-up.php">SIGN UP</a>
+                                    <a class="hs-btn" href="register.php">SIGN UP</a>
                                 </div>
                             </div>
                         </div>
@@ -349,13 +349,6 @@ include 'dbconnect.php';
                         <div class="hs-single-shop-area">
                             <div class="single-shop-thumd">
                                 <img src="<?= $product['image_url'] ?>" alt="<?= $product['product_name'] ?>">
-                                <div class="product-information">
-                                    <ul>
-                                        <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-favorite"></i></a></li>
-                                        <li><a data-bs-toggle="modal" data-bs-target="#productModal" title="quick-view" class="quick-view modal-view detail-link" href="#"><i class="zmdi zmdi-eye"></i></a></li>
-                                    </ul>
-                                </div>
                             </div>
                             <div class="hs-shop-details">
                                 <h4 class="shop-title"><a href="#"><?= $product['product_name'] ?></a></h4>

@@ -22,7 +22,7 @@ function sendOrderConfirmationEmail($email, $orderDetails) {
         $mail->SMTPSecure = 'ssl';
         $mail->Port = $_ENV['SMTP_PORT'];
 
-        $mail->setFrom($_ENV['SMTP_USER'], 'Your Store Name');
+        $mail->setFrom($_ENV['SMTP_USER'], 'Glamour Salon');
         $mail->addAddress($email);
 
         $mail->isHTML(true);
@@ -36,8 +36,14 @@ function sendOrderConfirmationEmail($email, $orderDetails) {
     }
 }
 
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "<script>alert('Please log in to proceed with the checkout.'); window.location.href = 'login.php';</script>";
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Assume the user is already logged in and session contains user_id
+    // Get user_id from session
     $user_id = $_SESSION['user_id'];
 
     // Fetch user details from the database
@@ -64,16 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Payment method
     $payment_method = $_POST['payment_method'];
 
-    // Insert order into orders table with user_id
     $stmt_order = $pdo->prepare("
         INSERT INTO orders (user_id, first_name, last_name, email, telephone, address, city, postal_code, country, total, payment_method)
         VALUES (:user_id, :first_name, :last_name, :email, :telephone, :address, :city, :postal_code, :country, :total, :payment_method)
     ");
     $stmt_order->execute([
-        'user_id' => $user_id, // Include user_id
+        'user_id' => $user_id,
         'first_name' => $user['first_name'],
         'last_name' => $user['last_name'],
         'email' => $user['email'],
@@ -120,7 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $orderDetails .= "<p><strong>Payment Method: Cash on Delivery</strong></p>";
     }
 
-    // Send confirmation email
     sendOrderConfirmationEmail($user['email'], $orderDetails);
 
     // Clear cart and redirect to Home (index.php)
