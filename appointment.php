@@ -1,6 +1,15 @@
 <?php
 include 'header.php';
 include 'dbconnect.php';
+require 'vendor/autoload.php'; // PHPMailer
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
+// Load environment variables
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 // Start session and check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -15,6 +24,32 @@ $user_id = $_SESSION['user_id'];
 $stmt_user = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id");
 $stmt_user->execute(['user_id' => $user_id]);
 $user = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
+// Function to send email after successful booking
+function sendAppointmentEmail($email, $name, $appointment_date, $appointment_time, $service_name) {
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = $_ENV['SMTP_PORT'];
+
+        $mail->setFrom($_ENV['SMTP_USER'], 'Glamour Salon');
+        $mail->addAddress($email);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Your Appointment Confirmation';
+        $mail->Body = "Dear $name,<br><br>Your appointment for $service_name on <b>$appointment_date</b> at <b>$appointment_time</b> has been successfully booked.<br><br>We look forward to seeing you at Glamour Salon.<br><br>Best regards,<br>Glamour Salon Team";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
 
 // Function to assign a random staff member if not selected
 function assignRandomStaff($pdo, $appointment_date, $appointment_time, $service_duration) {
@@ -80,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $appointment_time = date('H:i:s', strtotime($_POST['time']));
 
     // Get the service duration from the services table
-    $stmt_service = $pdo->prepare("SELECT duration FROM services WHERE service_id = :service_id");
+    $stmt_service = $pdo->prepare("SELECT name, duration FROM services WHERE service_id = :service_id");
     $stmt_service->execute(['service_id' => $service_id]);
     $service = $stmt_service->fetch(PDO::FETCH_ASSOC);
     
@@ -90,6 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Calculate appointment end time based on service duration
         $service_duration = $service['duration'];
+        $service_name = $service['name'];
         
         // Check if the user selected a staff member
         $staff_id = isset($_POST['staff']) && !empty($_POST['staff']) ? $_POST['staff'] : assignRandomStaff($pdo, $appointment_date, $appointment_time, $service_duration); // Assign a random staff member if none selected
@@ -117,7 +153,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'appointment_time' => $appointment_time
             ]);
 
-            $message = "Appointment successfully booked!";
+            // Send email after successful appointment booking
+            if (sendAppointmentEmail($email, $name, $appointment_date, $appointment_time, $service_name)) {
+                $message = "Appointment successfully booked and confirmation email sent!";
+            } else {
+                $message = "Appointment booked, but failed to send confirmation email.";
+            }
             $message_type = 'success';
         }
     }
