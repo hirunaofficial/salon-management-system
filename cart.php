@@ -138,25 +138,39 @@ if (isset($_SESSION['cart'])) {
                         <td class="text-center">LKR <?php echo number_format($cart_total, 2); ?></td>
                     </tr>
                     <tr>
+                        <td class="text-center"><strong>Shipping Charge:</strong></td>
+                        <td class="text-center">Free Shipping</td>
+                    </tr>
+                    <tr>
                         <td class="text-center"><strong>Total:</strong></td>
                         <td class="text-center">LKR <?php echo number_format($cart_total, 2); ?></td>
                     </tr>
                 </table>
-                <div class="buttons d-flex justify-content-between flex-wrap mt-5">
-                    <div class="pull-left mb-1">
-                        <a href="products.php"><button class="button bn7"><span>Continue Shopping</span></button></a>
-                    </div>
-                    <div class="pull-right no9">
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                            <a href="checkout.php"><button class="button bn7"><span>Checkout</span></button></a>
-                        <?php else: ?>
-                            <a href="login.php"><button class="button bn7"><span>Login to Checkout</span></button></a>
-                        <?php endif; ?>
-                    </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="text-left mt-3">
+                    <strong>Select Payment Method:</strong>
                 </div>
+                <form action="checkout.php" method="POST">
+                    <div class="form-group">
+                        <select name="payment_method" class="form-control" required>
+                            <option value="cod">Cash on Delivery</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <div class="buttons d-flex justify-content-between flex-wrap mt-5">
+                        <div class="pull-left mb-1">
+                            <a href="products.php"><button class="button bn7"><span>Continue Shopping</span></button></a>
+                        </div>
+                        <div class="pull-right no9">
+                            <button type="submit" class="button bn7"><span>Checkout</span></button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </section>
+
 
 <?php include 'footer.php' ?>
