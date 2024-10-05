@@ -1,4 +1,14 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+
+if (isset($_SESSION['user_id'])) {
+    require_once 'dbconnect.php';
+    $user_id = $_SESSION['user_id'];
+    $stmt = $pdo->prepare("SELECT role FROM users WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $user_id]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+?>
 
 <!doctype html>
 <html class="no-js" lang="en">
@@ -32,15 +42,26 @@
                         </div>
                         <div class="col-md-9 col-lg-10">
                             <div class="hs-header-top">
-                                <div class="header-top-left">
-                                    <p>Opening Hours: <span>Mon-Fri: 8.00 to 20.00</span></p>
-                                </div>
+                                <div class="header-top-left"></div>
                                 <ul class="hs-social-icon">
                                     <li><a href="cart.php"><i class="zmdi zmdi-shopping-cart"></i> Cart</a></li>
+                                    
                                     <?php if (isset($_SESSION['user_id'])): ?>
                                         <li><a href="manage_orders.php"><i class="zmdi zmdi-receipt"></i> Manage Orders</a></li>
-                                        <li><a href="manage_appointments.php"><i class="zmdi zmdi-calendar"></i> Manage Appointment</a></li>
-                                        <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
+                                        <li><a href="manage_appointments.php"><i class="zmdi zmdi-calendar"></i> Manage Appointments</a></li>
+
+                                        <?php if ($user['role'] === 'admin'): ?>
+                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
+                                            <li><a href="admin"><i class="zmdi zmdi-account"></i> Admin</a></li>
+
+                                        <?php elseif ($user['role'] === 'staff'): ?>
+                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
+                                            <li><a href="admin"><i class="zmdi zmdi-account"></i> Staff</a></li>
+
+                                        <?php else: ?>
+                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
+
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </ul>
                             </div>

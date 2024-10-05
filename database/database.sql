@@ -1,4 +1,3 @@
-
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -11,6 +10,7 @@ CREATE TABLE users (
     city VARCHAR(100),
     country VARCHAR(100),
     postal_code VARCHAR(20),
+    role ENUM('user', 'admin', 'staff') DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -249,7 +249,6 @@ CREATE TABLE orders (
     telephone VARCHAR(15) NOT NULL,
     address VARCHAR(255) NOT NULL,
     city VARCHAR(100) NOT NULL,
-    state VARCHAR(100) NOT NULL,
     postal_code VARCHAR(20) NOT NULL,
     country VARCHAR(100) NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
