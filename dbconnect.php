@@ -1,8 +1,15 @@
 <?php
-$host = 'localhost';
-$db   = 'glamoursalon';
-$user = 'root';
-$pass = '';
+require 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$host = 'db'; 
+$db   = $_ENV['MYSQL_DATABASE'];
+$user = $_ENV['MYSQL_USER'];
+$pass = $_ENV['MYSQL_PASSWORD'];
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -11,4 +18,3 @@ try {
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
-?>

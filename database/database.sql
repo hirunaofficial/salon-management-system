@@ -43,22 +43,6 @@ INSERT INTO staff (first_name, last_name, email, phone, specialization) VALUES
 ('Niluka', 'Fernando', 'niluka.fernando@glamoursalon.com', '0717654321', 'Hair Stylist'),
 ('Sachika', 'Silva', 'sachika.silva@glamoursalon.com', '0719876543', 'Makeup Artist');
 
-CREATE TABLE appointments (
-    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    service_id INT NOT NULL,
-    staff_id INT DEFAULT NULL,
-    appointment_date DATE NOT NULL,
-    appointment_time TIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
-    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE SET NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
-
 CREATE TABLE services (
     service_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -166,6 +150,22 @@ VALUES
 ('Hair Clippers', 'Professional hair clippers for salon-quality cuts.', 'Hair Tools', 28800.00, 'images/shop/14.jpg', 'in_stock'),
 ('Hair Gel', 'Strong hold hair gel for all-day control.', 'Hair Care', 5760.00, 'images/shop/15.jpg', 'in_stock');
 
+CREATE TABLE appointments (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    service_id INT NOT NULL,
+    staff_id INT DEFAULT NULL,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 CREATE TABLE gallery (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -266,6 +266,6 @@ CREATE TABLE order_items (
     product_name VARCHAR(255) NOT NULL,
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    total DECIMAL(10, 2) AS (quantity * price) PERSISTENT,
+    total DECIMAL(10, 2) GENERATED ALWAYS AS (quantity * price) STORED,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
