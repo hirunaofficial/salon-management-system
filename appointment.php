@@ -1,7 +1,7 @@
 <?php
 include 'header.php';
 include 'dbconnect.php';
-require 'vendor/autoload.php'; // PHPMailer
+require 'vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -55,9 +55,10 @@ function sendAppointmentEmail($email, $name, $appointment_date, $appointment_tim
 function assignRandomStaff($pdo, $appointment_date, $appointment_time, $service_duration) {
     // Get a random staff member who is available for the selected time and date
     $stmt_random_staff = $pdo->prepare("
-        SELECT staff_id 
-        FROM staff 
-        WHERE staff_id NOT IN (
+        SELECT user_id 
+        FROM users 
+        WHERE role = 'staff'
+        AND user_id NOT IN (
             SELECT staff_id FROM appointments 
             WHERE appointment_date = :appointment_date 
             AND (
@@ -75,7 +76,7 @@ function assignRandomStaff($pdo, $appointment_date, $appointment_time, $service_
     ]);
 
     $staff = $stmt_random_staff->fetch(PDO::FETCH_ASSOC);
-    return $staff ? $staff['staff_id'] : null; // Return null if no staff is available
+    return $staff ? $staff['user_id'] : null; // Return null if no staff is available
 }
 
 // Function to check if the selected staff is available
@@ -111,7 +112,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $service_id = $_POST['service'];
-    $appointment_date = date('Y-m-d', strtotime($_POST['date']));
+    
+    // Convert the user input date (assumed to be in dd/mm/yyyy) to the required format Y-m-d
+    $input_date = $_POST['date'];
+    $date_object = DateTime::createFromFormat('d/m/Y', $input_date);
+    if ($date_object === false) {
+        $message = "Invalid date format. Please use dd/mm/yyyy.";
+        $message_type = 'danger';
+    } else {
+        $appointment_date = $date_object->format('Y-m-d');
+    }
+
     $appointment_time = date('H:i:s', strtotime($_POST['time']));
 
     // Get the service duration from the services table
@@ -237,11 +248,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <select name="staff" style="border: 1px solid #000000; width: 100%; height: 45px; padding-left: 20px;">
                                     <option value="">Select Staff Member (Optional)</option>
                                     <?php
-                                    $stmt_staff = $pdo->prepare("SELECT staff_id, CONCAT(first_name, ' ', last_name) as staff_name FROM staff");
+                                    $stmt_staff = $pdo->prepare("SELECT user_id, CONCAT(first_name, ' ', last_name) as staff_name FROM users WHERE role = 'staff'");
                                     $stmt_staff->execute();
                                     $staff_members = $stmt_staff->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($staff_members as $staff): ?>
-                                        <option value="<?= $staff['staff_id'] ?>"><?= $staff['staff_name'] ?></option>
+                                        <option value="<?= $staff['user_id'] ?>"><?= $staff['staff_name'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
