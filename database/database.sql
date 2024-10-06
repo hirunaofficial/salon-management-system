@@ -11,9 +11,27 @@ CREATE TABLE users (
     country VARCHAR(100),
     postal_code VARCHAR(20),
     role ENUM('user', 'admin', 'staff') DEFAULT 'user',
+    specialization VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+-- Inserting Admin Accounts
+INSERT INTO users (first_name, last_name, email, password, telephone, role) VALUES
+('Admin', 'User1', 'admin1@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711000001', 'admin'),
+('Admin', 'User2', 'admin2@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711000002', 'admin');
+
+-- Inserting Staff Accounts
+INSERT INTO users (first_name, last_name, email, password, telephone, role, specialization) VALUES
+('Amal', 'Perera', 'amal.perera@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711234567', 'staff', 'Barber'),
+('Niluka', 'Fernando', 'niluka.fernando@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0717654321', 'staff', 'Hair Stylist'),
+('Sachika', 'Silva', 'sachika.silva@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0719876543', 'staff', 'Makeup Artist');
+
+-- Inserting User Accounts
+INSERT INTO users (first_name, last_name, email, password, telephone, role) VALUES
+('John', 'Doe', 'john.doe@example.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000001', 'user'),
+('Jane', 'Smith', 'jane.smith@example.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000002', 'user'),
+('David', 'Brown', 'david.brown@example.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000003', 'user');
 
 CREATE TABLE user_otp (
     user_otp_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,22 +44,6 @@ CREATE TABLE user_otp (
     otp_expiry DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE TABLE staff (
-    staff_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    phone VARCHAR(20),
-    specialization VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Inserting the 3 staff members into the table:
-INSERT INTO staff (first_name, last_name, email, phone, specialization) VALUES
-('Amal', 'Perera', 'amal.perera@glamoursalon.com', '0711234567', 'Barber'),
-('Niluka', 'Fernando', 'niluka.fernando@glamoursalon.com', '0717654321', 'Hair Stylist'),
-('Sachika', 'Silva', 'sachika.silva@glamoursalon.com', '0719876543', 'Makeup Artist');
 
 CREATE TABLE services (
     service_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -160,9 +162,10 @@ CREATE TABLE appointments (
     staff_id INT DEFAULT NULL,
     appointment_date DATE NOT NULL,
     appointment_time TIME NOT NULL,
+    status ENUM('Accepted', 'In Progress', 'Completed', 'Cancelled') DEFAULT 'Accepted',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
-    FOREIGN KEY (staff_id) REFERENCES staff(staff_id) ON DELETE SET NULL,
+    FOREIGN KEY (staff_id) REFERENCES users(user_id) ON DELETE SET NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -219,6 +222,37 @@ CREATE TABLE comments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (blog_id) REFERENCES blog(id) ON DELETE CASCADE
 );
+
+-- Comments for "The Ultimate Guide to Hair Straighteners"
+INSERT INTO comments (blog_id, author, email, content) 
+VALUES
+((SELECT id FROM blog WHERE title = 'The Ultimate Guide to Hair Straighteners: Choosing the Best for Your Hair'), 
+ 'Alice Johnson', 'alice@example.com', 'This guide was super helpful! I finally found the right straightener for my hair.'),
+
+((SELECT id FROM blog WHERE title = 'The Ultimate Guide to Hair Straighteners: Choosing the Best for Your Hair'), 
+ 'Emily Brown', 'emily@example.com', 'Great tips! Thanks for explaining how to avoid heat damage.'),
+
+-- Comments for "Top 5 Hair Dryer Mistakes You Should Avoid"
+((SELECT id FROM blog WHERE title = 'Top 5 Hair Dryer Mistakes You Should Avoid'), 
+ 'Chris Evans', 'chris@example.com', 'I never realized I was making so many mistakes with my hair dryer. Thanks for the info!'),
+
+((SELECT id FROM blog WHERE title = 'Top 5 Hair Dryer Mistakes You Should Avoid'), 
+ 'Sophia Miller', 'sophia@example.com', 'This was exactly what I needed to read. My hair is much healthier now.'),
+
+-- Comments for "Beard Grooming 101: Maintaining a Healthy Beard"
+((SELECT id FROM blog WHERE title = 'Beard Grooming 101: Maintaining a Healthy Beard'), 
+ 'Mark Wilson', 'mark@example.com', 'Great advice! I’ve been struggling to find the right products for my beard.'),
+
+((SELECT id FROM blog WHERE title = 'Beard Grooming 101: Maintaining a Healthy Beard'), 
+ 'Jake Davis', 'jake@example.com', 'Very informative. I’m trying the trimming tips this weekend.'),
+
+-- Comments for "Hair Wax vs Gel: Which is Best for Styling Your Hair?"
+((SELECT id FROM blog WHERE title = 'Hair Wax vs Gel: Which is Best for Styling Your Hair?'), 
+ 'Laura Green', 'laura@example.com', 'I’ve always wondered about the differences between these two. Thanks for clearing that up!'),
+
+((SELECT id FROM blog WHERE title = 'Hair Wax vs Gel: Which is Best for Styling Your Hair?'), 
+ 'Michael Adams', 'michael@example.com', 'I used wax for the first time after reading this and it works great for my hair.')
+;
 
 CREATE TABLE contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,

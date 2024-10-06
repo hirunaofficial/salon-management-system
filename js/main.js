@@ -124,60 +124,49 @@
 })(jQuery);
 
 $(document).ready(function() {
-  // Isotope filtering
-  var $grid = $('.grid').isotope({
-      itemSelector: '.pro-item'
-  });
+    // Initialize jQuery UI Datepicker
+    $("#datepicker").datepicker({
+        dateFormat: "dd/mm/yy", // Date format you need
+        minDate: 0, // Disable past dates
+        beforeShowDay: function(date) {
+            var day = date.getDay();
+            if (day === 0) {
+                return [false, "closed", "Closed on Sundays"]; // Disable Sundays
+            }
+            return [true, ""];
+        },
+        onSelect: function(dateText, inst) {
+            var selectedDate = $(this).datepicker("getDate");
+            var dayOfWeek = selectedDate.getUTCDay();
+            var timeSelect = $("#time-select");
+            timeSelect.empty();
 
-  $('#service-filters').on('click', 'li', function() {
-      var filterValue = $(this).attr('data-filter');
-      $grid.isotope({ filter: filterValue });
-      $('#service-filters li').removeClass('is-checked');
-      $(this).addClass('is-checked');
-  });
-
-  // Initialize jQuery UI Datepicker
-  $("#datepicker").datepicker({
-      dateFormat: "dd/mm/yy",
-      minDate: 0,
-      beforeShowDay: function(date) {
-          var day = date.getDay();
-          if (day === 0) {
-              return [false, "closed", "Closed on Sundays"];
-          }
-          return [true, ""];
-      },
-      onSelect: function(dateText, inst) {
-          var selectedDate = $(this).datepicker("getDate");
-          var dayOfWeek = selectedDate.getUTCDay();
-          var timeSelect = $("#time-select");
-          timeSelect.empty();
-
-          if (dayOfWeek === 6) { // Saturday
-              timeSelect.append('<option value="09:00:00">9:00 AM</option>');
-              timeSelect.append('<option value="10:00:00">10:00 AM</option>');
-              timeSelect.append('<option value="11:00:00">11:00 AM</option>');
-              timeSelect.append('<option value="12:00:00">12:00 PM</option>');
-              timeSelect.append('<option value="13:00:00">1:00 PM</option>');
-              timeSelect.append('<option value="14:00:00">2:00 PM</option>');
-              timeSelect.append('<option value="15:00:00">3:00 PM</option>');
-              timeSelect.append('<option value="16:00:00">4:00 PM</option>');
-              timeSelect.append('<option value="17:00:00">5:00 PM</option>');
-          } else { // Monday to Friday
-              timeSelect.append('<option value="08:00:00">8:00 AM</option>');
-              timeSelect.append('<option value="09:00:00">9:00 AM</option>');
-              timeSelect.append('<option value="10:00:00">10:00 AM</option>');
-              timeSelect.append('<option value="11:00:00">11:00 AM</option>');
-              timeSelect.append('<option value="12:00:00">12:00 PM</option>');
-              timeSelect.append('<option value="13:00:00">1:00 PM</option>');
-              timeSelect.append('<option value="14:00:00">2:00 PM</option>');
-              timeSelect.append('<option value="15:00:00">3:00 PM</option>');
-              timeSelect.append('<option value="16:00:00">4:00 PM</option>');
-              timeSelect.append('<option value="17:00:00">5:00 PM</option>');
-              timeSelect.append('<option value="18:00:00">6:00 PM</option>');
-              timeSelect.append('<option value="19:00:00">7:00 PM</option>');
-              timeSelect.append('<option value="20:00:00">8:00 PM</option>');
-          }
-      }
-  });
+            // Load time slots based on the selected day
+            if (dayOfWeek === 6) {
+                timeSelect.append('<option value="09:00:00">9:00 AM</option>');
+                timeSelect.append('<option value="10:00:00">10:00 AM</option>');
+                timeSelect.append('<option value="11:00:00">11:00 AM</option>');
+                timeSelect.append('<option value="12:00:00">12:00 PM</option>');
+                timeSelect.append('<option value="13:00:00">1:00 PM</option>');
+                timeSelect.append('<option value="14:00:00">2:00 PM</option>');
+                timeSelect.append('<option value="15:00:00">3:00 PM</option>');
+                timeSelect.append('<option value="16:00:00">4:00 PM</option>');
+                timeSelect.append('<option value="17:00:00">5:00 PM</option>');
+            } else {
+                timeSelect.append('<option value="08:00:00">8:00 AM</option>');
+                timeSelect.append('<option value="09:00:00">9:00 AM</option>');
+                timeSelect.append('<option value="10:00:00">10:00 AM</option>');
+                timeSelect.append('<option value="11:00:00">11:00 AM</option>');
+                timeSelect.append('<option value="12:00:00">12:00 PM</option>');
+                timeSelect.append('<option value="13:00:00">1:00 PM</option>');
+                timeSelect.append('<option value="14:00:00">2:00 PM</option>');
+                timeSelect.append('<option value="15:00:00">3:00 PM</option>');
+                timeSelect.append('<option value="16:00:00">4:00 PM</option>');
+                timeSelect.append('<option value="17:00:00">5:00 PM</option>');
+                timeSelect.append('<option value="18:00:00">6:00 PM</option>');
+                timeSelect.append('<option value="19:00:00">7:00 PM</option>');
+                timeSelect.append('<option value="20:00:00">8:00 PM</option>');
+            }
+        }
+    });
 });
