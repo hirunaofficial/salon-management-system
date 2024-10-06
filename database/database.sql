@@ -287,6 +287,7 @@ CREATE TABLE orders (
     country VARCHAR(100) NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
     payment_method ENUM('cod', 'bank_transfer') NOT NULL,
+    status ENUM('pending', 'packed', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
