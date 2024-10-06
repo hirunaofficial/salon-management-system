@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Clear cart and redirect to Home (index.php)
     unset($_SESSION['cart']);
-    echo "<script>alert('Order placed successfully! Redirecting to home...'); window.location.href = 'index.php';</script>";
+    echo "<script>alert('Order placed successfully! Redirecting to manage orders...'); window.location.href = 'manage_orders.php';</script>";
 }
 ?>
 

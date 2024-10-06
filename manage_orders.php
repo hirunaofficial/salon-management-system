@@ -79,7 +79,7 @@ if (isset($_GET['cancel_order'])) {
 
 // Fetch user's orders from the database
 $stmt = $pdo->prepare("
-    SELECT o.order_id, o.total, o.created_at AS order_date, o.payment_method
+    SELECT o.order_id, o.total, o.created_at AS order_date, o.payment_method, o.status
     FROM orders o
     WHERE o.user_id = :user_id
     ORDER BY o.created_at DESC
@@ -122,6 +122,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Total (LKR)</th>
                                     <th>Order Date</th>
                                     <th>Payment Method</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -132,6 +133,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?= number_format($order['total'], 2) ?></td>
                                         <td><?= date('F d, Y', strtotime($order['order_date'])) ?></td>
                                         <td><?= ucfirst($order['payment_method']) ?></td>
+                                        <td><?= ucfirst($order['status']) ?></td>
                                         <td>
                                             <a href="?cancel_order=<?= $order['order_id'] ?>" 
                                                onclick="return confirm('Are you sure you want to cancel this order?')">

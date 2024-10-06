@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Glamour Salon - Home</title>
+    <title>Glamour Salon</title>
     <meta name="description" content="Luxury hair and beauty services at Glamour Salon. Discover the best haircuts, beauty treatments, and pampering experiences.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
