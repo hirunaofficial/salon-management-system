@@ -135,10 +135,14 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?= ucfirst($order['payment_method']) ?></td>
                                         <td><?= ucfirst($order['status']) ?></td>
                                         <td>
-                                            <a href="?cancel_order=<?= $order['order_id'] ?>" 
-                                               onclick="return confirm('Are you sure you want to cancel this order?')">
-                                               <button class="btn btn-primary ce5">Cancel Order</button>
-                                            </a>
+                                            <?php if ($order['status'] === 'pending'): ?>
+                                                <a href="?cancel_order=<?= $order['order_id'] ?>" 
+                                                   onclick="return confirm('Are you sure you want to cancel this order?')">
+                                                   <button class="btn btn-primary ce5">Cancel Order</button>
+                                                </a>
+                                            <?php else: ?>
+                                                <button class="btn btn-primary ce5" disabled>Cancel Order</button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

@@ -147,12 +147,20 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?= $appointment['staff_name'] ?? 'N/A' ?></td>
                                         <td><?= date('F d, Y', strtotime($appointment['appointment_date'])) ?></td>
                                         <td><?= date('h:i A', strtotime($appointment['appointment_time'])) ?></td>
-                                        <td><?= $appointment['status'] ?></td>
+                                        <td><?= ucfirst($appointment['status']) ?></td>
                                         <td>
-                                            <a href="?cancel_appointment=<?= $appointment['appointment_id'] ?>" 
-                                               onclick="return confirm('Are you sure you want to cancel this appointment?')">
-                                               <button class="btn btn-primary ce5">Cancel Appointment</button>
-                                            </a>
+                                            <?php 
+                                                $appointment_datetime = strtotime($appointment['appointment_date'] . ' ' . $appointment['appointment_time']);
+                                                $current_datetime = time();
+                                                
+                                                if ($current_datetime < ($appointment_datetime - 86400)): ?>
+                                                <a href="?cancel_appointment=<?= $appointment['appointment_id'] ?>" 
+                                                   onclick="return confirm('Are you sure you want to cancel this appointment?')">
+                                                   <button class="btn btn-primary ce5">Cancel Appointment</button>
+                                                </a>
+                                            <?php else: ?>
+                                                <button class="btn btn-primary ce5" disabled>Cancel Unavailable</button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
