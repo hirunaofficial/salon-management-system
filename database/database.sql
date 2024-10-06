@@ -188,7 +188,7 @@ VALUES
 
 ((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John Doe', 'john.doe@hiruna.dev', '0712000001', 
 (SELECT service_id FROM services WHERE name = 'Kid’s Haircut'), 
-NULL, 
+(SELECT user_id FROM users WHERE email = 'amal.perera@hiruna.dev'),
 '2024-10-18', '11:00:00', 'Accepted'),
 
 ((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane Smith', 'jane.smith@hiruna.dev', '0712000002', 

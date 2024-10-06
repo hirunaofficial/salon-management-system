@@ -20,6 +20,7 @@ $message = "";
 
 // Fetch today's appointments for logged-in staff (for role 'staff' users)
 if ($is_staff) {
+    // Fetching today's appointments for the staff
     $stmt_today = $pdo->prepare("
         SELECT appointments.*, CONCAT(users.first_name, ' ', users.last_name) AS user_full_name,
                services.name AS service_name, CONCAT(staff.first_name, ' ', staff.last_name) AS staff_full_name
@@ -31,8 +32,9 @@ if ($is_staff) {
         ORDER BY appointments.appointment_time
     ");
     $stmt_today->execute(['staff_id' => $user_id]);
+    $todays_appointments = $stmt_today->fetchAll(PDO::FETCH_ASSOC);
 
-    // Fetch all appointments for logged-in staff
+    // Fetching all appointments for the staff
     $stmt_all = $pdo->prepare("
         SELECT appointments.*, CONCAT(users.first_name, ' ', users.last_name) AS user_full_name,
                services.name AS service_name, CONCAT(staff.first_name, ' ', staff.last_name) AS staff_full_name
@@ -59,6 +61,7 @@ if ($is_staff) {
         ORDER BY appointments.appointment_time
     ");
     $stmt_today->execute();
+    $todays_appointments = $stmt_today->fetchAll(PDO::FETCH_ASSOC);
 
     // Fetch all appointments for admin role
     $stmt_all = $pdo->prepare("
@@ -73,10 +76,7 @@ if ($is_staff) {
     $stmt_all->execute();
     $appointments = $stmt_all->fetchAll(PDO::FETCH_ASSOC);
 }
-
-$todays_appointments = $stmt_today->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <section class="breadcrumbs-area ptb-100 bg-gray">
     <div class="container">
         <div class="row">
@@ -200,7 +200,6 @@ $todays_appointments = $stmt_today->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
     </table>
 
-    <?php if (!$is_staff): ?>
     <h3 class="mt-5">All Appointments</h3>
     <table class="table table-bordered mt-3">
         <thead>
@@ -208,8 +207,7 @@ $todays_appointments = $stmt_today->fetchAll(PDO::FETCH_ASSOC);
                 <th>User</th>
                 <th>Service</th>
                 <th>Staff</th>
-                <th>Appointment Date</th>
-                <th>Appointment Time</th>
+                <th>Appointment Date & Time</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -239,7 +237,6 @@ $todays_appointments = $stmt_today->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?php endif; ?>
 
 </div>
 
