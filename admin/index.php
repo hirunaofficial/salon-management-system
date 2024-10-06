@@ -73,7 +73,6 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                     </div>
                 </div>
             </div>
-            <?php endif; ?>
 
             <div class="col-md-6 col-lg-4 mb-6">
                 <div class="hs-priceing-box">
@@ -85,6 +84,7 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -98,7 +98,7 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                     <a href="manage-users.php">
                         <div class="single-service-area">
                             <div class="service-icon">
-                                <img src="images/icons/manage_users.png" alt="Manage Users">
+                                <img src="../images/icons/manage_users.png" alt="Manage Users">
                             </div>
                             <h4 class="ser-vice-tit">Manage Users</h4>
                             <p class="ser-pra">View, edit, and manage registered users.</p>
@@ -110,7 +110,7 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                     <a href="manage-services.php">
                         <div class="single-service-area">
                             <div class="service-icon">
-                                <img src="images/icons/edit_services.png" alt="Manage Services">
+                                <img src="../images/icons/edit_services.png" alt="Manage Services">
                             </div>
                             <h4 class="ser-vice-tit">Manage Services</h4>
                             <p class="ser-pra">Add, edit, or remove salon services.</p>
@@ -122,21 +122,20 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                     <a href="manage-products.php">
                         <div class="single-service-area">
                             <div class="service-icon">
-                                <img src="images/icons/manage_products.png" alt="Manage Products">
+                                <img src="../images/icons/manage_products.png" alt="Manage Products">
                             </div>
                             <h4 class="ser-vice-tit">Manage Products</h4>
                             <p class="ser-pra">Manage salon products and inventory.</p>
                         </div>
                     </a>
                 </div>
-
             <?php endif; ?>
 
             <div class="col-lg-4 col-md-6 mb-6">
                 <a href="manage-appointments.php">
                     <div class="single-service-area">
                         <div class="service-icon">
-                            <img src="images/icons/manage_appointments.png" alt="Manage Appointments">
+                            <img src="../images/icons/manage_appointments.png" alt="Manage Appointments">
                         </div>
                         <h4 class="ser-vice-tit">Manage Appointments</h4>
                         <p class="ser-pra">Manage client bookings and schedules.</p>
@@ -144,11 +143,12 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                 </a>
             </div>
 
+            <?php if ($user_role === 'admin'): ?>
             <div class="col-lg-4 col-md-6 mb-6">
                 <a href="manage-orders.php">
                     <div class="single-service-area">
                         <div class="service-icon">
-                            <img src="images/icons/manage_orders.png" alt="Manage Orders">
+                            <img src="../images/icons/manage_orders.png" alt="Manage Orders">
                         </div>
                         <h4 class="ser-vice-tit">Manage Orders</h4>
                         <p class="ser-pra">Track and manage customer orders.</p>
@@ -160,7 +160,7 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                 <a href="manage-blog.php">
                     <div class="single-service-area">
                         <div class="service-icon">
-                            <img src="images/icons/manage_blog.png" alt="Manage Blog">
+                            <img src="../images/icons/manage_blog.png" alt="Manage Blog">
                         </div>
                         <h4 class="ser-vice-tit">Manage Blog</h4>
                         <p class="ser-pra">Publish and manage blog articles.</p>
@@ -172,7 +172,7 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                 <a href="manage-comments.php">
                     <div class="single-service-area">
                         <div class="service-icon">
-                            <img src="images/icons/manage_comments.png" alt="Manage Blog">
+                            <img src="../images/icons/manage_comments.png" alt="Manage Comments">
                         </div>
                         <h4 class="ser-vice-tit">Manage Comments</h4>
                         <p class="ser-pra">Manage comments related to blog articles.</p>
@@ -184,7 +184,7 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                 <a href="edit-gallery.php">
                     <div class="single-service-area">
                         <div class="service-icon">
-                            <img src="images/icons/edit_gallery.png" alt="Edit Gallery Images">
+                            <img src="../images/icons/edit_gallery.png" alt="Edit Gallery Images">
                         </div>
                         <h4 class="ser-vice-tit">Edit Gallery Images</h4>
                         <p class="ser-pra">Update salon gallery images.</p>
@@ -196,15 +196,17 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                 <a href="contact-messages.php">
                     <div class="single-service-area">
                         <div class="service-icon">
-                            <img src="images/icons/contact_responses.png" alt="Contact Message Responses">
+                            <img src="../images/icons/contact_responses.png" alt="Contact Message Responses">
                         </div>
                         <h4 class="ser-vice-tit">Contact Message Responses</h4>
                         <p class="ser-pra">Manage and respond to customer inquiries.</p>
                     </div>
                 </a>
             </div>
+            <?php endif; ?>
+
         </div>
     </div>
 </section>
 
-<?php include 'footer.php' ?>
+<?php include 'footer.php'; ?>

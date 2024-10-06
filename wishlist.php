@@ -37,14 +37,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist'])) {
             'product_id' => $product_id,
             'qty' => $qty
         ]);
-        $message = "Product added to the wishlist!";
+
+        // Fetch product stock status
+        $stmt_stock = $pdo->prepare("SELECT stock_status FROM products WHERE product_id = :product_id");
+        $stmt_stock->execute(['product_id' => $product_id]);
+        $product = $stmt_stock->fetch(PDO::FETCH_ASSOC);
+
+        if ($product['stock_status'] == 'out_of_stock') {
+            $message = "Product added to the wishlist, We will notify you when this product is available.";
+        } else {
+            $message = "Product added to the wishlist!";
+        }
     }
 }
 
 // Fetch wishlist items for the logged-in user
 $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("
-    SELECT w.wishlist_id, p.product_id, p.product_name, p.price, w.qty
+    SELECT w.wishlist_id, p.product_id, p.product_name, p.price, w.qty, p.stock_status
     FROM wishlist w
     JOIN products p ON w.product_id = p.product_id
     WHERE w.user_id = :user_id
@@ -101,6 +111,7 @@ if (isset($_GET['remove'])) {
                             <tr>
                                 <th>Product Name</th>
                                 <th>Price</th>
+                                <th>Stock Status</th>
                                 <th>Remove</th>
                             </tr>
                             <?php if (!empty($wishlist_items)): ?>
@@ -112,6 +123,13 @@ if (isset($_GET['remove'])) {
                                             </a>
                                         </td>
                                         <td class="sop-cart">LKR <?= number_format($item['price'], 2) ?></td>
+                                        <td class="sop-cart">
+                                            <?php if ($item['stock_status'] == 'in_stock'): ?>
+                                                <span class="label label-success">In Stock</span>
+                                            <?php else: ?>
+                                                <span class="label label-danger">Out of Stock</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td class="sop-icon">
                                             <a href="wishlist.php?remove=<?= $item['wishlist_id'] ?>" class="remove">
                                                 <i class="zmdi zmdi-close-circle"></i>

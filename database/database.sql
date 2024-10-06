@@ -18,20 +18,20 @@ CREATE TABLE users (
 
 -- Inserting Admin Accounts
 INSERT INTO users (first_name, last_name, email, password, telephone, role) VALUES
-('Admin', 'User1', 'admin1@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711000001', 'admin'),
-('Admin', 'User2', 'admin2@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711000002', 'admin');
+('Admin', 'User1', 'admin1@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711000001', 'admin'),
+('Admin', 'User2', 'admin2@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711000002', 'admin');
 
 -- Inserting Staff Accounts
 INSERT INTO users (first_name, last_name, email, password, telephone, role, specialization) VALUES
-('Amal', 'Perera', 'amal.perera@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711234567', 'staff', 'Barber'),
-('Niluka', 'Fernando', 'niluka.fernando@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0717654321', 'staff', 'Hair Stylist'),
-('Sachika', 'Silva', 'sachika.silva@glamoursalon.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0719876543', 'staff', 'Makeup Artist');
+('Amal', 'Perera', 'amal.perera@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0711234567', 'staff', 'Barber'),
+('Niluka', 'Fernando', 'niluka.fernando@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0717654321', 'staff', 'Hair Stylist'),
+('Sachika', 'Silva', 'sachika.silva@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0719876543', 'staff', 'Makeup Artist');
 
 -- Inserting User Accounts
 INSERT INTO users (first_name, last_name, email, password, telephone, role) VALUES
-('John', 'Doe', 'john.doe@example.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000001', 'user'),
-('Jane', 'Smith', 'jane.smith@example.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000002', 'user'),
-('David', 'Brown', 'david.brown@example.com', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000003', 'user');
+('John', 'Doe', 'john.doe@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000001', 'user'),
+('Jane', 'Smith', 'jane.smith@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000002', 'user'),
+('David', 'Brown', 'david.brown@hiruna.dev', '$2y$10$UNoa4vy9FZ/ZS/0wP65zfuq.rDHh6eOy9/TFb850OH1Zv5ZcaNJpi', '0712000003', 'user');
 
 CREATE TABLE user_otp (
     user_otp_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -169,6 +169,33 @@ CREATE TABLE appointments (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+INSERT INTO appointments (user_id, name, email, phone, service_id, staff_id, appointment_date, appointment_time, status)
+VALUES
+((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John Doe', 'john.doe@hiruna.dev', '0712000001', 
+(SELECT service_id FROM services WHERE name = 'Classic Haircut'), 
+(SELECT user_id FROM users WHERE email = 'amal.perera@hiruna.dev'), 
+'2024-10-10', '10:00:00', 'Accepted'),
+
+((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane Smith', 'jane.smith@hiruna.dev', '0712000002', 
+(SELECT service_id FROM services WHERE name = 'Blowout'), 
+(SELECT user_id FROM users WHERE email = 'niluka.fernando@hiruna.dev'), 
+'2024-10-12', '14:00:00', 'Accepted'),
+
+((SELECT user_id FROM users WHERE email = 'david.brown@hiruna.dev'), 'David Brown', 'david.brown@hiruna.dev', '0712000003', 
+(SELECT service_id FROM services WHERE name = 'Full Makeup Application'), 
+(SELECT user_id FROM users WHERE email = 'sachika.silva@hiruna.dev'), 
+'2024-10-15', '16:00:00', 'Accepted'),
+
+((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John Doe', 'john.doe@hiruna.dev', '0712000001', 
+(SELECT service_id FROM services WHERE name = 'Kid’s Haircut'), 
+NULL, 
+'2024-10-18', '11:00:00', 'Accepted'),
+
+((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane Smith', 'jane.smith@hiruna.dev', '0712000002', 
+(SELECT service_id FROM services WHERE name = 'Beach Waves'), 
+(SELECT user_id FROM users WHERE email = 'niluka.fernando@hiruna.dev'), 
+'2024-10-22', '13:00:00', 'Cancelled');
+
 CREATE TABLE gallery (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -223,35 +250,31 @@ CREATE TABLE comments (
     FOREIGN KEY (blog_id) REFERENCES blog(id) ON DELETE CASCADE
 );
 
--- Comments for "The Ultimate Guide to Hair Straighteners"
 INSERT INTO comments (blog_id, author, email, content) 
 VALUES
 ((SELECT id FROM blog WHERE title = 'The Ultimate Guide to Hair Straighteners: Choosing the Best for Your Hair'), 
- 'Alice Johnson', 'alice@example.com', 'This guide was super helpful! I finally found the right straightener for my hair.'),
+ 'Alice Johnson', 'alice@hiruna.dev', 'This guide was super helpful! I finally found the right straightener for my hair.'),
 
 ((SELECT id FROM blog WHERE title = 'The Ultimate Guide to Hair Straighteners: Choosing the Best for Your Hair'), 
- 'Emily Brown', 'emily@example.com', 'Great tips! Thanks for explaining how to avoid heat damage.'),
-
--- Comments for "Top 5 Hair Dryer Mistakes You Should Avoid"
-((SELECT id FROM blog WHERE title = 'Top 5 Hair Dryer Mistakes You Should Avoid'), 
- 'Chris Evans', 'chris@example.com', 'I never realized I was making so many mistakes with my hair dryer. Thanks for the info!'),
+ 'Emily Brown', 'emily@hiruna.dev', 'Great tips! Thanks for explaining how to avoid heat damage.'),
 
 ((SELECT id FROM blog WHERE title = 'Top 5 Hair Dryer Mistakes You Should Avoid'), 
- 'Sophia Miller', 'sophia@example.com', 'This was exactly what I needed to read. My hair is much healthier now.'),
+ 'Chris Evans', 'chris@hiruna.dev', 'I never realized I was making so many mistakes with my hair dryer. Thanks for the info!'),
 
--- Comments for "Beard Grooming 101: Maintaining a Healthy Beard"
+((SELECT id FROM blog WHERE title = 'Top 5 Hair Dryer Mistakes You Should Avoid'), 
+ 'Sophia Miller', 'sophia@hiruna.dev', 'This was exactly what I needed to read. My hair is much healthier now.'),
+
 ((SELECT id FROM blog WHERE title = 'Beard Grooming 101: Maintaining a Healthy Beard'), 
- 'Mark Wilson', 'mark@example.com', 'Great advice! I’ve been struggling to find the right products for my beard.'),
+ 'Mark Wilson', 'mark@hiruna.dev', 'Great advice! I’ve been struggling to find the right products for my beard.'),
 
 ((SELECT id FROM blog WHERE title = 'Beard Grooming 101: Maintaining a Healthy Beard'), 
- 'Jake Davis', 'jake@example.com', 'Very informative. I’m trying the trimming tips this weekend.'),
-
--- Comments for "Hair Wax vs Gel: Which is Best for Styling Your Hair?"
-((SELECT id FROM blog WHERE title = 'Hair Wax vs Gel: Which is Best for Styling Your Hair?'), 
- 'Laura Green', 'laura@example.com', 'I’ve always wondered about the differences between these two. Thanks for clearing that up!'),
+ 'Jake Davis', 'jake@hiruna.dev', 'Very informative. I’m trying the trimming tips this weekend.'),
 
 ((SELECT id FROM blog WHERE title = 'Hair Wax vs Gel: Which is Best for Styling Your Hair?'), 
- 'Michael Adams', 'michael@example.com', 'I used wax for the first time after reading this and it works great for my hair.')
+ 'Laura Green', 'laura@hiruna.dev', 'I’ve always wondered about the differences between these two. Thanks for clearing that up!'),
+
+((SELECT id FROM blog WHERE title = 'Hair Wax vs Gel: Which is Best for Styling Your Hair?'), 
+ 'Michael Adams', 'michael@hiruna.dev', 'I used wax for the first time after reading this and it works great for my hair.')
 ;
 
 CREATE TABLE contact_messages (
@@ -303,3 +326,36 @@ CREATE TABLE order_items (
     total DECIMAL(10, 2) GENERATED ALWAYS AS (quantity * price) STORED,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+
+INSERT INTO orders (user_id, first_name, last_name, email, telephone, address, city, postal_code, country, total, payment_method, status)
+VALUES
+((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John', 'Doe', 'john.doe@hiruna.dev', '0712000001', '123 Main Street', 'Colombo', '00100', 'Sri Lanka', 5760.00, 'cod', 'pending'),
+((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane', 'Smith', 'jane.smith@hiruna.dev', '0712000002', '456 Elm Street', 'Kandy', '20000', 'Sri Lanka', 12800.00, 'bank_transfer', 'packed'),
+((SELECT user_id FROM users WHERE email = 'david.brown@hiruna.dev'), 'David', 'Brown', 'david.brown@hiruna.dev', '0712000003', '789 Pine Avenue', 'Galle', '80000', 'Sri Lanka', 16000.00, 'cod', 'shipped'),
+((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John', 'Doe', 'john.doe@hiruna.dev', '0712000001', '123 Main Street', 'Colombo', '00100', 'Sri Lanka', 22400.00, 'bank_transfer', 'delivered'),
+((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane', 'Smith', 'jane.smith@hiruna.dev', '0712000002', '456 Elm Street', 'Kandy', '20000', 'Sri Lanka', 20800.00, 'cod', 'cancelled');
+
+INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+VALUES
+((SELECT order_id FROM orders WHERE email = 'john.doe@hiruna.dev' AND status = 'pending'), 
+(SELECT product_id FROM products WHERE product_name = 'Hair Gel'), 'Hair Gel', 1, 5760.00);
+
+INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+VALUES
+((SELECT order_id FROM orders WHERE email = 'jane.smith@hiruna.dev' AND status = 'packed'), 
+(SELECT product_id FROM products WHERE product_name = 'Beard Trimmer'), 'Beard Trimmer', 1, 12800.00);
+
+INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+VALUES
+((SELECT order_id FROM orders WHERE email = 'david.brown@hiruna.dev' AND status = 'shipped'), 
+(SELECT product_id FROM products WHERE product_name = 'Hair Shampoo'), 'Hair Shampoo', 1, 16000.00);
+
+INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+VALUES
+((SELECT order_id FROM orders WHERE email = 'john.doe@hiruna.dev' AND status = 'delivered'), 
+(SELECT product_id FROM products WHERE product_name = 'Hair Straightener'), 'Hair Straightener', 1, 22400.00);
+
+INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
+VALUES
+((SELECT order_id FROM orders WHERE email = 'jane.smith@hiruna.dev' AND status = 'cancelled'), 
+(SELECT product_id FROM products WHERE product_name = 'Hair Dryer'), 'Hair Dryer', 1, 20800.00);
