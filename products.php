@@ -1,5 +1,7 @@
-<?php include 'header.php'; ?>
-<?php include 'dbconnect.php'; ?>
+<?php
+include 'header.php';
+include 'dbconnect.php';
+?>
 
 <section class="breadcrumbs-area ptb-100 bg-gray">
     <div class="container">
@@ -20,11 +22,9 @@
 <section class="top-shop-area ptb-100">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-3">
                 <div class="shop-around">
                     <div class="all-shop2-area ptb-20">
-
                         <h3 class="leave-comment-text">Price</h3>
                         <div class="widget shop-filter">
                             <div class="price_filter">
@@ -58,7 +58,6 @@
                                 ?>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -67,7 +66,6 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="features-tab fe-again">
-
                             <div class="shop-all-tab top-shop-n">
                                 <div class="two-part an-tw">
                                     <ul class="nav tabs" role="tablist">
@@ -85,18 +83,18 @@
                                         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                                         $offset = ($page - 1) * $limit;
 
-                                        $query = "SELECT product_id, product_name, description, price, image_url FROM products WHERE 1";
-                                        
+                                        $query = "SELECT product_id, product_name, description, price, image_url, stock_status FROM products WHERE 1";
+
                                         if (!empty($_GET['query'])) {
                                             $search = htmlspecialchars($_GET['query']);
                                             $query .= " AND product_name LIKE '%$search%'";
                                         }
-                                        
+
                                         if (!empty($_GET['category'])) {
                                             $category = htmlspecialchars($_GET['category']);
                                             $query .= " AND category = '$category'";
                                         }
-                                        
+
                                         if (!empty($_GET['price'])) {
                                             $price = explode('-', $_GET['price']);
                                             $min_price = (float) $price[0];
@@ -110,6 +108,7 @@
 
                                         if ($products) {
                                             foreach ($products as $product) {
+                                                $is_out_of_stock = ($product['stock_status'] === 'out_of_stock');
                                         ?>
                                         <div class="col-lg-4 col-md-6 mb-30">
                                             <div class="hs-single-shop-area mb-30">
@@ -118,15 +117,21 @@
                                                     <div class="product-information">
                                                         <ul>
                                                             <li>
-                                                                <form action="cart.php" method="post">
-                                                                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
-                                                                    <input type="hidden" name="product_name" value="<?php echo $product['product_name']; ?>">
-                                                                    <input type="hidden" name="price" value="<?php echo $product['price'], 2; ?>">
-                                                                    <input type="hidden" name="qty" value="1">
-                                                                    <a><button type="submit" name="add_to_cart" style="border: none; background: none;">
+                                                                <?php if ($is_out_of_stock): ?>
+                                                                    <a href="#" onclick="alert('This product is out of stock and cannot be added to the cart.'); return false;">
                                                                         <i class="zmdi zmdi-shopping-cart"></i>
-                                                                    </button></a>
-                                                                </form>
+                                                                    </a>
+                                                                <?php else: ?>
+                                                                    <form action="cart.php" method="post">
+                                                                        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                                        <input type="hidden" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                        <input type="hidden" name="price" value="<?php echo $product['price'], 2; ?>">
+                                                                        <input type="hidden" name="qty" value="1">
+                                                                        <a><button type="submit" name="add_to_cart" style="border: none; background: none;">
+                                                                            <i class="zmdi zmdi-shopping-cart"></i>
+                                                                        </button></a>
+                                                                    </form>
+                                                                <?php endif; ?>
                                                             </li>
 
                                                             <li>
@@ -147,6 +152,9 @@
                                                     <h4 class="shop-title"><a href="#"><?php echo $product['product_name']; ?></a></h4>
                                                     <ul class="product-price">
                                                         <li class="new-price">LKR <?php echo number_format($product['price'], 2); ?></li>
+                                                        <?php if ($is_out_of_stock): ?>
+                                                            <li style="color: red;">Out of Stock</li>
+                                                        <?php endif; ?>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -165,6 +173,7 @@
                                         <?php
                                         if ($products) {
                                             foreach ($products as $product) {
+                                                $is_out_of_stock = ($product['stock_status'] === 'out_of_stock');
                                         ?>
                                         <div class="row hs-single-shop-area shop-over mb-30">
                                             <div class="col-lg-4 col-md-4 col-shop">
@@ -172,9 +181,22 @@
                                                     <img src="<?php echo $product['image_url']; ?>" alt="product images">
                                                     <div class="product-information">
                                                         <ul>
-                                                            <li><a href="#"><i class="zmdi zmdi-shopping-cart"></i></a></li>
+                                                            <?php if ($is_out_of_stock): ?>
+                                                                <li><a href="#" onclick="alert('This product is out of stock and cannot be added to the cart.'); return false;"><i class="zmdi zmdi-shopping-cart"></i></a></li>
+                                                            <?php else: ?>
+                                                                <li>
+                                                                    <form action="cart.php" method="post">
+                                                                        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                                        <input type="hidden" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                        <input type="hidden" name="price" value="<?php echo $product['price'], 2; ?>">
+                                                                        <input type="hidden" name="qty" value="1">
+                                                                        <button type="submit" name="add_to_cart" style="border: none; background: none;">
+                                                                            <a><i class="zmdi zmdi-shopping-cart"></i></a>
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            <?php endif; ?>
                                                             <li><a href="#"><i class="zmdi zmdi-favorite"></i></a></li>
-                                                            <li><a href="#"><i class="zmdi zmdi-eye"></i></a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -182,16 +204,12 @@
                                             <div class="col-md-8 col-lg-8 col-shop">
                                                 <div class="hs-shop-details">
                                                     <h4 class="shop-title"><a href="#"><?php echo $product['product_name']; ?></a></h4>
-                                                    <ul>
-                                                        <li><a href="#"><i class="zmdi zmdi-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-star"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-star"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-star"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-star"></i></a></li>
-                                                    </ul>
                                                     <p><?php echo $product['description']; ?></p>
                                                     <ul class="product-price">
                                                         <li class="new-price">LKR <?php echo number_format($product['price'], 2); ?></li>
+                                                        <?php if ($is_out_of_stock): ?>
+                                                            <li style="color: red;">Out of Stock</li>
+                                                        <?php endif; ?>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -232,12 +250,10 @@
                                     <li class="p-icon"><a href="?page=<?php echo min($page + 1, $total_pages); ?>"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
