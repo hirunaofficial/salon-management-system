@@ -44,22 +44,22 @@ if (isset($_SESSION['user_id'])) {
                             <div class="hs-header-top">
                                 <div class="header-top-left"></div>
                                 <ul class="hs-social-icon">
-                                    <li><a href="cart.php"><i class="zmdi zmdi-shopping-cart"></i> Cart</a></li>
+                                    <li><a href="cart.php"><i class="zmdi zmdi-shopping-cart"></i> <span class="hide-text">Cart</span></a></li>
                                     
                                     <?php if (isset($_SESSION['user_id'])): ?>
-                                        <li><a href="manage_orders.php"><i class="zmdi zmdi-receipt"></i> Manage Orders</a></li>
-                                        <li><a href="manage_appointments.php"><i class="zmdi zmdi-calendar"></i> Manage Appointments</a></li>
+                                        <li><a href="manage_orders.php"><i class="zmdi zmdi-receipt"></i> <span class="hide-text">Manage Orders</span></a></li>
+                                        <li><a href="manage_appointments.php"><i class="zmdi zmdi-calendar"></i> <span class="hide-text">Manage Appointments</span></a></li>
 
                                         <?php if ($user['role'] === 'admin'): ?>
-                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
-                                            <li><a href="admin"><i class="zmdi zmdi-account"></i> Admin</a></li>
+                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> <span class="hide-text">My Account</span></a></li>
+                                            <li><a href="admin"><i class="zmdi zmdi-settings"></i> <span class="hide-text">Admin</span></a></li>
 
                                         <?php elseif ($user['role'] === 'staff'): ?>
-                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
-                                            <li><a href="admin"><i class="zmdi zmdi-account"></i> Staff</a></li>
+                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> <span class="hide-text">My Account</span></a></li>
+                                            <li><a href="admin"><i class="zmdi zmdi-settings"></i> <span class="hide-text">Staff</span></a></li>
 
                                         <?php else: ?>
-                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> My Account</a></li>
+                                            <li><a href="my-account.php"><i class="zmdi zmdi-account"></i> <span class="hide-text">My Account</span></a></li>
 
                                         <?php endif; ?>
                                     <?php endif; ?>

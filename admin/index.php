@@ -130,17 +130,6 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
                     </a>
                 </div>
 
-                <div class="col-lg-4 col-md-6 mb-6">
-                    <a href="manage-staff-members.php">
-                        <div class="single-service-area">
-                            <div class="service-icon">
-                                <img src="images/icons/manage_staff.png" alt="Manage Staff">
-                            </div>
-                            <h4 class="ser-vice-tit">Manage Staff Members</h4>
-                            <p class="ser-pra">Add, edit, or remove staff members.</p>
-                        </div>
-                    </a>
-                </div>
             <?php endif; ?>
 
             <div class="col-lg-4 col-md-6 mb-6">

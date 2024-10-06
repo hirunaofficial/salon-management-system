@@ -54,7 +54,7 @@ if ($user['role'] !== 'admin' && $user['role'] !== 'staff') {
                             <div class="hs-header-top">
                             <div class="header-top-left"></div>
                                 <ul class="hs-social-icon">
-                                <li><a href="../my-account.php"><i class="zmdi zmdi-home"></i> Return to Home</a></li>
+                                <li><a href="../my-account.php"><i class="zmdi zmdi-home"></i> <span class="hide-text">Return to Home</span></a></li>
                                 </ul>
                             </div>
                             <div class="hs-mainmenu-wrap d-none d-md-block">
@@ -89,7 +89,6 @@ if ($user['role'] !== 'admin' && $user['role'] !== 'staff') {
                                     <li><a href="manage-users.php">Manage Users</a></li>
                                     <li><a href="manage-orders.php">Manage Orders</a></li>
                                     <li><a href="manage-appointments.php">Manage Appointments</a></li>
-                                    <li><a href="manage-staff-members.php">Manage Staff</a></li>
                                     <li><a href="manage-products.php">Manage Products</a></li>
                                     <li><a href="manage-services.php">Manage Services</a></li>
                                     <li><a href="manage-blog.php">Manage Blog</a></li>

@@ -768,7 +768,11 @@ label.col-sm-2.control-label.ta7 {
 .hs-story-text-rot h3 {
   font-size: 23px;
 }
-
-
 }
- 
+
+/* Hide the text in mobile view */
+@media (max-width: 768px) {
+  .hide-text {
+    display: none;
+  }
+}
