@@ -169,6 +169,18 @@ $user_role = $stmt_role->fetch(PDO::FETCH_ASSOC)['role'];
             </div>
 
             <div class="col-lg-4 col-md-6 mb-6">
+                <a href="manage-comments.php">
+                    <div class="single-service-area">
+                        <div class="service-icon">
+                            <img src="images/icons/manage_comments.png" alt="Manage Blog">
+                        </div>
+                        <h4 class="ser-vice-tit">Manage Comments</h4>
+                        <p class="ser-pra">Manage comments related to blog articles.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-6">
                 <a href="edit-gallery.php">
                     <div class="single-service-area">
                         <div class="service-icon">

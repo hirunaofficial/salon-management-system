@@ -51,12 +51,10 @@ $comments = $comments_stmt->fetchAll(PDO::FETCH_ASSOC);
                             <p>No comments yet.</p>
                         <?php else: ?>
                             <?php foreach ($comments as $comment): ?>
-                            <div class="blog-top">
+
+                            <div class="blog-top ptb-20">
                                 <div class="news-allreply">
                                     <a href="#"><img src="images/blog/user.jpg" alt=""></a>
-                                    <div class="nes-icon">
-                                        <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
-                                    </div>
                                 </div>
                                 <div class="blog-img-details">
                                     <div class="blog-title">
