@@ -14,7 +14,7 @@ $stmt = $pdo->prepare("SELECT role FROM users WHERE user_id = :user_id");
 $stmt->execute(['user_id' => $user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Restrict access for non-admin or non-staff users if needed
+// Restrict access for non-admin or non-staff users
 if ($user['role'] !== 'admin' && $user['role'] !== 'staff') {
     echo "<script>alert('Access denied.'); window.location.href = '../index.php';</script>";
     exit;
@@ -89,7 +89,7 @@ if ($user['role'] !== 'admin' && $user['role'] !== 'staff') {
                                     <li><a href="manage-users.php">Manage Users</a></li>
                                     <li><a href="manage-orders.php">Manage Orders</a></li>
                                     <li><a href="manage-appointments.php">Manage Appointments</a></li>
-                                    <li><a href="manage-staff.php">Manage Staff</a></li>
+                                    <li><a href="manage-staff-members.php">Manage Staff</a></li>
                                     <li><a href="manage-products.php">Manage Products</a></li>
                                     <li><a href="manage-services.php">Manage Services</a></li>
                                     <li><a href="manage-blog.php">Manage Blog</a></li>

@@ -135,7 +135,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <td>
                                             <a href="?cancel_order=<?= $order['order_id'] ?>" 
                                                onclick="return confirm('Are you sure you want to cancel this order?')">
-                                               <button class="btn btn-danger">Cancel Order</button>
+                                               <button class="btn btn-primary ce5">Cancel Order</button>
                                             </a>
                                         </td>
                                     </tr>

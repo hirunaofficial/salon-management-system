@@ -1963,3 +1963,32 @@ a.o-back-to:hover {
 .pt-90 {
     padding-top: 50px;
 }
+
+/*--------------------------- My Account -----------------------------*/
+
+.method-input-box {
+    padding: 5px 0;
+}
+.faq-accordion .panel-default > .panel-heading {
+    background: none repeat scroll 0 0 #323a45;
+    border-left: 0 none;
+    border-radius: 0;
+    border-right: 0 none;
+    border-top: 0 none;
+    padding: 12px 15px 12px;
+}
+.faq-accordion .panel.panel-default.actives .panel-title a {
+    color: #009587;
+}
+.faq-accordion .panel-title a {
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 16px;
+    position: relative;
+    text-decoration: none;
+}
+.panel-title a:hover {
+    text-decoration: none;
+}
