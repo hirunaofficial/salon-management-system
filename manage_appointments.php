@@ -53,10 +53,10 @@ if (isset($_GET['cancel_appointment'])) {
     // Fetch appointment details before deleting for the email
     $stmt_appointment = $pdo->prepare("
         SELECT a.appointment_id, a.appointment_date, a.appointment_time, s.name AS service_name, 
-               CONCAT(st.first_name, ' ', st.last_name) AS staff_name, u.email, u.first_name, u.last_name
+               CONCAT(u_staff.first_name, ' ', u_staff.last_name) AS staff_name, u.email, u.first_name, u.last_name
         FROM appointments a
         JOIN services s ON a.service_id = s.service_id
-        LEFT JOIN staff st ON a.staff_id = st.staff_id
+        LEFT JOIN users u_staff ON a.staff_id = u_staff.user_id AND u_staff.role = 'staff'
         JOIN users u ON a.user_id = u.user_id
         WHERE a.appointment_id = :appointment_id AND a.user_id = :user_id
     ");
@@ -86,13 +86,13 @@ if (isset($_GET['cancel_appointment'])) {
     sendCancellationEmail($appointment['email'], $appointmentDetails);
 }
 
-// Fetch user's appointments from the database, including staff information
+// Fetch user's appointments from the database, including staff information and status
 $stmt = $pdo->prepare("
-    SELECT a.appointment_id, a.appointment_date, a.appointment_time, s.name AS service_name, 
-           CONCAT(st.first_name, ' ', st.last_name) AS staff_name
+    SELECT a.appointment_id, a.appointment_date, a.appointment_time, a.status, s.name AS service_name, 
+           CONCAT(u_staff.first_name, ' ', u_staff.last_name) AS staff_name
     FROM appointments a
     JOIN services s ON a.service_id = s.service_id
-    LEFT JOIN staff st ON a.staff_id = st.staff_id
+    LEFT JOIN users u_staff ON a.staff_id = u_staff.user_id AND u_staff.role = 'staff'
     WHERE a.user_id = :user_id
     ORDER BY a.appointment_date DESC, a.appointment_time DESC
 ");
@@ -136,6 +136,7 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <th>Staff</th>
                                     <th>Appointment Date</th>
                                     <th>Appointment Time</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -146,10 +147,11 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?= $appointment['staff_name'] ?? 'N/A' ?></td>
                                         <td><?= date('F d, Y', strtotime($appointment['appointment_date'])) ?></td>
                                         <td><?= date('h:i A', strtotime($appointment['appointment_time'])) ?></td>
+                                        <td><?= $appointment['status'] ?></td>
                                         <td>
                                             <a href="?cancel_appointment=<?= $appointment['appointment_id'] ?>" 
                                                onclick="return confirm('Are you sure you want to cancel this appointment?')">
-                                               <button class="btn btn-danger">Cancel Appointment</button>
+                                               <button class="btn btn-primary ce5">Cancel Appointment</button>
                                             </a>
                                         </td>
                                     </tr>
