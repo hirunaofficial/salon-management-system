@@ -134,8 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Prepare parameters for PayHere
-        $merchant_id = '1228404';
-        $merchant_secret = 'MTM4NDUzMjEyOTIzNjgyNTg5MDYzMjAzNzE2ODM4MTE4MDgwNDQ0OA==';
+        $merchant_id = $_ENV['PAYHERE_MERCHANT_ID'];
+        $merchant_secret = $_ENV['PAYHERE_MERCHANT_SECRET'];
         $currency = 'LKR';
         $hash = strtoupper(
             md5(
@@ -150,9 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Prepare PayHere checkout form
         echo '<form method="post" action="https://sandbox.payhere.lk/pay/checkout" id="payhere_form">';
         echo '<input type="hidden" name="merchant_id" value="' . $merchant_id . '">';
-        echo '<input type="hidden" name="return_url" value="http://localhost/return.php">';
-        echo '<input type="hidden" name="cancel_url" value="http://localhost/cancel.php">';
-        echo '<input type="hidden" name="notify_url" value="http://localhost/notify.php">';
+        echo '<input type="hidden" name="return_url" value="' . $_ENV['PAYHERE_RETURN_URL'] . '">';
+        echo '<input type="hidden" name="cancel_url" value="' . $_ENV['PAYHERE_CANCEL_URL'] . '">';
+        echo '<input type="hidden" name="notify_url" value="' . $_ENV['PAYHERE_NOTIFY_URL'] . '">';
         echo '<input type="hidden" name="order_id" value="' . $order_id . '">';
         echo '<input type="hidden" name="items" value="Order No: ' . $order_id . '">';
         echo '<input type="hidden" name="currency" value="' . $currency . '">';
@@ -166,6 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<input type="hidden" name="country" value="' . $user['country'] . '">';
         echo '<input type="hidden" name="hash" value="' . $hash . '">';
         echo '</form>';
+
+        // Clear cart after successful order creation
+        unset($_SESSION['cart']);
 
         // Redirect to PayHere
         echo '<script>document.getElementById("payhere_form").submit();</script>';
@@ -197,8 +200,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<script>alert('There was an error sending the confirmation email. Please check your email details.');</script>";
         }
 
+        // Clear cart after successful order creation
+        unset($_SESSION['cart']);
+
         // Redirect to the return page with the order ID
-        echo "<script>window.location.href = 'http://localhost/return.php?order_id={$order_id}';</script>";
+        echo "<script>window.location.href = '" . $_ENV['PAYHERE_RETURN_URL'] . "?order_id={$order_id}';</script>";
         exit;
     }
 }
