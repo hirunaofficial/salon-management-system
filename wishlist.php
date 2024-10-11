@@ -22,12 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist'])) {
     $wishlist_item = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($wishlist_item) {
-        // Update the quantity if the product is already in the wishlist
-        $stmt = $pdo->prepare("UPDATE wishlist SET qty = qty + :qty WHERE wishlist_id = :wishlist_id");
-        $stmt->execute(['qty' => $qty, 'wishlist_id' => $wishlist_item['wishlist_id']]);
-        $message = "Product quantity updated in the wishlist!";
+        $message = "Product already added to your wishlist!";
     } else {
-        // Insert new product into the wishlist
         $stmt = $pdo->prepare("
             INSERT INTO wishlist (user_id, product_id, qty)
             VALUES (:user_id, :product_id, :qty)
@@ -38,20 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist'])) {
             'qty' => $qty
         ]);
 
-        // Fetch product stock status
         $stmt_stock = $pdo->prepare("SELECT stock_status FROM products WHERE product_id = :product_id");
         $stmt_stock->execute(['product_id' => $product_id]);
         $product = $stmt_stock->fetch(PDO::FETCH_ASSOC);
 
         if ($product['stock_status'] == 'out_of_stock') {
-            $message = "Product added to the wishlist, We will notify you when this product is available.";
+            $message = "Product added to the wishlist, we will notify you when this product is available.";
         } else {
             $message = "Product added to the wishlist!";
         }
     }
 }
 
-// Fetch wishlist items for the logged-in user
 $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("
     SELECT w.wishlist_id, p.product_id, p.product_name, p.price, w.qty, p.stock_status
@@ -62,7 +56,6 @@ $stmt = $pdo->prepare("
 $stmt->execute(['user_id' => $user_id]);
 $wishlist_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Handle wishlist item removal
 if (isset($_GET['remove'])) {
     $wishlist_id = $_GET['remove'];
     $stmt = $pdo->prepare("DELETE FROM wishlist WHERE wishlist_id = :wishlist_id AND user_id = :user_id");
