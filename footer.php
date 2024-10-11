@@ -3,21 +3,23 @@
             <div class="row">
                 <div class="col-12">
                     <div class="hs-newsletter-inner bg-theme">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-md-auto">
-                                <h2 class="hs-newsletter-tile">NewsLetter Sign-Up</h2>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="nws-input-box">
-                                    <input type="email" placeholder="Enter your E-mail">
+                        <form action="newsletter_signup.php" method="POST">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-md-auto">
+                                    <h2 class="hs-newsletter-tile">Newsletter Sign-Up</h2>
+                                </div>
+                                <div class="col-md-auto">
+                                    <div class="nws-input-box">
+                                        <input type="email" name="email" placeholder="Enter your E-mail" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                    <div class="sing-up-btn">
+                                        <button type="submit" class="hs-btn hs-btn-3">Subscribe</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-auto">
-                                <div class="sing-up-btn">
-                                    <a class="hs-btn hs-btn-3" href="#">subcribes</a>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

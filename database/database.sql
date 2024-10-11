@@ -359,3 +359,9 @@ INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
 VALUES
 ((SELECT order_id FROM orders WHERE email = 'jane.smith@hiruna.dev' AND status = 'cancelled'), 
 (SELECT product_id FROM products WHERE product_name = 'Hair Dryer'), 'Hair Dryer', 1, 20800.00);
+
+CREATE TABLE newsletter_subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
