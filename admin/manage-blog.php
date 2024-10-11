@@ -42,8 +42,10 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <table class="table table-bordered mt-4">
         <thead>
             <tr>
+                <th>Image</th>
                 <th>Title</th>
                 <th>Category</th>
+                <th>Tags</th>
                 <th>Post Date</th>
                 <th>Actions</th>
             </tr>
@@ -51,8 +53,10 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <tbody>
             <?php foreach ($blogs as $blog): ?>
                 <tr>
+                    <td><img src="../<?= $blog['image'] ?>" alt="Blog Image" style="width:100px;height:60px;"></td>
                     <td><?= $blog['title'] ?></td>
                     <td><?= $blog['category'] ?></td>
+                    <td><?= $blog['tags'] ?></td>
                     <td><?= date('F d, Y', strtotime($blog['post_date'])) ?></td>
                     <td>
                         <button class="btn btn-primary ce5" data-bs-toggle="modal" data-bs-target="#editBlogModal<?= $blog['id'] ?>">Edit</button>
@@ -63,7 +67,7 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="modal fade" id="editBlogModal<?= $blog['id'] ?>" tabindex="-1" aria-labelledby="editBlogModalLabel<?= $blog['id'] ?>" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form method="post" action="edit-blog.php">
+                            <form method="post" action="edit-blog.php" enctype="multipart/form-data">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editBlogModalLabel<?= $blog['id'] ?>">Edit Blog Post</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -79,8 +83,17 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <input type="text" class="form-control" name="category" value="<?= $blog['category'] ?>" required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="tags">Tags</label>
+                                        <input type="text" class="form-control" name="tags" value="<?= $blog['tags'] ?>" placeholder="Comma-separated tags">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="content">Content</label>
                                         <textarea class="form-control" name="content" required><?= $blog['content'] ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" class="form-control" name="image">
+                                        <img src="../<?= $blog['image'] ?>" alt="Current Blog Image" style="width:100px;height:60px;margin-top:10px;">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -99,7 +112,7 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="modal fade" id="addBlogModal" tabindex="-1" aria-labelledby="addBlogModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="add-blog.php">
+            <form method="post" action="add-blog.php" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addBlogModalLabel">Add New Blog Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -114,8 +127,16 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="text" class="form-control" name="category" required>
                     </div>
                     <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <input type="text" class="form-control" name="tags" placeholder="Comma-separated tags" required>
+                    </div>
+                    <div class="form-group">
                         <label for="content">Content</label>
                         <textarea class="form-control" name="content" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" name="image" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -129,14 +150,21 @@ $blogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
+
     if (urlParams.has('added') && urlParams.get('added') === 'success') {
         alert('Blog post added successfully!');
     }
+
     if (urlParams.has('updated') && urlParams.get('updated') === 'success') {
         alert('Blog post updated successfully!');
     }
+
     if (urlParams.has('deleted') && urlParams.get('deleted') === 'success') {
         alert('Blog post deleted successfully!');
+    }
+
+    if (urlParams.has('mail') && urlParams.get('mail') === 'failed') {
+        alert('Blog post added, but failed to send notification email.');
     }
 </script>
 
