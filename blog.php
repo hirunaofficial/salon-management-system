@@ -36,8 +36,16 @@
                         $stmt_total->execute(['query' => '%' . $query . '%']);
                         $total_blogs = $stmt_total->fetch(PDO::FETCH_ASSOC)['total_blogs'];
 
-                        // Fetch blog posts matching the query
-                        $stmt = $pdo->prepare("SELECT * FROM blog WHERE title LIKE :query OR content LIKE :query ORDER BY post_date DESC LIMIT :limit OFFSET :offset");
+                        // Fetch blog posts matching the query with comment counts
+                        $stmt = $pdo->prepare("
+                            SELECT b.*, COUNT(c.id) as comments_count 
+                            FROM blog b
+                            LEFT JOIN comments c ON b.id = c.blog_id 
+                            WHERE b.title LIKE :query OR b.content LIKE :query 
+                            GROUP BY b.id 
+                            ORDER BY b.post_date DESC 
+                            LIMIT :limit OFFSET :offset
+                        ");
                         $stmt->bindValue(':query', '%' . $query . '%', PDO::PARAM_STR);
                         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
                         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -47,8 +55,15 @@
                         $stmt_total->execute();
                         $total_blogs = $stmt_total->fetch(PDO::FETCH_ASSOC)['total_blogs'];
 
-                        // Fetch blog posts for the current page
-                        $stmt = $pdo->prepare("SELECT * FROM blog ORDER BY post_date DESC LIMIT :limit OFFSET :offset");
+                        // Fetch blog posts for the current page with comment counts
+                        $stmt = $pdo->prepare("
+                            SELECT b.*, COUNT(c.id) as comments_count 
+                            FROM blog b
+                            LEFT JOIN comments c ON b.id = c.blog_id 
+                            GROUP BY b.id 
+                            ORDER BY b.post_date DESC 
+                            LIMIT :limit OFFSET :offset
+                        ");
                         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
                         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
                     }

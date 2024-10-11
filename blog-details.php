@@ -20,10 +20,11 @@ $comments = $comments_stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="row">
             <div class="col-12 text-center">
                 <div class="breadcrumbs">
-                    <h2 class="page-title">Blog details</h2>
+                    <h2 class="page-title"><?= $blog['title'] ?></h2>
                     <ul>
                         <li><a class="active" href="#">Home</a></li>
-                        <li>Blog details</li>
+                        <li><a class="active" href="#">Blog</a></li>
+                        <li><?= $blog['title'] ?></li>
                     </ul>
                 </div>
             </div>

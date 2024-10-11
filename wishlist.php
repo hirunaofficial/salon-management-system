@@ -13,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
 // Handle adding product to wishlist
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist'])) {
     $product_id = $_POST['product_id'];
-    $qty = isset($_POST['qty']) ? $_POST['qty'] : 1;
     $user_id = $_SESSION['user_id'];
 
     // Check if the product is already in the wishlist
@@ -25,13 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist'])) {
         $message = "Product already added to your wishlist!";
     } else {
         $stmt = $pdo->prepare("
-            INSERT INTO wishlist (user_id, product_id, qty)
-            VALUES (:user_id, :product_id, :qty)
+            INSERT INTO wishlist (user_id, product_id)
+            VALUES (:user_id, :product_id)
         ");
         $stmt->execute([
             'user_id' => $user_id,
-            'product_id' => $product_id,
-            'qty' => $qty
+            'product_id' => $product_id
         ]);
 
         $stmt_stock = $pdo->prepare("SELECT stock_status FROM products WHERE product_id = :product_id");
@@ -48,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist'])) {
 
 $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("
-    SELECT w.wishlist_id, p.product_id, p.product_name, p.price, w.qty, p.stock_status
+    SELECT w.wishlist_id, p.product_id, p.product_name, p.price, p.stock_status
     FROM wishlist w
     JOIN products p ON w.product_id = p.product_id
     WHERE w.user_id = :user_id

@@ -217,27 +217,26 @@ CREATE TABLE blog (
     content TEXT NOT NULL,
     image VARCHAR(255),
     post_date DATE,
-    comments_count INT DEFAULT 0,
     category VARCHAR(100),
     tags VARCHAR(255)
 );
 
-INSERT INTO blog (title, content, image, post_date, comments_count, category, tags) VALUES
+INSERT INTO blog (title, content, image, post_date, category, tags) VALUES
 ('The Ultimate Guide to Hair Straighteners: Choosing the Best for Your Hair', 
  'In this article, we explore the best hair straighteners on the market, how to choose one based on your hair type, and some expert tips on how to use them effectively without causing damage.', 
- 'images/blog/1.jpg', '2023-09-15', 45, 'Hair Straightener', 'hair care,heat styling,tips'),
+ 'images/blog/1.jpg', '2023-09-15', 'Hair Straightener', 'hair care,heat styling,tips'),
 
 ('Top 5 Hair Dryer Mistakes You Should Avoid', 
  'Hair dryers are essential for daily grooming, but are you using them correctly? This article discusses the common mistakes people make when using hair dryers and how to avoid damaging your hair.', 
- 'images/blog/2.jpg', '2023-09-20', 30, 'Hair Dryer', 'hair care,blow-drying,tips'),
+ 'images/blog/2.jpg', '2023-09-20', 'Hair Dryer', 'hair care,blow-drying,tips'),
 
 ('Beard Grooming 101: Maintaining a Healthy Beard', 
  'Whether you are growing a short beard or a long, majestic one, maintaining it is essential. This article outlines the best beard grooming techniques, products you should use, and trimming tips.', 
- 'images/blog/3.jpg', '2023-09-25', 65, 'Beard Trimmer', 'beard care,trimming,tips'),
+ 'images/blog/3.jpg', '2023-09-25', 'Beard Trimmer', 'beard care,trimming,tips'),
 
 ('Hair Wax vs Gel: Which is Best for Styling Your Hair?', 
  'Are you confused about whether to use wax or gel for styling your hair? In this article, we compare the two, including their benefits and which hair types they work best for.', 
- 'images/blog/4.jpg', '2023-10-01', 50, 'Hair Wax', 'styling,products,hair wax,gel')
+ 'images/blog/4.jpg', '2023-10-01', 'Hair Wax', 'styling,products,hair wax,gel')
 ;
 
 CREATE TABLE comments (
@@ -291,7 +290,6 @@ CREATE TABLE wishlist (
     wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     product_id INT NOT NULL,
-    qty INT DEFAULT 1,
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
