@@ -87,6 +87,10 @@ $stmt = $pdo->prepare("
 $stmt->execute(['user_id' => $user_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Function to generate PDF download link
+function generatePDFLink($order_id) {
+    return "<a href='admin/download-order-pdf.php?order_id={$order_id}' class='btn btn-primary ce5'>Download PDF</a>";
+}
 ?>
 
 <section class="breadcrumbs-area ptb-100 bg-gray">
@@ -135,7 +139,15 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?= ucfirst($order['payment_method']) ?></td>
                                         <td><?= ucfirst($order['status']) ?></td>
                                         <td>
-                                            <?php if ($order['status'] === 'pending'): ?>
+                                            <?php if ($order['status'] === 'unpaid'): ?>
+                                                <a href="proceed_to_payment.php?order_id=<?= $order['order_id'] ?>">
+                                                    <button class="btn btn-primary ce5">Proceed to Payment</button>
+                                                </a>
+                                                <a href="?cancel_order=<?= $order['order_id'] ?>" 
+                                                   onclick="return confirm('Are you sure you want to cancel this order?')">
+                                                   <button class="btn btn-primary ce5">Cancel Order</button>
+                                                </a>
+                                            <?php elseif ($order['status'] === 'pending'): ?>
                                                 <a href="?cancel_order=<?= $order['order_id'] ?>" 
                                                    onclick="return confirm('Are you sure you want to cancel this order?')">
                                                    <button class="btn btn-primary ce5">Cancel Order</button>
@@ -143,6 +155,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php else: ?>
                                                 <button class="btn btn-primary ce5" disabled>Cancel Order</button>
                                             <?php endif; ?>
+                                            <?= generatePDFLink($order['order_id']) ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
