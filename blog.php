@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <div class="breadcrumbs">
-                    <h2 class="page-title">Blog Right Sidebar</h2>
+                    <h2 class="page-title">Blog</h2>
                     <ul>
                         <li><a class="active" href="#">Home</a></li>
                         <li>Blog</li>

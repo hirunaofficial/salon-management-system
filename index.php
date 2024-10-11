@@ -325,8 +325,15 @@ include 'dbconnect.php';
                 </div>
                 <div class="row mt-40 mb-n6">
                     <?php
-                    // Fetch 3 random blog posts from the database
-                    $stmt_blogs = $pdo->prepare("SELECT * FROM blog ORDER BY RAND() LIMIT 3");
+                    // Fetch 3 random blog posts from the database along with their comment counts
+                    $stmt_blogs = $pdo->prepare("
+                        SELECT b.*, COUNT(c.id) as comments_count 
+                        FROM blog b 
+                        LEFT JOIN comments c ON b.id = c.blog_id 
+                        GROUP BY b.id 
+                        ORDER BY RAND() 
+                        LIMIT 3
+                    ");
                     $stmt_blogs->execute();
                     $blogs = $stmt_blogs->fetchAll(PDO::FETCH_ASSOC);
 
@@ -336,7 +343,7 @@ include 'dbconnect.php';
                         <div class="single-blog-wrap">
                             <div class="blog-front">
                                 <div class="blog-thumb">
-                                    <img src="<?= $blog['image'] ?>" alt="<?= $blog['title'] ?>">
+                                    <img src="<?= htmlspecialchars($blog['image']) ?>" alt="<?= htmlspecialchars($blog['title']) ?>">
                                 </div>
                                 <div class="blog-hover-info">
                                     <div class="blog-hover-action">
@@ -345,7 +352,7 @@ include 'dbconnect.php';
                                 </div>
                             </div>
                             <div class="blog-details">
-                                <h4 class="blog-title"><a href="blog-details.php?id=<?= $blog['id'] ?>"><?= $blog['title'] ?></a></h4>
+                                <h4 class="blog-title"><a href="blog-details.php?id=<?= $blog['id'] ?>"><?= htmlspecialchars($blog['title']) ?></a></h4>
                                 <ul class="blog-post-date">
                                     <li class="post-time"><i class="zmdi zmdi-time"></i><span><?= date('M d, Y', strtotime($blog['post_date'])) ?></span></li>
                                     <li class="post-cmt"><i class="zmdi zmdi-comment-alt-text"></i><span>(<?= $blog['comments_count'] ?>)</span></li>
