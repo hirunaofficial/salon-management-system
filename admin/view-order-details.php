@@ -5,11 +5,12 @@ include '../dbconnect.php';
 if (isset($_GET['order_id'])) {
     $order_id = $_GET['order_id'];
 
-    // Fetch the order details
+    // Fetch the order details including address and user details
     $stmt_order = $pdo->prepare("
-        SELECT * 
-        FROM orders 
-        WHERE order_id = :order_id
+        SELECT o.*, u.first_name AS user_first_name, u.last_name AS user_last_name, u.email AS user_email, u.telephone AS user_telephone
+        FROM orders o
+        JOIN users u ON o.user_id = u.user_id
+        WHERE o.order_id = :order_id
     ");
     $stmt_order->execute(['order_id' => $order_id]);
     $order = $stmt_order->fetch(PDO::FETCH_ASSOC);
@@ -38,12 +39,40 @@ if (isset($_GET['order_id'])) {
                 <td><?= $order['first_name'] . ' ' . $order['last_name'] ?></td>
             </tr>
             <tr>
+                <th>Email</th>
+                <td><?= $order['email'] ?></td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td><?= $order['telephone'] ?></td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td><?= $order['address'] ?></td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td><?= $order['city'] ?></td>
+            </tr>
+            <tr>
+                <th>Postal Code</th>
+                <td><?= $order['postal_code'] ?></td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td><?= $order['country'] ?></td>
+            </tr>
+            <tr>
                 <th>Total</th>
                 <td>LKR <?= number_format($order['total'], 2) ?></td>
             </tr>
             <tr>
                 <th>Status</th>
                 <td><?= ucfirst($order['status']) ?></td>
+            </tr>
+            <tr>
+                <th>Payment Method</th>
+                <td><?= ucfirst(str_replace('_', ' ', $order['payment_method'])) ?></td>
             </tr>
         </table>
 
