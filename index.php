@@ -117,21 +117,21 @@ include 'dbconnect.php';
             </div>
         </section>
 
-        <section id="hs-membership-packages" class="hs-membership-packages ptb-90 bg-white">
+        <section id="hs-membership-benefits" class="hs-membership-benefits ptb-90 bg-white">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="hs-pricing-title text-center">
-                            <h2 class="section-title">Membership Packages</h2>
-                            <p class="section-details">Unlock exclusive benefits with our membership plans. Choose the package that suits your beauty needs and enjoy premium services at Glamour Salon.</p>
+                            <h2 class="section-title">Membership Benefits</h2>
+                            <p class="section-details">As a registered member of Glamour Salon, you unlock access to exclusive member prices and enjoy a range of premium services. Sign up today to take advantage of these fantastic benefits!</p>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-40 mb-n6">
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="hs-priceing-box">
+                <div class="row justify-content-center mt-40 mb-n6">
+                    <div class="col-md-8 col-lg-6 mb-6">
+                        <div class="hs-priceing-box text-center">
                             <div class="hs-price-head">
-                                <h4>Basic Membership</h4>
+                                <h4>Exclusive Member Benefits</h4>
                                 <div class="hs-price-box">
                                     <p>FREE</p>
                                 </div>
@@ -139,64 +139,14 @@ include 'dbconnect.php';
                             <div class="hs-price-body">
                                 <ul>
                                     <li>Access to Member Prices on All Services</li>
-                                    <li>Discounted Rates on Regular Haircuts</li>
-                                    <li>Access to Standard Shampoo & Blowdry</li>
-                                    <li class="no">Hair Treatments</li>
-                                    <li class="no">Makeup Services</li>
-                                    <li class="no">Priority Booking</li>
+                                    <li>Discounted Rates on Haircuts</li>
+                                    <li>Exclusive Discounts on Hair Treatments & Styling</li>
+                                    <li>Special Member Offers on Products</li>
+                                    <li>Priority Booking & Scheduling</li>
+                                    <li>Exclusive Invitations to Salon Events & Promotions</li>
                                 </ul>
                                 <div class="pricing-btn">
                                     <a class="hs-btn" href="register.php">SIGN UP</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="hs-priceing-box active">
-                            <div class="hs-price-head">
-                                <h4>Premium Membership</h4>
-                                <div class="hs-price-box">
-                                    <p>10,000 LKR</p>/year
-                                </div>
-                            </div>
-                            <div class="hs-price-body">
-                                <ul>
-                                    <li>All Basic Membership Benefits</li>
-                                    <li>Complimentary Haircut & Premium Blowdry (Monthly)</li>
-                                    <li>Exclusive Access to Hair Treatments</li>
-                                    <li>Member Prices on Hair Color & Styling</li>
-                                    <li>10% Off on All Product Purchases</li>
-                                    <li>Priority Booking & Flexible Scheduling</li>
-                                    <li class="no">Makeup Services</li>
-                                </ul>
-                                <div class="pricing-btn">
-                                    <a class="hs-btn" href="contact-shop.php">CONTACT SHOP</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4 mb-6">
-                        <div class="hs-priceing-box">
-                            <div class="hs-price-head">
-                                <h4>VIP Membership</h4>
-                                <div class="hs-price-box">
-                                    <p>15,000 LKR</p>/year
-                                </div>
-                            </div>
-                            <div class="hs-price-body">
-                                <ul>
-                                    <li>All Premium Membership Benefits</li>
-                                    <li>VIP Haircut & Blowdry (Monthly)</li>
-                                    <li>Unlimited Hair Treatments</li>
-                                    <li>Makeup Services Included</li>
-                                    <li>20% Off on All Product Purchases</li>
-                                    <li>Priority Booking with Exclusive Time Slots</li>
-                                    <li>Complimentary Beverages During Visits</li>
-                                </ul>
-                                <div class="pricing-btn">
-                                    <a class="hs-btn" href="contact-shop.php">CONTACT SHOP</a>
                                 </div>
                             </div>
                         </div>
