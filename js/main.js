@@ -11,29 +11,22 @@
   // WOW.js initialization
   new WOW().init();
 
-  // Portfolio Masonry (width)
-  $('.our-portfolio-page').imagesLoaded(function() {
-      $('#our-filters').on('click', 'li', function () {
-          var filterValue = $(this).attr('data-filter');
-          $containerpage.isotope({ filter: filterValue });
-      });
-      $('#our-filters li').on('click', function () {
-          $('#our-filters li').removeClass('is-checked');
-          $(this).addClass('is-checked');
-          var selector = $(this).attr('data-filter');
-          $containerpage.isotope({ filter: selector });
-          return false;
-      });
-      var $containerpage = $('.our-portfolio-page');
-      $containerpage.isotope({
-          itemSelector: '.pro-item',
-          filter: '*',
-          transitionDuration: '0.5s',
-          masonry: {
-              columnWidth: '.pro-item'
-          }
-      });
-  });
+  // Service Page Filter Option
+  $(document).ready(function() {
+        $('#service-filters li').on('click', function() {
+            var filterValue = $(this).attr('data-filter');
+
+            $('#service-filters li').removeClass('is-checked');
+            $(this).addClass('is-checked');
+
+            if (filterValue === '*') {
+                $('.pro-item').show();
+            } else {
+                $('.pro-item').hide();
+                $(filterValue).show();
+            }
+        });
+    });
 
   // Sticky Header functionality
   $(window).on('scroll', function() {    
@@ -93,80 +86,53 @@
           window.location.href = currentUrl + "?price=" + minPrice + "-" + maxPrice;
       });
   });
+  
+    $(document).ready(function() {
+        // Initialize jQuery UI Datepicker
+        $("#datepicker").datepicker({
+            dateFormat: "dd/mm/yy", // Date format you need
+            minDate: 0, // Disable past dates
+            beforeShowDay: function(date) {
+                var day = date.getDay();
+                if (day === 0) {
+                    return [false, "closed", "Closed on Sundays"]; // Disable Sundays
+                }
+                return [true, ""];
+            },
+            onSelect: function(dateText, inst) {
+                var selectedDate = $(this).datepicker("getDate");
+                var dayOfWeek = selectedDate.getUTCDay();
+                var timeSelect = $("#time-select");
+                timeSelect.empty();
 
-  // Pro Slider for product details
-  $(".pro-img-tab-slider").owlCarousel({
-      autoPlay: false,
-      loop: true,
-      slideSpeed: 2000,
-      dots: false,
-      nav: false,
-      items: 3,
-      responsive: {
-          0: {
-              items: 1
-          },
-          480: {
-              items: 1
-          },
-          768: {
-              items: 3
-          },
-          992: {
-              items: 4
-          },
-          1200: {
-              items: 4
-          }
-      }
-  });
+                // Load time slots based on the selected day
+                if (dayOfWeek === 6) {
+                    timeSelect.append('<option value="09:00:00">9:00 AM</option>');
+                    timeSelect.append('<option value="10:00:00">10:00 AM</option>');
+                    timeSelect.append('<option value="11:00:00">11:00 AM</option>');
+                    timeSelect.append('<option value="12:00:00">12:00 PM</option>');
+                    timeSelect.append('<option value="13:00:00">1:00 PM</option>');
+                    timeSelect.append('<option value="14:00:00">2:00 PM</option>');
+                    timeSelect.append('<option value="15:00:00">3:00 PM</option>');
+                    timeSelect.append('<option value="16:00:00">4:00 PM</option>');
+                    timeSelect.append('<option value="17:00:00">5:00 PM</option>');
+                } else {
+                    timeSelect.append('<option value="08:00:00">8:00 AM</option>');
+                    timeSelect.append('<option value="09:00:00">9:00 AM</option>');
+                    timeSelect.append('<option value="10:00:00">10:00 AM</option>');
+                    timeSelect.append('<option value="11:00:00">11:00 AM</option>');
+                    timeSelect.append('<option value="12:00:00">12:00 PM</option>');
+                    timeSelect.append('<option value="13:00:00">1:00 PM</option>');
+                    timeSelect.append('<option value="14:00:00">2:00 PM</option>');
+                    timeSelect.append('<option value="15:00:00">3:00 PM</option>');
+                    timeSelect.append('<option value="16:00:00">4:00 PM</option>');
+                    timeSelect.append('<option value="17:00:00">5:00 PM</option>');
+                    timeSelect.append('<option value="18:00:00">6:00 PM</option>');
+                    timeSelect.append('<option value="19:00:00">7:00 PM</option>');
+                    timeSelect.append('<option value="20:00:00">8:00 PM</option>');
+                }
+            }
+        });
+    });
 
 })(jQuery);
-
-$(document).ready(function() {
-    // Initialize jQuery UI Datepicker
-    $("#datepicker").datepicker({
-        dateFormat: "dd/mm/yy", // Date format you need
-        minDate: 0, // Disable past dates
-        beforeShowDay: function(date) {
-            var day = date.getDay();
-            if (day === 0) {
-                return [false, "closed", "Closed on Sundays"]; // Disable Sundays
-            }
-            return [true, ""];
-        },
-        onSelect: function(dateText, inst) {
-            var selectedDate = $(this).datepicker("getDate");
-            var dayOfWeek = selectedDate.getUTCDay();
-            var timeSelect = $("#time-select");
-            timeSelect.empty();
-
-            // Load time slots based on the selected day
-            if (dayOfWeek === 6) {
-                timeSelect.append('<option value="09:00:00">9:00 AM</option>');
-                timeSelect.append('<option value="10:00:00">10:00 AM</option>');
-                timeSelect.append('<option value="11:00:00">11:00 AM</option>');
-                timeSelect.append('<option value="12:00:00">12:00 PM</option>');
-                timeSelect.append('<option value="13:00:00">1:00 PM</option>');
-                timeSelect.append('<option value="14:00:00">2:00 PM</option>');
-                timeSelect.append('<option value="15:00:00">3:00 PM</option>');
-                timeSelect.append('<option value="16:00:00">4:00 PM</option>');
-                timeSelect.append('<option value="17:00:00">5:00 PM</option>');
-            } else {
-                timeSelect.append('<option value="08:00:00">8:00 AM</option>');
-                timeSelect.append('<option value="09:00:00">9:00 AM</option>');
-                timeSelect.append('<option value="10:00:00">10:00 AM</option>');
-                timeSelect.append('<option value="11:00:00">11:00 AM</option>');
-                timeSelect.append('<option value="12:00:00">12:00 PM</option>');
-                timeSelect.append('<option value="13:00:00">1:00 PM</option>');
-                timeSelect.append('<option value="14:00:00">2:00 PM</option>');
-                timeSelect.append('<option value="15:00:00">3:00 PM</option>');
-                timeSelect.append('<option value="16:00:00">4:00 PM</option>');
-                timeSelect.append('<option value="17:00:00">5:00 PM</option>');
-                timeSelect.append('<option value="18:00:00">6:00 PM</option>');
-                timeSelect.append('<option value="19:00:00">7:00 PM</option>');
-                timeSelect.append('<option value="20:00:00">8:00 PM</option>');
-            }
-        }
-    });
-});
