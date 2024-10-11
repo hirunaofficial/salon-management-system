@@ -307,12 +307,13 @@ CREATE TABLE orders (
     postal_code VARCHAR(20) NOT NULL,
     country VARCHAR(100) NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
-    payment_method ENUM('cod', 'bank_transfer') NOT NULL,
-    status ENUM('pending', 'packed', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    payment_method ENUM('online_payment', 'cod') NOT NULL DEFAULT 'online_payment',
+    status ENUM('unpaid', 'pending', 'paid', 'packed', 'shipped', 'delivered', 'cancelled') DEFAULT 'unpaid',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
 
 CREATE TABLE order_items (
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -327,15 +328,15 @@ CREATE TABLE order_items (
 
 INSERT INTO orders (user_id, first_name, last_name, email, telephone, address, city, postal_code, country, total, payment_method, status)
 VALUES
-((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John', 'Doe', 'john.doe@hiruna.dev', '0712000001', '123 Main Street', 'Colombo', '00100', 'Sri Lanka', 5760.00, 'cod', 'pending'),
-((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane', 'Smith', 'jane.smith@hiruna.dev', '0712000002', '456 Elm Street', 'Kandy', '20000', 'Sri Lanka', 12800.00, 'bank_transfer', 'packed'),
-((SELECT user_id FROM users WHERE email = 'david.brown@hiruna.dev'), 'David', 'Brown', 'david.brown@hiruna.dev', '0712000003', '789 Pine Avenue', 'Galle', '80000', 'Sri Lanka', 16000.00, 'cod', 'shipped'),
-((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John', 'Doe', 'john.doe@hiruna.dev', '0712000001', '123 Main Street', 'Colombo', '00100', 'Sri Lanka', 22400.00, 'bank_transfer', 'delivered'),
-((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane', 'Smith', 'jane.smith@hiruna.dev', '0712000002', '456 Elm Street', 'Kandy', '20000', 'Sri Lanka', 20800.00, 'cod', 'cancelled');
+((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John', 'Doe', 'john.doe@hiruna.dev', '0712000001', '123 Main Street', 'Colombo', '00100', 'Sri Lanka', 5760.00, 'online_payment', 'paid'),
+((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane', 'Smith', 'jane.smith@hiruna.dev', '0712000002', '456 Elm Street', 'Kandy', '20000', 'Sri Lanka', 12800.00, 'online_payment', 'packed'),
+((SELECT user_id FROM users WHERE email = 'david.brown@hiruna.dev'), 'David', 'Brown', 'david.brown@hiruna.dev', '0712000003', '789 Pine Avenue', 'Galle', '80000', 'Sri Lanka', 16000.00, 'online_payment', 'shipped'),
+((SELECT user_id FROM users WHERE email = 'john.doe@hiruna.dev'), 'John', 'Doe', 'john.doe@hiruna.dev', '0712000001', '123 Main Street', 'Colombo', '00100', 'Sri Lanka', 22400.00, 'online_payment', 'delivered'),
+((SELECT user_id FROM users WHERE email = 'jane.smith@hiruna.dev'), 'Jane', 'Smith', 'jane.smith@hiruna.dev', '0712000002', '456 Elm Street', 'Kandy', '20000', 'Sri Lanka', 20800.00, 'online_payment', 'cancelled');
 
 INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
 VALUES
-((SELECT order_id FROM orders WHERE email = 'john.doe@hiruna.dev' AND status = 'pending'), 
+((SELECT order_id FROM orders WHERE email = 'john.doe@hiruna.dev' AND status = 'paid'), 
 (SELECT product_id FROM products WHERE product_name = 'Hair Gel'), 'Hair Gel', 1, 5760.00);
 
 INSERT INTO order_items (order_id, product_id, product_name, quantity, price)
