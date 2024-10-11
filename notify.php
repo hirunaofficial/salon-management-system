@@ -37,16 +37,16 @@ function sendOrderStatusEmail($email, $subject, $orderDetails) {
 }
 
 // Fetch the POST parameters from PayHere
-$merchant_id = $_POST['merchant_id'];
-$order_id = $_POST['order_id'];
-$payment_id = $_POST['payment_id'];
-$payhere_amount = $_POST['payhere_amount'];
-$payhere_currency = $_POST['payhere_currency'];
-$status_code = $_POST['status_code'];
-$md5sig = $_POST['md5sig'];
+$merchant_id = $_POST['merchant_id'] ?? null;
+$order_id = $_POST['order_id'] ?? null;
+$payment_id = $_POST['payment_id'] ?? null;
+$payhere_amount = $_POST['payhere_amount'] ?? null;
+$payhere_currency = $_POST['payhere_currency'] ?? null;
+$status_code = $_POST['status_code'] ?? null;
+$md5sig = $_POST['md5sig'] ?? null;
 
-// Your Merchant Secret
-$merchant_secret = 'MTM4NDUzMjEyOTIzNjgyNTg5MDYzMjAzNzE2ODM4MTE4MDgwNDQ0OA';
+// Your Merchant Secret (from .env)
+$merchant_secret = $_ENV['PAYHERE_MERCHANT_SECRET'];
 
 // Generate the local MD5 signature for verification
 $local_md5sig = strtoupper(
@@ -144,4 +144,3 @@ if ($local_md5sig === $md5sig) {
     // Invalid notification, handle appropriately
     error_log("Invalid payment notification for order ID: {$order_id}. Signature mismatch.");
 }
-?>
