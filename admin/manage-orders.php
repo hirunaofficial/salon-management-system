@@ -85,10 +85,23 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="order_id" value="<?= $order['order_id'] ?>">
+
+                                    <!-- Payment Method Dropdown -->
+                                    <div class="form-group">
+                                        <label for="payment_method">Payment Method</label>
+                                        <select class="form-control" name="payment_method" required>
+                                            <option value="online_payment" <?= ($order['payment_method'] == 'online_payment') ? 'selected' : '' ?>>Online Payment</option>
+                                            <option value="cod" <?= ($order['payment_method'] == 'cod') ? 'selected' : '' ?>>Cash on Delivery (COD)</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Status Dropdown -->
                                     <div class="form-group">
                                         <label for="status">Order Status</label>
                                         <select class="form-control" name="status" required>
+                                            <option value="unpaid" <?= ($order['status'] == 'unpaid') ? 'selected' : '' ?>>Unpaid</option>
                                             <option value="pending" <?= ($order['status'] == 'pending') ? 'selected' : '' ?>>Pending</option>
+                                            <option value="paid" <?= ($order['status'] == 'paid') ? 'selected' : '' ?>>Paid</option>
                                             <option value="packed" <?= ($order['status'] == 'packed') ? 'selected' : '' ?>>Packed</option>
                                             <option value="shipped" <?= ($order['status'] == 'shipped') ? 'selected' : '' ?>>Shipped</option>
                                             <option value="delivered" <?= ($order['status'] == 'delivered') ? 'selected' : '' ?>>Delivered</option>
