@@ -28,6 +28,23 @@
         });
     });
 
+  // Gallery Page Filter Option
+  $(document).ready(function() {
+        $('#gallery-filters li').on('click', function() {
+            var filterValue = $(this).attr('data-filter');
+
+            $('#gallery-filters li').removeClass('is-checked');
+            $(this).addClass('is-checked');
+
+            if (filterValue === '*') {
+                $('.pro-item').show();
+            } else {
+                $('.pro-item').hide();
+                $(filterValue).show();
+            }
+        });
+    });
+
   // Sticky Header functionality
   $(window).on('scroll', function() {    
       var scroll = $(window).scrollTop();

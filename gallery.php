@@ -23,18 +23,16 @@
     <div class="container">
         <div class="row mb-50 xmb-20">
             <div class="col-12 text-center">
-                <ul id="our-filters" class="port-filter-nav">
+                <ul id="gallery-filters" class="port-filter-nav">
                     <li data-filter="*" class="is-checked">All</li>
 
                     <?php
-                    // Fetch distinct categories from the gallery table
                     $stmt_categories = $pdo->prepare("SELECT DISTINCT category FROM gallery");
                     $stmt_categories->execute();
                     $categories = $stmt_categories->fetchAll(PDO::FETCH_ASSOC);
 
                     // Loop through each category and generate a filter button
                     foreach ($categories as $category) {
-                        // Sanitize the category to use as a class name
                         $category_class = strtolower(preg_replace('/[^a-zA-Z0-9]/', '-', $category['category']));
                         echo '<li data-filter=".' . $category_class . '">' . ucfirst($category['category']) . '</li>';
                     }
@@ -45,14 +43,12 @@
 
         <div class="row our-portfolio-page grid">
             <?php
-            // Fetch gallery items from the database
             $stmt = $pdo->prepare("SELECT * FROM gallery");
             $stmt->execute();
             $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // Loop through gallery items and display them
             foreach ($gallery_items as $item) {
-                // Sanitize the category to use as a class name
                 $category_class = strtolower(preg_replace('/[^a-zA-Z0-9]/', '-', $item['category']));
             ?>
 
