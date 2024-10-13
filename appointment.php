@@ -76,7 +76,7 @@ function assignRandomStaff($pdo, $appointment_date, $appointment_time, $service_
     ]);
 
     $staff = $stmt_random_staff->fetch(PDO::FETCH_ASSOC);
-    return $staff ? $staff['user_id'] : null; // Return null if no staff is available
+    return $staff ? $staff['user_id'] : null;
 }
 
 // Function to check if the selected staff is available
@@ -100,7 +100,7 @@ function isStaffAvailable($pdo, $staff_id, $appointment_date, $appointment_time,
     ]);
 
     $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
-    return $result['appointment_count'] == 0; // Return true if the staff is available
+    return $result['appointment_count'] == 0;
 }
 
 // Form submission logic
@@ -222,11 +222,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="appoinment-form mt-40">
                         <form action="appointment.php" method="POST">
                             <div class="input-box">
-                                <input type="text" name="name" value="<?= $user['first_name'] . ' ' . $user['last_name'] ?>" required>
-                                <input type="email" name="email" value="<?= $user['email'] ?>" required>
+                                <input type="text" name="name" value="<?= $user['first_name'] . ' ' . $user['last_name'] ?>" required disabled>
+                                <input type="email" name="email" value="<?= $user['email'] ?>" required disabled>
                             </div>
                             <div class="input-box">
-                                <input type="tel" name="phone" value="<?= $user['telephone'] ?>" required>
+                                <input type="tel" name="phone" value="<?= $user['telephone'] ?>" required disabled>
                                 <select name="service" required>
                                     <option disabled selected>Choose Service</option>
                                     <?php

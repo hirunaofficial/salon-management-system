@@ -301,7 +301,7 @@ include 'dbconnect.php';
                                 <img src="<?= $product['image_url'] ?>" alt="<?= $product['product_name'] ?>">
                             </div>
                             <div class="hs-shop-details">
-                                <h4 class="shop-title"><a href="#"><?= $product['product_name'] ?></a></h4>
+                                <h4 class="shop-title"><a href="products.php"><?= $product['product_name'] ?></a></h4>
                                 <ul class="product-price">
                                     <li class="new-price"><?= $product['price'] ?></li>
                                 </ul>

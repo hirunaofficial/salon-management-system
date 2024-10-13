@@ -5,7 +5,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
 
-// Load environment variables
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -36,14 +35,13 @@ function sendOrderStatusEmail($email, $subject, $orderDetails) {
     }
 }
 
-// Fetch the POST parameters from PayHere
-$merchant_id = $_POST['merchant_id'] ?? null;
-$order_id = $_POST['order_id'] ?? null;
-$payment_id = $_POST['payment_id'] ?? null;
-$payhere_amount = $_POST['payhere_amount'] ?? null;
-$payhere_currency = $_POST['payhere_currency'] ?? null;
-$status_code = $_POST['status_code'] ?? null;
-$md5sig = $_POST['md5sig'] ?? null;
+// Fetch the POST parameters from PayHere and sanitize input
+$merchant_id = filter_input(INPUT_POST, 'merchant_id', FILTER_SANITIZE_STRING);
+$order_id = filter_input(INPUT_POST, 'order_id', FILTER_SANITIZE_NUMBER_INT);
+$payhere_amount = filter_input(INPUT_POST, 'payhere_amount', FILTER_SANITIZE_STRING);
+$payhere_currency = filter_input(INPUT_POST, 'payhere_currency', FILTER_SANITIZE_STRING);
+$status_code = filter_input(INPUT_POST, 'status_code', FILTER_SANITIZE_NUMBER_INT);
+$md5sig = filter_input(INPUT_POST, 'md5sig', FILTER_SANITIZE_STRING);
 
 // Your Merchant Secret (from .env)
 $merchant_secret = $_ENV['PAYHERE_MERCHANT_SECRET'];
@@ -62,85 +60,85 @@ $local_md5sig = strtoupper(
 
 // Verify the payment notification
 if ($local_md5sig === $md5sig) {
-    // Fetch the order details
     $stmt_order = $pdo->prepare("SELECT * FROM orders WHERE order_id = :order_id");
     $stmt_order->execute(['order_id' => $order_id]);
     $order = $stmt_order->fetch(PDO::FETCH_ASSOC);
 
-    if ($order) {
-        // Fetch the order items
-        $stmt_items = $pdo->prepare("SELECT * FROM order_items WHERE order_id = :order_id");
-        $stmt_items->execute(['order_id' => $order_id]);
-        $order_items = $stmt_items->fetchAll(PDO::FETCH_ASSOC);
+    if (!$order) {
+        error_log("Order not found for order ID: {$order_id}");
+        return;
+    }
 
-        // Prepare detailed order content for the email
-        $orderDetails = "<h2>Order Details</h2>";
-        $orderDetails .= "<p><strong>Order ID:</strong> {$order['order_id']}</p>";
-        $orderDetails .= "<p><strong>Name:</strong> {$order['first_name']} {$order['last_name']}</p>";
-        $orderDetails .= "<p><strong>Email:</strong> {$order['email']}</p>";
-        $orderDetails .= "<p><strong>Telephone:</strong> {$order['telephone']}</p>";
-        $orderDetails .= "<p><strong>Shipping Address:</strong> {$order['address']}, {$order['city']}, {$order['postal_code']}, {$order['country']}</p>";
-        $orderDetails .= "<p><strong>Total Amount:</strong> LKR " . number_format($order['total'], 2) . "</p>";
-        $orderDetails .= "<h3>Order Items:</h3><ul>";
+    $stmt_items = $pdo->prepare("SELECT * FROM order_items WHERE order_id = :order_id");
+    $stmt_items->execute(['order_id' => $order_id]);
+    $order_items = $stmt_items->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($order_items as $item) {
-            $orderDetails .= "<li>{$item['product_name']} - Qty: {$item['quantity']} - Price: LKR " . number_format($item['price'], 2) . "</li>";
-        }
+    $orderDetails = "<h2>Order Details</h2>";
+    $orderDetails .= "<p><strong>Order ID:</strong> {$order['order_id']}</p>";
+    $orderDetails .= "<p><strong>Name:</strong> {$order['first_name']} {$order['last_name']}</p>";
+    $orderDetails .= "<p><strong>Email:</strong> {$order['email']}</p>";
+    $orderDetails .= "<p><strong>Telephone:</strong> {$order['telephone']}</p>";
+    $orderDetails .= "<p><strong>Shipping Address:</strong> {$order['address']}, {$order['city']}, {$order['postal_code']}, {$order['country']}</p>";
+    $orderDetails .= "<p><strong>Total Amount:</strong> LKR " . number_format($order['total'], 2) . "</p>";
+    $orderDetails .= "<h3>Order Items:</h3><ul>";
 
-        $orderDetails .= "</ul>";
+    foreach ($order_items as $item) {
+        $orderDetails .= "<li>{$item['product_name']} - Qty: {$item['quantity']} - Price: LKR " . number_format($item['price'], 2) . "</li>";
+    }
 
-        // Handle payment status codes and email content based on status
-        switch ($status_code) {
-            case 2: // Payment successful
-                $stmt_update = $pdo->prepare("UPDATE orders SET status = 'paid', payment_id = :payment_id WHERE order_id = :order_id");
-                $stmt_update->execute(['payment_id' => $payment_id, 'order_id' => $order_id]);
-                $orderDetails .= "<p><strong>Payment Status:</strong> Successful</p>";
-                $orderDetails .= "<p>Your payment has been received successfully. Thank you for shopping with Glamour Salon!</p>";
-                sendOrderStatusEmail($order['email'], 'Order Completed - Glamour Salon', $orderDetails);
-                error_log("Payment success for order ID: {$order_id}. Email sent.");
-                break;
+    $orderDetails .= "</ul>";
 
-            case 0: // Payment pending
-                $stmt_update = $pdo->prepare("UPDATE orders SET status = 'pending' WHERE order_id = :order_id");
-                $stmt_update->execute(['order_id' => $order_id]);
-                $orderDetails .= "<p><strong>Payment Status:</strong> Pending</p>";
-                $orderDetails .= "<p>Your payment is currently pending. We will notify you once it has been processed. If you have any questions, please contact support.</p>";
-                sendOrderStatusEmail($order['email'], 'Order Pending - Glamour Salon', $orderDetails);
-                error_log("Payment pending for order ID: {$order_id}. Email sent.");
-                break;
+    // Handle payment status codes and email content based on status
+    switch ($status_code) {
+        case 2: // Payment successful
+            $stmt_update = $pdo->prepare("UPDATE orders SET status = 'paid' WHERE order_id = :order_id");
+            $stmt_update->execute(['order_id' => $order_id]);
+            $orderDetails .= "<p><strong>Payment Status:</strong> Successful</p>";
+            $orderDetails .= "<p>Your payment has been received successfully. Thank you for shopping with Glamour Salon!</p>";
+            sendOrderStatusEmail($order['email'], 'Order Completed - Glamour Salon', $orderDetails);
+            error_log("Payment success for order ID: {$order_id}. Email sent.");
+            break;
 
-            case -1: // Payment canceled
-                $stmt_update = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = :order_id");
-                $stmt_update->execute(['order_id' => $order_id]);
-                $orderDetails .= "<p><strong>Payment Status:</strong> Cancelled</p>";
-                $orderDetails .= "<p>Your payment was cancelled. If you wish to retry, please place a new order. For any queries, contact support.</p>";
-                sendOrderStatusEmail($order['email'], 'Order Cancelled - Glamour Salon', $orderDetails);
-                error_log("Payment cancelled for order ID: {$order_id}. Email sent.");
-                break;
+        case 0: // Payment pending
+            $stmt_update = $pdo->prepare("UPDATE orders SET status = 'pending' WHERE order_id = :order_id");
+            $stmt_update->execute(['order_id' => $order_id]);
+            $orderDetails .= "<p><strong>Payment Status:</strong> Pending</p>";
+            $orderDetails .= "<p>Your payment is currently pending. We will notify you once it has been processed. If you have any questions, please contact support.</p>";
+            sendOrderStatusEmail($order['email'], 'Order Pending - Glamour Salon', $orderDetails);
+            error_log("Payment pending for order ID: {$order_id}. Email sent.");
+            break;
 
-            case -2: // Payment failed
-                $stmt_update = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = :order_id");
-                $stmt_update->execute(['order_id' => $order_id]);
-                $orderDetails .= "<p><strong>Payment Status:</strong> Failed</p>";
-                $orderDetails .= "<p>Your payment attempt failed. Please try again or contact support for assistance.</p>";
-                sendOrderStatusEmail($order['email'], 'Payment Failed - Glamour Salon', $orderDetails);
-                error_log("Payment failed for order ID: {$order_id}. Email sent.");
-                break;
+        case -1: // Payment canceled
+            $stmt_update = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = :order_id");
+            $stmt_update->execute(['order_id' => $order_id]);
+            $orderDetails .= "<p><strong>Payment Status:</strong> Cancelled</p>";
+            $orderDetails .= "<p>Your payment was cancelled. If you wish to retry, please place a new order. For any queries, contact support.</p>";
+            sendOrderStatusEmail($order['email'], 'Order Cancelled - Glamour Salon', $orderDetails);
+            error_log("Payment cancelled for order ID: {$order_id}. Email sent.");
+            break;
 
-            case -3: // Chargeback
-                $stmt_update = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = :order_id");
-                $stmt_update->execute(['order_id' => $order_id]);
-                $orderDetails .= "<p><strong>Payment Status:</strong> Chargeback</p>";
-                $orderDetails .= "<p>A chargeback has been issued for your payment. Please contact support for further details.</p>";
-                sendOrderStatusEmail($order['email'], 'Chargeback Received - Glamour Salon', $orderDetails);
-                error_log("Chargeback received for order ID: {$order_id}. Email sent.");
-                break;
+        case -2: // Payment failed
+            $stmt_update = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = :order_id");
+            $stmt_update->execute(['order_id' => $order_id]);
+            $orderDetails .= "<p><strong>Payment Status:</strong> Failed</p>";
+            $orderDetails .= "<p>Your payment attempt failed. Please try again or contact support for assistance.</p>";
+            sendOrderStatusEmail($order['email'], 'Payment Failed - Glamour Salon', $orderDetails);
+            error_log("Payment failed for order ID: {$order_id}. Email sent.");
+            break;
 
-            default:
-                error_log("Unhandled payment status code: {$status_code} for order ID: {$order_id}.");
-        }
+        case -3: // Chargeback
+            $stmt_update = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = :order_id");
+            $stmt_update->execute(['order_id' => $order_id]);
+            $orderDetails .= "<p><strong>Payment Status:</strong> Chargeback</p>";
+            $orderDetails .= "<p>A chargeback has been issued for your payment. Please contact support for further details.</p>";
+            sendOrderStatusEmail($order['email'], 'Chargeback Received - Glamour Salon', $orderDetails);
+            error_log("Chargeback received for order ID: {$order_id}. Email sent.");
+            break;
+
+        default:
+            error_log("Unhandled payment status code: {$status_code} for order ID: {$order_id}.");
     }
 } else {
-    // Invalid notification, handle appropriately
     error_log("Invalid payment notification for order ID: {$order_id}. Signature mismatch.");
 }
+?>

@@ -2,40 +2,10 @@
 include 'dbconnect.php';
 include 'header.php';
 require 'vendor/autoload.php';
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
 
-// Load environment variables
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-// Function to send order confirmation email
-function sendOrderConfirmationEmail($email, $orderDetails) {
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = $_ENV['SMTP_HOST'];
-        $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['SMTP_USER'];
-        $mail->Password = $_ENV['SMTP_PASSWORD'];
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = $_ENV['SMTP_PORT'];
-
-        $mail->setFrom($_ENV['SMTP_USER'], 'Glamour Salon');
-        $mail->addAddress($email);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Order Payment Details - Glamour Salon';
-        $mail->Body = $orderDetails;
-
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        error_log('Mail Error: ' . $mail->ErrorInfo);
-        return false;
-    }
-}
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -68,25 +38,8 @@ $stmt_user = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id");
 $stmt_user->execute(['user_id' => $user_id]);
 $user = $stmt_user->fetch(PDO::FETCH_ASSOC);
 
-// Prepare the email content with full order details
-$orderDetails = "<h2>Order Details</h2>";
-$orderDetails .= "<p><strong>Order ID:</strong> {$order_id}</p>";
-$orderDetails .= "<p><strong>Total Amount:</strong> LKR " . number_format($order['total'], 2) . "</p>";
-$orderDetails .= "<p><strong>Payment Method:</strong> " . $order['payment_method'] . "</p>";
-$orderDetails .= "<h3>Customer Information</h3>";
-$orderDetails .= "<p><strong>Name:</strong> {$user['first_name']} {$user['last_name']}</p>";
-$orderDetails .= "<p><strong>Email:</strong> {$user['email']}</p>";
-$orderDetails .= "<p><strong>Telephone:</strong> {$user['telephone']}</p>";
-$orderDetails .= "<p><strong>Address:</strong> {$user['address']}, {$user['city']}, {$user['postal_code']}, {$user['country']}</p>";
-
 // Handle payment method logic
 if ($order['payment_method'] === 'online_payment') {
-    // Send email for online payment
-    if (!sendOrderConfirmationEmail($user['email'], $orderDetails)) {
-        echo "<script>alert('There was an error sending the confirmation email. Please check your email details.');</script>";
-    }
-
-    // Retrieve PayHere credentials and URLs from .env
     $merchant_id = $_ENV['PAYHERE_MERCHANT_ID'];
     $merchant_secret = $_ENV['PAYHERE_MERCHANT_SECRET'];
     $return_url = $_ENV['PAYHERE_RETURN_URL'];
@@ -94,7 +47,6 @@ if ($order['payment_method'] === 'online_payment') {
     $notify_url = $_ENV['PAYHERE_NOTIFY_URL'];
     $currency = 'LKR';
 
-    // Calculate the hash
     $hash = strtoupper(
         md5(
             $merchant_id . 
@@ -105,7 +57,6 @@ if ($order['payment_method'] === 'online_payment') {
         )
     );
 
-    // Prepare PayHere checkout form
     echo '<form method="post" action="https://sandbox.payhere.lk/pay/checkout" id="payhere_form">';
     echo '<input type="hidden" name="merchant_id" value="' . $merchant_id . '">';
     echo '<input type="hidden" name="return_url" value="' . $return_url . '">';
@@ -125,7 +76,6 @@ if ($order['payment_method'] === 'online_payment') {
     echo '<input type="hidden" name="hash" value="' . $hash . '">';
     echo '</form>';
 
-    // Redirect to PayHere
     echo '<script>document.getElementById("payhere_form").submit();</script>';
     exit;
 
