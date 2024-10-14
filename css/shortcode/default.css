@@ -141,18 +141,18 @@ a:active {
     outline: none;
 }
 a {
-    color: #ff69b4;
+    color: #ffffff;
     text-decoration: none;
 }
 a:hover,
 a:focus,
 a:active {
-    color: #ff69b4 !important;
+    color: #ff3699 !important;
 }
 p a:hover,
 p a:focus,
 p a:active {
-    color: #ff69b4;
+    color: #ff3699;
 }
 h1 a,
 h2 a,
@@ -321,23 +321,23 @@ body {
   background: #fff;
 }
 *::-moz-selection {
-    background: #ff69b4;
+    background: #B23372;
     color: #fff;
     text-shadow: none;
 }
 ::-moz-selection {
-    background: #ff69b4;
+    background: #B23372;
     color: #fff;
     text-shadow: none;
 }
 ::selection {
-    background: #ff69b4;
+    background: #B23372;
     color: #fff;
     text-shadow: none;
 }
 
 .mark, mark {
-    background: #ff69b4 none repeat scroll 0 0;
+    background: #B23372 none repeat scroll 0 0;
     color: #ffffff;
 }
 /*-------------
@@ -350,11 +350,11 @@ body {
 .bg-white span,
 .bg-white ul,
 .bg-white a:not(.ml-btn) {
-  color: #000000;
+  color: #121212;
 }
 
 .bg-white a:hover {
-  color: #000000;
+  color: #121212;
 }
 
 .bg-white h1,
@@ -364,7 +364,7 @@ body {
 .bg-white h5,
 .bg-white h6,
 .bg-white i {
-  color: #000000;
+  color: #121212;
 }
 /*-------------
   bg-gray
@@ -376,7 +376,7 @@ body {
 .bg-gray span,
 .bg-gray ul,
 .bg-gray a:not(.btn) {
-  color: #000000;
+  color: #121212;
 }
 .bg-gray h1,
 .bg-gray h2,
@@ -385,7 +385,7 @@ body {
 .bg-gray h5,
 .bg-gray h6,
 .bg-gray i {
-  color: #000000;
+  color: #121212;
 }
 
 /*-------------
@@ -393,7 +393,7 @@ body {
 ---------------*/
 
 .bg-dark {
-    background: #151515 !important;
+    background: #121212 !important;
 }
 .bg-dark p,
 .bg-dark span,
@@ -416,10 +416,10 @@ body {
 ---------------*/
 
 .bg-theme {
-    background: #ff69b4 !important;
+    background: #B23372 !important;
 }
 .theme-color {
-    color: #ff69b4 !important;
+    color: #B23372 !important;
 }
 .bg-theme p,
 .bg-theme span,
@@ -563,12 +563,12 @@ body {
 .text-blue { color: #4FC1F0; }
 .text-white { color: #fff ;}
 .text-black { color: #363636; }
-.text-theme { color: #ff69b4; }
+.text-theme { color: #B23372; }
 
 .text-white h1, .text-white p, .text-white h2{ color: #fff; }
 .text-white { color: #fff; }
 .text-theme {
-  color: #ff69b4 !important;
+  color: #B23372 !important;
 }
 
 
@@ -910,8 +910,8 @@ input:focus {
 }
 textarea {
     resize: vertical;
-    background: #ff69b4;
-    border: 1px solid #ff69b4;
+    background: #B23372;
+    border: 1px solid #B23372;
     padding: 10px;
     width: 100%;
     font-size: 14px;
@@ -1252,7 +1252,7 @@ p.error {
     z-index: 2;
 }
 .hs-btn.btn-light {
-    background: #ff69b4 none repeat scroll 0 0;
+    background: #B23372 none repeat scroll 0 0;
     color: #fff;
 }
 .hs-btn.btn-light.btn-large {
@@ -1279,7 +1279,7 @@ p.error {
 }
 
 .hs-btn.hs-btn-3 {
-  color: #ff69b4 !important;
+  color: #B23372 !important;
   height: 36px;
   line-height: 36px;
   padding: 0 18px;
@@ -1290,7 +1290,7 @@ p.error {
 
 .bg-theme *::-moz-selection {
   background: #fff none repeat scroll 0 0;
-  color: #ff69b4;
+  color: #B23372;
   text-shadow: none;
 }
 

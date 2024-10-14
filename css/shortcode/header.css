@@ -19,7 +19,7 @@
   text-transform: uppercase;
 }
 .main-menu > li:hover > a{
-  color: #ff69b4;
+  color: #B23372;
 }
 .main-menu li + li {
     margin-left: 36px;
@@ -230,10 +230,10 @@
 .hs-social-icon li a:hover i {
 }
 .hs-social-icon li a:hover i {
-    color: #ff69b4;
+    color: #B23372;
 }
 .header-top-left p {
-    color: #ff69b4;
+    color: #B23372;
     font-family: Open Sans;
     font-size: 13px;
     height: 56px;
@@ -258,7 +258,7 @@ header.hs-header {
 
 .header-wrap.scroll-header {
   animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
-  background: #ff69b4;
+  background: #B23372;
   box-shadow: 0 1px 3px rgba(50, 50, 50, 0.4);
   left: 0;
   margin: 0 auto;

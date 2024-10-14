@@ -96,8 +96,13 @@ The environment variables in the `.env` file will determine the ports being used
 
 ## Screenshots
 
+## Screenshots
+
 ### Home Page
 ![Home](screenshots/home.png)
+
+### About
+![About](screenshots/about.png)
 
 ### Manage Appointments
 ![Manage Appointments](screenshots/manage_appointments.png)
@@ -114,8 +119,8 @@ The environment variables in the `.env` file will determine the ports being used
 ### Services
 ![Services](screenshots/services.png)
 
-### Order Confirmation
-![Order Confirmation](screenshots/thank_you.png)
+### Appointment
+![Appointment](screenshots/appointment.png)
 
 ### Shopping Cart
 ![Shopping Cart](screenshots/cart.png)
@@ -123,8 +128,14 @@ The environment variables in the `.env` file will determine the ports being used
 ### Payment Gateway
 ![Payment Gateway](screenshots/checkout.png)
 
+### Order Confirmation
+![Order Confirmation](screenshots/thank_you.png)
+
 ### Blog
 ![Blog](screenshots/blog.png)
+
+### Gallery
+![Gallery](screenshots/gallery.png)
 
 ## Admin and Staff Dashboard
 

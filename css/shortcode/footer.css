@@ -2,10 +2,10 @@
 	Footer Default
 ------------------------------*/
 .ft-bg-1{
-	background: #131313;
+	background: #121212;
 }
 .ft-bg-2{
-	background: #010101;
+	background: #121212;
 }
 .footer-pra {
   color: #fff;
@@ -35,8 +35,8 @@
     margin-left: 14px;
 }
 .social-icon li a:hover{
-    background: #ff69b4 none repeat scroll 0 0;
-    border: 1px solid #ff69b4;
+    background: #B23372 none repeat scroll 0 0;
+    border: 1px solid #B23372;
     color: #fff;
 }
 .social-icon li a:hover i {
@@ -64,7 +64,7 @@
 .footer-icon a{
     border: 1px solid #f6f6f6;
     border-radius: 50%;
-    color: #ff69b4;
+    color: #B23372;
     height: 30px;
     line-height: 28px;
     margin-right: 14px;
@@ -110,7 +110,7 @@
   display: block;
 }
 .our-colection li a::before {
-  background: #ff69b4 none repeat scroll 0 0;
+  background: #B23372 none repeat scroll 0 0;
   content: "";
   height: 100%;
   left: 0;
@@ -148,7 +148,7 @@
     text-transform: capitalize;
 }
 .footer-btm-inner p a {
-	color: #ff69b4;
+	color: #B23372;
 }
 .footer-top {
   padding-top: 130px;

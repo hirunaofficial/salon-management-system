@@ -46,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="login-content">
-                    <h2 class="text-center">Login to your account</h2>
 
                     <?php if (isset($message)): ?>
                         <div class="mt-20 alert alert-<?= $message_type ?>"><?= $message ?></div>
@@ -62,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="password" class="form-control" name="password" required placeholder="Enter your password">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block mb-10">Login</button>
+                            <button type="submit" class="btn btn-primary ce5 btn-large mb-10">Login</button>
                         </div>
                         <div class="text-center">
-                            <p>Don't have an account? <a href="register.php">Register here</a></p>
+                            <p>Don't have an account? <a href="register.php" style="color: #B23372;">Register here</a></p>
                         </div>
                     </form>
                 </div>
@@ -84,15 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 .btn-primary {
-    background-color: #000000;
     border: none;
     padding: 12px;
-    font-size: 16px;
+    font-size: 20px;
     width: 100%;
-}
-
-.btn-primary:hover {
-    background-color: #000000;
+    height: 45px;
 }
 
 .alert {

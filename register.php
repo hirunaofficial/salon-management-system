@@ -110,12 +110,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 }
 ?>
 
+<section class="breadcrumbs-area ptb-100 bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumbs">
+                    <h2 class="page-title">Register</h2>
+                    <ul>
+                        <li><a class="active" href="index.php">Home</a></li>
+                        <li>Register</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="register-area ptb-90">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="register-content">
-                    <h2 class="text-center">Create your account</h2>
 
                     <?php if (isset($message)): ?>
                         <div class="mt-20 alert alert-<?= $message_type ?>"><?= $message ?></div>
@@ -143,7 +158,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                             <input type="tel" class="form-control" name="telephone" required placeholder="Enter your phone number">
                         </div>
                         <div class="form-group">
-                            <button type="submit" name="register" class="btn btn-primary btn-block mb-10">Register</button>
+                            <button type="submit" name="register" class="btn btn-primary ce5 btn-large mb-10">Register</button>
+                        </div>
+                        <div class="text-center">
+                            <p>If you already have an account, <a href="login.php" style="color: #B23372;">login here</a>.</p>
                         </div>
                     </form>
                 </div>
@@ -162,15 +180,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 }
 
 .btn-primary {
-    background-color: #000000;
     border: none;
     padding: 12px;
-    font-size: 16px;
+    font-size: 20px;
     width: 100%;
-}
-
-.btn-primary:hover {
-    background-color: #000000;
+    height: 45px;
 }
 
 .alert {

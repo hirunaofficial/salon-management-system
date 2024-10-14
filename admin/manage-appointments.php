@@ -290,7 +290,7 @@ if ($is_staff) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary ce5" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary ce5" data-bs-dismiss="modal">Close</button>
                     <button type="submit" name="add_appointment" class="btn btn-primary ce5">Add Appointment</button>
                 </div>
             </form>

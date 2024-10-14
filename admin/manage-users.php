@@ -110,7 +110,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary ce5" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary ce5" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary ce5">Save changes</button>
                                 </div>
                             </form>
@@ -161,7 +161,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary ce5" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary ce5" data-bs-dismiss="modal">Close</button>
                         <button type="submit" name="add_user" class="btn btn-primary ce5">Add User</button>
                     </div>
                 </form>
