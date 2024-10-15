@@ -139,7 +139,7 @@ function generatePDFLink($order_id) {
                                         <td><?= ucfirst($order['payment_method']) ?></td>
                                         <td><?= ucfirst($order['status']) ?></td>
                                         <td>
-                                            <?php if ($order['status'] === 'unpaid'): ?>
+                                            <?php if ($order['status'] === 'unpaid' && $order['payment_method'] === 'online_payment'): ?>
                                                 <a href="proceed_to_payment.php?order_id=<?= $order['order_id'] ?>">
                                                     <button class="btn btn-primary ce5">Proceed to Payment</button>
                                                 </a>

@@ -222,11 +222,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="appoinment-form mt-40">
                         <form action="appointment.php" method="POST">
                             <div class="input-box">
-                                <input type="text" name="name" value="<?= $user['first_name'] . ' ' . $user['last_name'] ?>" required disabled>
-                                <input type="email" name="email" value="<?= $user['email'] ?>" required disabled>
+                                <input type="text" name="name" value="<?= $user['first_name'] . ' ' . $user['last_name'] ?>" readonly required>
+                                <input type="email" name="email" value="<?= $user['email'] ?>" readonly required>
                             </div>
                             <div class="input-box">
-                                <input type="tel" name="phone" value="<?= $user['telephone'] ?>" required disabled>
+                                <input type="tel" name="phone" value="<?= $user['telephone'] ?>" readonly required>
                                 <select name="service" required>
                                     <option disabled selected>Choose Service</option>
                                     <?php

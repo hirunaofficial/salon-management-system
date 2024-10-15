@@ -17,7 +17,7 @@ $user_id = $_SESSION['user_id'];
 
 // Check if order_id is provided
 if (!isset($_GET['order_id'])) {
-    echo "<script>alert('No order found.'); window.location.href = 'manage-orders.php';</script>";
+    echo "<script>alert('No order found.'); window.location.href = 'manage_orders.php';</script>";
     exit;
 }
 
@@ -29,7 +29,7 @@ $stmt_order->execute(['order_id' => $order_id, 'user_id' => $user_id]);
 $order = $stmt_order->fetch(PDO::FETCH_ASSOC);
 
 if (!$order || $order['status'] !== 'unpaid') {
-    echo "<script>alert('This order is not available for payment.'); window.location.href = 'manage-orders.php';</script>";
+    echo "<script>alert('This order is not available for payment.'); window.location.href = 'manage_orders.php';</script>";
     exit;
 }
 
@@ -81,7 +81,7 @@ if ($order['payment_method'] === 'online_payment') {
 
 } elseif ($order['payment_method'] === 'cod') {
     // Handle Cash on Delivery (COD)
-    echo "<script>alert('Your order is marked as Cash on Delivery. You will be contacted for delivery.'); window.location.href = 'manage-orders.php';</script>";
+    echo "<script>alert('Your order is marked as Cash on Delivery. You will be contacted for delivery.'); window.location.href = 'manage_orders.php';</script>";
     exit;
 }
 
